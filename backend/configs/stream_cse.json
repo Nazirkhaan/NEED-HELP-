@@ -1,0 +1,212 @@
+{
+  "key": "cse",
+  "name": "Computer Science & Engineering",
+  "skills": [
+    { "code": "python", "label": "Python", "category": "Programming", "aliases": ["py", "python3", "pandas numpy scripting"], "demand_weight": 1.2 },
+    { "code": "sql", "label": "SQL", "category": "Data", "aliases": ["structured query language", "postgres", "postgresql", "mysql", "queries", "joins", "normalized schemas"], "demand_weight": 1.2 },
+    { "code": "rest_api", "label": "REST API Development", "category": "Web", "aliases": ["restful", "rest api", "rest apis", "api endpoints", "http services", "backend services", "microservices"], "demand_weight": 1.1 },
+    { "code": "react", "label": "React", "category": "Web", "aliases": ["reactjs", "react.js", "jsx", "frontend framework"], "demand_weight": 1.0 },
+    { "code": "javascript", "label": "JavaScript", "category": "Programming", "aliases": ["js", "es6", "ecmascript"], "demand_weight": 1.0 },
+    { "code": "java", "label": "Java", "category": "Programming", "aliases": ["core java", "jvm", "spring boot"], "demand_weight": 1.0 },
+    { "code": "cpp", "label": "C++", "category": "Programming", "aliases": ["c plus plus", "cpp17", "stl"], "demand_weight": 0.9 },
+    { "code": "dsa", "label": "Data Structures & Algorithms", "category": "Fundamentals", "aliases": ["dsa", "algorithms", "problem solving", "leetcode", "competitive programming"], "demand_weight": 1.1 },
+    { "code": "html_css", "label": "HTML & CSS", "category": "Web", "aliases": ["web markup", "stylesheets", "responsive design", "tailwind"], "demand_weight": 0.8 },
+    { "code": "django", "label": "Django", "category": "Web", "aliases": ["django rest framework", "drf"], "demand_weight": 0.9 },
+    { "code": "nodejs", "label": "Node.js", "category": "Web", "aliases": ["node", "express", "npm"], "demand_weight": 0.9 },
+    { "code": "docker", "label": "Docker", "category": "DevOps", "aliases": ["containers", "containerization", "container images", "dockerfiles"], "demand_weight": 1.0 },
+    { "code": "linux", "label": "Linux & Shell", "category": "Tools", "aliases": ["bash", "unix", "shell scripting", "command line"], "demand_weight": 0.9 },
+    { "code": "git", "label": "Git & Version Control", "category": "Tools", "aliases": ["github", "version control", "merge conflicts", "pull requests"], "demand_weight": 0.8 },
+    { "code": "aws", "label": "AWS Cloud", "category": "Cloud", "aliases": ["aws", "amazon", "amazon web services", "ec2", "s3", "lambda", "cloud deployment", "event-driven functions"], "demand_weight": 1.1 },
+    { "code": "pandas", "label": "Pandas / Data Analysis", "category": "Data", "aliases": ["pandas", "dataframes", "data wrangling", "exploratory data analysis", "numpy"], "demand_weight": 1.1 },
+    { "code": "ml_basics", "label": "Machine Learning Fundamentals", "category": "AI/ML", "aliases": ["ml", "scikit-learn", "supervised learning", "model training", "regression classifiers"], "demand_weight": 1.1 },
+    { "code": "deep_learning", "label": "Deep Learning", "category": "AI/ML", "aliases": ["neural networks", "pytorch", "tensorflow", "cnn", "transformers"], "demand_weight": 1.0 },
+    { "code": "nlp", "label": "NLP", "category": "AI/ML", "aliases": ["natural language processing", "text mining", "language models", "embeddings"], "demand_weight": 0.9 },
+    { "code": "sql_analytics", "label": "Analytics & BI", "category": "Data", "aliases": ["powerbi", "tableau", "dashboards", "reporting", "kpi tracking"], "demand_weight": 0.9 },
+    { "code": "mongodb", "label": "MongoDB", "category": "Data", "aliases": ["nosql", "document database", "mongo"], "demand_weight": 0.8 },
+    { "code": "testing", "label": "Software Testing", "category": "Quality", "aliases": ["unit tests", "pytest", "jest", "test automation", "qa"], "demand_weight": 0.8 },
+    { "code": "system_design", "label": "System Design", "category": "Fundamentals", "aliases": ["scalability", "architecture", "distributed systems", "caching"], "demand_weight": 1.0 },
+    { "code": "cybersecurity", "label": "Cybersecurity Basics", "category": "Security", "aliases": ["owasp", "infosec", "vulnerabilities", "authentication security"], "demand_weight": 0.9 },
+    { "code": "mobile_dev", "label": "Mobile Development", "category": "Web", "aliases": ["android", "flutter", "react native", "mobile apps"], "demand_weight": 0.8 },
+    { "code": "communication", "label": "Professional Communication", "category": "Soft Skills", "aliases": ["presentation", "documentation", "teamwork"], "demand_weight": 0.7 }
+  ],
+  "target_roles": [
+    {
+      "name": "Backend Developer Intern",
+      "required": [
+        { "code": "python", "weight": 1.3 },
+        { "code": "sql", "weight": 1.2 },
+        { "code": "rest_api", "weight": 1.2 },
+        { "code": "docker", "weight": 1.0 },
+        { "code": "git", "weight": 0.8 },
+        { "code": "system_design", "weight": 0.8 }
+      ]
+    },
+    {
+      "name": "Frontend Developer Intern",
+      "required": [
+        { "code": "react", "weight": 1.3 },
+        { "code": "javascript", "weight": 1.2 },
+        { "code": "html_css", "weight": 1.0 },
+        { "code": "git", "weight": 0.8 },
+        { "code": "rest_api", "weight": 0.8 }
+      ]
+    },
+    {
+      "name": "Data Analyst Intern",
+      "required": [
+        { "code": "pandas", "weight": 1.3 },
+        { "code": "sql", "weight": 1.2 },
+        { "code": "sql_analytics", "weight": 1.1 },
+        { "code": "python", "weight": 1.0 },
+        { "code": "communication", "weight": 0.7 }
+      ]
+    },
+    {
+      "name": "ML Engineer Intern",
+      "required": [
+        { "code": "ml_basics", "weight": 1.3 },
+        { "code": "deep_learning", "weight": 1.1 },
+        { "code": "pandas", "weight": 1.0 },
+        { "code": "python", "weight": 1.2 },
+        { "code": "nlp", "weight": 0.8 }
+      ]
+    },
+    {
+      "name": "Cloud / DevOps Intern",
+      "required": [
+        { "code": "aws", "weight": 1.3 },
+        { "code": "docker", "weight": 1.2 },
+        { "code": "linux", "weight": 1.0 },
+        { "code": "rest_api", "weight": 0.8 },
+        { "code": "system_design", "weight": 0.9 }
+      ]
+    },
+    {
+      "name": "Full-Stack Developer Intern",
+      "required": [
+        { "code": "react", "weight": 1.1 },
+        { "code": "nodejs", "weight": 1.1 },
+        { "code": "mongodb", "weight": 0.9 },
+        { "code": "rest_api", "weight": 1.0 },
+        { "code": "javascript", "weight": 1.0 },
+        { "code": "git", "weight": 0.7 }
+      ]
+    }
+  ],
+  "learning_resources": {
+    "python": [
+      { "title": "Python for Everybody (Coursera)", "provider": "Coursera", "url": "https://www.coursera.org/specializations/python", "duration_hours": 40 },
+      { "title": "Official Python Tutorial", "provider": "python.org", "url": "https://docs.python.org/3/tutorial/", "duration_hours": 10 }
+    ],
+    "sql": [
+      { "title": "SQL Tutorial (SQLBolt)", "provider": "SQLBolt", "url": "https://sqlbolt.com/", "duration_hours": 6 },
+      { "title": "Databases: Advanced querying (NPTEL)", "provider": "NPTEL", "url": "https://nptel.ac.in/courses/106105175", "duration_hours": 30 }
+    ],
+    "rest_api": [
+      { "title": "REST API design guide (MDN)", "provider": "MDN", "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP", "duration_hours": 8 },
+      { "title": "FastAPI official tutorial", "provider": "FastAPI", "url": "https://fastapi.tiangolo.com/tutorial/", "duration_hours": 12 }
+    ],
+    "react": [
+      { "title": "React Official Learn Course", "provider": "react.dev", "url": "https://react.dev/learn", "duration_hours": 20 }
+    ],
+    "javascript": [
+      { "title": "The Modern JavaScript Tutorial", "provider": "javascript.info", "url": "https://javascript.info/", "duration_hours": 30 }
+    ],
+    "docker": [
+      { "title": "Docker Get Started", "provider": "Docker", "url": "https://docs.docker.com/get-started/", "duration_hours": 8 }
+    ],
+    "aws": [
+      { "title": "AWS Cloud Practitioner Essentials", "provider": "AWS Skill Builder", "url": "https://skillbuilder.aws/", "duration_hours": 20 }
+    ],
+    "pandas": [
+      { "title": "Kaggle Pandas Micro-course", "provider": "Kaggle", "url": "https://www.kaggle.com/learn/pandas", "duration_hours": 4 }
+    ],
+    "ml_basics": [
+      { "title": "Machine Learning Specialization", "provider": "Coursera", "url": "https://www.coursera.org/specializations/machine-learning-introduction", "duration_hours": 60 }
+    ],
+    "deep_learning": [
+      { "title": "Practical Deep Learning for Coders", "provider": "fast.ai", "url": "https://course.fast.ai/", "duration_hours": 40 }
+    ],
+    "dsa": [
+      { "title": "Algorithms (CLRS-based NPTEL)", "provider": "NPTEL", "url": "https://nptel.ac.in/courses/106106145", "duration_hours": 40 }
+    ],
+    "linux": [
+      { "title": "The Missing Semester (MIT)", "provider": "MIT", "url": "https://missing.csail.mit.edu/", "duration_hours": 10 }
+    ],
+    "git": [
+      { "title": "Pro Git book", "provider": "git-scm", "url": "https://git-scm.com/book/en/v2", "duration_hours": 8 }
+    ],
+    "system_design": [
+      { "title": "System Design Primer (GitHub)", "provider": "GitHub", "url": "https://github.com/donnemartin/system-design-primer", "duration_hours": 25 }
+    ],
+    "nlp": [
+      { "title": "Hugging Face NLP Course", "provider": "Hugging Face", "url": "https://huggingface.co/learn/nlp-course", "duration_hours": 25 }
+    ],
+    "html_css": [
+      { "title": "Responsive Web Design Certification", "provider": "freeCodeCamp", "url": "https://www.freecodecamp.org/learn/2022/responsive-web-design/", "duration_hours": 30 }
+    ],
+    "django": [
+      { "title": "Django Official Tutorial", "provider": "Django", "url": "https://docs.djangoproject.com/en/stable/intro/tutorial01/", "duration_hours": 10 }
+    ],
+    "nodejs": [
+      { "title": "Node.js Introduction (MDN)", "provider": "MDN", "url": "https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs", "duration_hours": 12 }
+    ],
+    "java": [
+      { "title": "Java Programming (NPTEL)", "provider": "NPTEL", "url": "https://nptel.ac.in/courses/106105191", "duration_hours": 40 }
+    ],
+    "cpp": [
+      { "title": "C++ Course (learncpp.com)", "provider": "LearnCpp", "url": "https://www.learncpp.com/", "duration_hours": 30 }
+    ],
+    "mongodb": [
+      { "title": "MongoDB University M001", "provider": "MongoDB", "url": "https://learn.mongodb.com/", "duration_hours": 7 }
+    ],
+    "sql_analytics": [
+      { "title": "Google Data Analytics Certificate", "provider": "Coursera", "url": "https://www.coursera.org/professional-certificates/google-data-analytics", "duration_hours": 60 }
+    ],
+    "testing": [
+      { "title": "pytest documentation & course", "provider": "pytest", "url": "https://docs.pytest.org/en/stable/", "duration_hours": 6 }
+    ],
+    "cybersecurity": [
+      { "title": "Foundations of Cybersecurity (Google)", "provider": "Coursera", "url": "https://www.coursera.org/learn/foundations-of-cybersecurity", "duration_hours": 15 }
+    ],
+    "mobile_dev": [
+      { "title": "Flutter codelabs (Google)", "provider": "Google", "url": "https://codelabs.developers.google.com/?product=flutter", "duration_hours": 20 }
+    ],
+    "communication": [
+      { "title": "Business English Communication (Coursera)", "provider": "Coursera", "url": "https://www.coursera.org/specializations/business-english-communication", "duration_hours": 20 }
+    ]
+  },
+  "generator": {
+    "orgs": ["CloudNest", "DataMint Analytics", "PixelForge Studios", "StackRiver Systems", "FinEdge Labs", "MedixTron Health"],
+    "jd_templates": [
+      { "role": "Backend Developer Intern", "title": "Backend Developer Intern", "kind": "internship", "stipend": [15000, 30000], "seats": [2, 5] },
+      { "role": "Frontend Developer Intern", "title": "Frontend Developer Intern", "kind": "internship", "stipend": [12000, 25000], "seats": [1, 4] },
+      { "role": "Data Analyst Intern", "title": "Business Data Analyst Intern", "kind": "internship", "stipend": [10000, 22000], "seats": [1, 3] },
+      { "role": "ML Engineer Intern", "title": "Applied ML Intern", "kind": "internship", "stipend": [20000, 40000], "seats": [1, 2] },
+      { "role": "Cloud / DevOps Intern", "title": "Cloud & DevOps Intern", "kind": "internship", "stipend": [18000, 35000], "seats": [1, 3] },
+      { "role": "Full-Stack Developer Intern", "title": "Full-Stack Developer Intern", "kind": "internship", "stipend": [15000, 32000], "seats": [2, 4] },
+      { "role": "Backend Developer Intern", "title": "Graduate Software Engineer (Placement)", "kind": "placement", "salary_min": [450000, 700000], "salary_max": [900000, 1400000], "seats": [1, 6] },
+      { "role": "ML Engineer Intern", "title": "AI Engineer Trainee (Placement)", "kind": "placement", "salary_min": [500000, 800000], "salary_max": [1000000, 1600000], "seats": [1, 3] }
+    ],
+    "jd_intro": [
+      "We are building products used by thousands of users daily and need interns who can ship reliable features.",
+      "Our engineering team is small and hands-on; interns work on production code from week one.",
+      "Join the platform team maintaining services that process millions of events per day.",
+      "We are modernising our stack and looking for curious interns to help drive that migration."
+    ],
+    "jd_outro": [
+      "Strong fundamentals matter more than specific frameworks; we mentor on the rest.",
+      "You will pair with a senior engineer and own a small surface area end to end.",
+      "Expect code reviews, weekly demos, and honest feedback loops.",
+      "Convert-to-pre-placement-offer possible based on internship performance."
+    ],
+    "resume_bullets": [
+      "Built and deployed {skill} projects during coursework",
+      "Completed a 6-week self project centred on {skill}",
+      "Used {skill} in a 4-member team project for the institute tech fest",
+      "Certified coursework covering {skill} fundamentals",
+      "Internship exposure to {skill} in a startup environment",
+      "Won 2nd place at a hackathon using {skill}"
+    ]
+  }
+}

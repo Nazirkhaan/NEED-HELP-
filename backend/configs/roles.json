@@ -1,0 +1,55 @@
+{
+  "roles": [
+    {
+      "name": "student",
+      "display_name": "Student",
+      "description": "Uploads profile, claims skills, views gap & matches, applies.",
+      "permissions": [
+        "profile.manage.own",
+        "skills.claim.own",
+        "gap.view.own",
+        "matches.view.own",
+        "applications.create.own",
+        "consent.manage.own"
+      ]
+    },
+    {
+      "name": "tpo",
+      "display_name": "Institution / TPO",
+      "description": "Co-signs student skills, views institution gaps & placements.",
+      "permissions": [
+        "students.view.institution",
+        "skills.cosign.institution",
+        "gaps.view.institution",
+        "placements.view.institution",
+        "matches.view.institution",
+        "curriculum.view.institution"
+      ]
+    },
+    {
+      "name": "industry",
+      "display_name": "Industry",
+      "description": "Posts jobs, reviews applicants, verifies skills, logs outcomes.",
+      "permissions": [
+        "jobs.manage.own",
+        "applicants.view.own",
+        "applications.review.own",
+        "outcomes.log.own",
+        "skills.verify.industry"
+      ]
+    },
+    {
+      "name": "admin",
+      "display_name": "Admin / Ministry",
+      "description": "Sees cross-institution analytics, manages RBAC & taxonomy, reseeds streams.",
+      "permissions": [
+        "dashboard.view.all",
+        "analytics.view.all",
+        "curriculum.view.all",
+        "rbac.manage",
+        "taxonomy.manage",
+        "reseed.run"
+      ]
+    }
+  ]
+}

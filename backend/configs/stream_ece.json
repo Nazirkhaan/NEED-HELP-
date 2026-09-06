@@ -1,0 +1,182 @@
+{
+  "key": "ece",
+  "name": "Electronics & Communication Engineering",
+  "skills": [
+    { "code": "embedded_c", "label": "Embedded C", "category": "Embedded", "aliases": ["firmware", "bare-metal c", "microcontroller programming"], "demand_weight": 1.2 },
+    { "code": "microcontrollers", "label": "Microcontrollers (8051/STM32)", "category": "Embedded", "aliases": ["stm32", "8051", "arm cortex-m", "avr"], "demand_weight": 1.1 },
+    { "code": "arduino", "label": "Arduino Prototyping", "category": "Embedded", "aliases": ["esp32", "esp8266", "maker boards"], "demand_weight": 0.9 },
+    { "code": "iot", "label": "IoT Systems", "category": "Embedded", "aliases": ["mqtt", "sensor networks", "connected devices", "smart devices"], "demand_weight": 1.1 },
+    { "code": "pcb_design", "label": "PCB Design", "category": "Hardware Design", "aliases": ["eagle", "kicad", "altium", "schematic capture", "board layout"], "demand_weight": 1.0 },
+    { "code": "analog_circuits", "label": "Analog Circuits", "category": "Hardware Design", "aliases": ["op-amps", "amplifiers", "filters", "analog design"], "demand_weight": 1.0 },
+    { "code": "digital_electronics", "label": "Digital Electronics", "category": "Hardware Design", "aliases": ["flip-flops", "logic gates", "combinational circuits", "sequential logic"], "demand_weight": 0.9 },
+    { "code": "verilog", "label": "Verilog / HDL", "category": "VLSI", "aliases": ["systemverilog", "rtl design", "hardware description"], "demand_weight": 1.1 },
+    { "code": "vlsi", "label": "VLSI Design Flow", "category": "VLSI", "aliases": ["asic flow", "physical design", "synthesis", "place and route"], "demand_weight": 1.0 },
+    { "code": "signal_processing", "label": "Digital Signal Processing", "category": "Signals", "aliases": ["dsp", "filters design", "fourier analysis", "sampling"], "demand_weight": 1.1 },
+    { "code": "matlab", "label": "MATLAB / Simulink", "category": "Tools", "aliases": ["simulink modelling", "octave"], "demand_weight": 1.0 },
+    { "code": "communication_systems", "label": "Communication Systems", "category": "Signals", "aliases": ["modulation", "5g", "wireless communication", "antennas"], "demand_weight": 1.0 },
+    { "code": "control_systems", "label": "Control Systems", "category": "Signals", "aliases": ["pid controllers", "feedback loops", "bode analysis"], "demand_weight": 0.9 },
+    { "code": "rtos", "label": "RTOS", "category": "Embedded", "aliases": ["freeRTOS", "real-time operating systems", "task scheduling"], "demand_weight": 1.0 },
+    { "code": "python_ece", "label": "Python for ECE", "category": "Programming", "aliases": ["automation scripts", "pyserial", "data logging"], "demand_weight": 0.9 },
+    { "code": "robotics", "label": "Robotics", "category": "Systems", "aliases": ["ros", "kinematics", "actuators", "autonomous bots"], "demand_weight": 0.9 },
+    { "code": "embedded_linux", "label": "Embedded Linux", "category": "Embedded", "aliases": ["yocto", "raspberry pi", "device drivers", "raspbian"], "demand_weight": 1.0 },
+    { "code": "circuit_simulation", "label": "Circuit Simulation", "category": "Tools", "aliases": ["ltspice", "multisim", "pspice", "proteus"], "demand_weight": 0.8 },
+    { "code": "sensors", "label": "Sensors & Instrumentation", "category": "Systems", "aliases": ["transducers", "measurement", "calibration", "data acquisition"], "demand_weight": 0.9 },
+    { "code": "plc_scada", "label": "PLC / SCADA", "category": "Industrial", "aliases": ["industrial automation", "ladder logic", "scada systems"], "demand_weight": 0.9 },
+    { "code": "communication_ece", "label": "Technical Documentation", "category": "Soft Skills", "aliases": ["datasheets", "test reports", "presentation"], "demand_weight": 0.7 }
+  ],
+  "target_roles": [
+    {
+      "name": "Embedded Systems Intern",
+      "required": [
+        { "code": "embedded_c", "weight": 1.3 },
+        { "code": "microcontrollers", "weight": 1.2 },
+        { "code": "rtos", "weight": 1.0 },
+        { "code": "iot", "weight": 0.9 },
+        { "code": "sensors", "weight": 0.8 }
+      ]
+    },
+    {
+      "name": "VLSI Design Intern",
+      "required": [
+        { "code": "verilog", "weight": 1.3 },
+        { "code": "vlsi", "weight": 1.2 },
+        { "code": "digital_electronics", "weight": 1.0 },
+        { "code": "circuit_simulation", "weight": 0.8 }
+      ]
+    },
+    {
+      "name": "IoT Developer Intern",
+      "required": [
+        { "code": "iot", "weight": 1.3 },
+        { "code": "arduino", "weight": 1.0 },
+        { "code": "embedded_linux", "weight": 1.0 },
+        { "code": "python_ece", "weight": 1.0 },
+        { "code": "sensors", "weight": 0.9 }
+      ]
+    },
+    {
+      "name": "Signal Processing Intern",
+      "required": [
+        { "code": "signal_processing", "weight": 1.3 },
+        { "code": "matlab", "weight": 1.2 },
+        { "code": "communication_systems", "weight": 1.0 },
+        { "code": "python_ece", "weight": 0.8 }
+      ]
+    },
+    {
+      "name": "PCB / Hardware Intern",
+      "required": [
+        { "code": "pcb_design", "weight": 1.3 },
+        { "code": "analog_circuits", "weight": 1.1 },
+        { "code": "circuit_simulation", "weight": 1.0 },
+        { "code": "digital_electronics", "weight": 0.9 }
+      ]
+    },
+    {
+      "name": "Industrial Automation Intern",
+      "required": [
+        { "code": "plc_scada", "weight": 1.3 },
+        { "code": "control_systems", "weight": 1.0 },
+        { "code": "sensors", "weight": 1.0 },
+        { "code": "robotics", "weight": 0.8 }
+      ]
+    }
+  ],
+  "learning_resources": {
+    "embedded_c": [
+      { "title": "Embedded Systems Programming (NPTEL)", "provider": "NPTEL", "url": "https://nptel.ac.in/courses/108102045", "duration_hours": 30 }
+    ],
+    "microcontrollers": [
+      { "title": "STM32 Embedded Bootcamp", "provider": "Udemy", "url": "https://www.udemy.com/topic/stm32/", "duration_hours": 20 }
+    ],
+    "arduino": [
+      { "title": "Arduino Official Basics", "provider": "Arduino", "url": "https://docs.arduino.cc/learn/", "duration_hours": 8 }
+    ],
+    "iot": [
+      { "title": "Introduction to IoT (NPTEL)", "provider": "NPTEL", "url": "https://nptel.ac.in/courses/106105166", "duration_hours": 25 }
+    ],
+    "pcb_design": [
+      { "title": "KiCad Getting Started", "provider": "KiCad", "url": "https://docs.kicad.org/", "duration_hours": 10 }
+    ],
+    "analog_circuits": [
+      { "title": "Analog Circuits (NPTEL)", "provider": "NPTEL", "url": "https://nptel.ac.in/courses/108108155", "duration_hours": 35 }
+    ],
+    "digital_electronics": [
+      { "title": "Digital Circuits (NPTEL)", "provider": "NPTEL", "url": "https://nptel.ac.in/courses/108105132", "duration_hours": 30 }
+    ],
+    "verilog": [
+      { "title": "HDL with Verilog (Coursera)", "provider": "Coursera", "url": "https://www.coursera.org/learn/hardware-description-language", "duration_hours": 20 }
+    ],
+    "vlsi": [
+      { "title": "VLSI Design Flow (NPTEL)", "provider": "NPTEL", "url": "https://nptel.ac.in/courses/108107130", "duration_hours": 40 }
+    ],
+    "signal_processing": [
+      { "title": "Digital Signal Processing (NPTEL)", "provider": "NPTEL", "url": "https://nptel.ac.in/courses/108102112", "duration_hours": 40 }
+    ],
+    "matlab": [
+      { "title": "MATLAB Onramp (MathWorks)", "provider": "MathWorks", "url": "https://matlabacademy.mathworks.com/", "duration_hours": 2 }
+    ],
+    "communication_systems": [
+      { "title": "Principles of Communication Systems I (NPTEL)", "provider": "NPTEL", "url": "https://nptel.ac.in/courses/108104109", "duration_hours": 35 }
+    ],
+    "control_systems": [
+      { "title": "Control Systems (NPTEL)", "provider": "NPTEL", "url": "https://nptel.ac.in/courses/108102121", "duration_hours": 30 }
+    ],
+    "rtos": [
+      { "title": "FreeRTOS Documentation & Tutorials", "provider": "FreeRTOS", "url": "https://www.freertos.org/", "duration_hours": 12 }
+    ],
+    "python_ece": [
+      { "title": "Automate the Boring Stuff with Python", "provider": "automatetheboringstuff.com", "url": "https://automatetheboringstuff.com/", "duration_hours": 15 }
+    ],
+    "robotics": [
+      { "title": "ROS Tutorials (wiki.ros.org)", "provider": "ROS", "url": "http://wiki.ros.org/ROS/Tutorials", "duration_hours": 20 }
+    ],
+    "embedded_linux": [
+      { "title": "Embedded Linux (Bootlin training materials)", "provider": "Bootlin", "url": "https://bootlin.com/training/", "duration_hours": 30 }
+    ],
+    "circuit_simulation": [
+      { "title": "LTspice Getting Started Guide", "provider": "Analog Devices", "url": "https://www.analog.com/en/resources/design-center/ltspice-simulator.html", "duration_hours": 6 }
+    ],
+    "sensors": [
+      { "title": "Sensors & Instrumentation basics", "provider": "NPTEL", "url": "https://nptel.ac.in/courses/108105153", "duration_hours": 25 }
+    ],
+    "plc_scada": [
+      { "title": "PLC Fundamentals (Coursera)", "provider": "Coursera", "url": "https://www.coursera.org/learn/plc-fundamentals", "duration_hours": 15 }
+    ],
+    "communication_ece": [
+      { "title": "Technical Writing (Coursera)", "provider": "Coursera", "url": "https://www.coursera.org/learn/technical-writing", "duration_hours": 15 }
+    ]
+  },
+  "generator": {
+    "orgs": ["VoltEdge Robotics", "SiliconMint Semiconductors", "GridSense Power", "AeroSignal Systems", "FabChips Design", "SmartFactory Instruments"],
+    "jd_templates": [
+      { "role": "Embedded Systems Intern", "title": "Embedded Firmware Intern", "kind": "internship", "stipend": [12000, 25000], "seats": [1, 4] },
+      { "role": "VLSI Design Intern", "title": "VLSI Physical Design Intern", "kind": "internship", "stipend": [18000, 35000], "seats": [1, 3] },
+      { "role": "IoT Developer Intern", "title": "IoT Solutions Intern", "kind": "internship", "stipend": [12000, 26000], "seats": [1, 3] },
+      { "role": "Signal Processing Intern", "title": "DSP Engineering Intern", "kind": "internship", "stipend": [15000, 30000], "seats": [1, 2] },
+      { "role": "PCB / Hardware Intern", "title": "Hardware Design Intern", "kind": "internship", "stipend": [10000, 22000], "seats": [1, 3] },
+      { "role": "Industrial Automation Intern", "title": "Automation & Controls Intern", "kind": "internship", "stipend": [12000, 24000], "seats": [1, 4] },
+      { "role": "Embedded Systems Intern", "title": "Firmware Engineer (Placement)", "kind": "placement", "salary_min": [400000, 600000], "salary_max": [800000, 1200000], "seats": [1, 4] }
+    ],
+    "jd_intro": [
+      "We design hardware products shipped to industrial clients across three continents.",
+      "Our lab builds and tests boards every sprint; interns work with real measurement gear.",
+      "We help factories automate inspection lines using in-house electronics.",
+      "Our team takes products from schematic to certification, and you will touch every stage."
+    ],
+    "jd_outro": [
+      "Hands-on lab experience matters more than grades; bring your project portfolio.",
+      "You will be mentored by senior hardware engineers with 10+ years of experience.",
+      "Exposure to end-to-end product development guaranteed.",
+      "PPO possible for exceptional interns."
+    ],
+    "resume_bullets": [
+      "Designed and tested {skill} prototypes in the institute electronics lab",
+      "Completed a mini-project on {skill} under faculty guidance",
+      "Hands-on workshop certification in {skill}",
+      "Participated in a national level competition involving {skill}",
+      "Summer traineeship covering {skill} fundamentals",
+      "Led the institute robotics club module on {skill}"
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "streams": [
+    { "key": "cse", "name": "Computer Science & Engineering" },
+    { "key": "ece", "name": "Electronics & Communication Engineering" }
+  ]
+}

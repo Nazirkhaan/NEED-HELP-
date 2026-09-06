@@ -1,0 +1,4 @@
+# Optional but recommended: real local sentence embeddings (no torch needed).
+# If this fails to install on your Python, the app still works: the matching
+# pipeline degrades gracefully to the built-in pure-Python TF-IDF fallback.
+fastembed==0.4.2
