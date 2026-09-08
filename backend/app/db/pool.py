@@ -7,11 +7,11 @@ import contextlib
 
 # pyrefly: ignore [missing-import]
 from psycopg.rows import dict_row
-from psycopg_pool import ConnectionPool
+from psycopg_pool import AsyncConnectionPool
 
 from app.config import settings
 
-_pool: ConnectionPool | None = None
+_pool: AsyncConnectionPool | None = None
 
 
 def _resolve_conninfo(conninfo: str) -> str:
