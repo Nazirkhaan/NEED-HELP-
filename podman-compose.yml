@@ -1,0 +1,36 @@
+﻿# podman-compose.yml -- run with: podman-compose up -d
+# Requires: podman >= 4.x  +  pip install podman-compose
+#
+# WSL2 NOTE: netavark (Podman default) requires nftables kernel support which
+# is unavailable in the microsoft-standard-WSL2 kernel. We use network_mode:
+# host as a workaround -- Postgres binds directly to the WSL2 VM IP
+# (192.168.162.220:5432) which is already set in backend/.env.
+#
+# To start: podman-compose up -d
+# To stop:  podman-compose down
+
+name: sih26044
+
+services:
+  db:
+    image: docker.io/pgvector/pgvector:pg16
+    container_name: sih26044-db
+    network_mode: host
+    labels:
+      io.podman.compose.project: "sih26044"
+      io.podman.compose.service: "db"
+    environment:
+      POSTGRES_USER: sih
+      POSTGRES_PASSWORD: sih
+      POSTGRES_DB: sih26044
+    # No ports: section needed -- host networking exposes 5432 directly
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sih -d sih26044"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  pgdata:

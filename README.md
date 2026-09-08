@@ -51,14 +51,15 @@ SkillBridge implements a closed-loop platform connecting Students, Institutions 
 ### Prerequisites
 - Python 3.10+
 - Node.js 18+ & npm
-- PostgreSQL 15+ with `pgvector` extension enabled (or run via Docker Compose)
+- PostgreSQL 15+ with `pgvector` extension enabled (or run via Podman Compose)
+- [Podman](https://podman.io/getting-started/installation) >= 4.x + `pip install podman-compose`
 
 ### 1. Database Setup
-If using Docker, launch PostgreSQL with `pgvector`:
+Launch PostgreSQL with `pgvector` via Podman:
 ```bash
-docker-compose up -d
+podman-compose up -d
 ```
-Alternatively, set your PostgreSQL connection string in `backend/.env`.
+Alternatively, set your PostgreSQL connection string directly in `backend/.env`.
 
 ### 2. Backend Setup
 ```bash
