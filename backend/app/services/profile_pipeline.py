@@ -6,7 +6,7 @@ persist it to pgvector, then (re)compute matches. Embeddings are fully local;
 if the model is unavailable, extraction still works via the alias layer and
 matching falls back to TF-IDF.
 """
-from app.db.pool import execute, fetch_all, fetch_one, transaction
+from app.db.pool import aexecute, afetch_all, afetch_one, atransaction
 from app.services import embeddings, extraction, matching
 from app.services.matching import STATE_FACTOR
 
@@ -41,10 +41,10 @@ def math_sqrt(x: float) -> float:
     return math.sqrt(x)
 
 
-def _skill_vectors(skill_ids: list[str], state_weights: dict[str, float] | None = None) -> list[tuple[list[float], float]]:
+async def _skill_vectors(skill_ids: list[str], state_weights: dict[str, float] | None = None) -> list[tuple[list[float], float]]:
     if not skill_ids:
         return []
-    rows = fetch_all(
+    rows = await afetch_all(
         "select id, embedding from skills where id = any(%s) and embedding is not null",
         (skill_ids,),
     )
@@ -61,21 +61,21 @@ def _skill_vectors(skill_ids: list[str], state_weights: dict[str, float] | None 
     return out
 
 
-def process_student_profile(student_profile_id: str) -> dict:
+async def process_student_profile(student_profile_id: str) -> dict:
     """Extract skills from resume text, store claims, embed, recompute matches."""
-    profile = fetch_one("select * from student_profiles where id = %s", (student_profile_id,))
+    profile = await afetch_one("select * from student_profiles where id = %s", (student_profile_id,))
     if profile is None:
         raise ValueError("student profile not found")
     stream = profile["stream"]
     resume_text = profile["resume_text"] or ""
 
-    extracted = extraction.extract_skills(resume_text, stream)
+    extracted = await extraction.extract_skills(resume_text, stream)
     provider = embeddings.provider_name()
 
     if extracted:
-        with transaction() as cur:
+        async with atransaction() as cur:
             for f in extracted:
-                cur.execute(
+                await cur.execute(
                     """
                     insert into skill_verification_state
                         (student_profile_id, skill_id, state, extracted_from_resume)
@@ -87,17 +87,17 @@ def process_student_profile(student_profile_id: str) -> dict:
 
     state_weights = {
         str(r["skill_id"]): STATE_FACTOR.get(r["state"], 0.7)
-        for r in fetch_all(
+        for r in await afetch_all(
             "select skill_id, state from skill_verification_state where student_profile_id = %s",
             (student_profile_id,),
         )
     }
     skill_ids = list(state_weights.keys())
     text_vec = embeddings.embed_one(resume_text[:6000]) if provider == "fastembed" else None
-    svecs = _skill_vectors(skill_ids, state_weights) if provider == "fastembed" else []
+    svecs = await _skill_vectors(skill_ids, state_weights) if provider == "fastembed" else []
     vec = _blend(text_vec, svecs) if provider == "fastembed" else None
 
-    execute(
+    await aexecute(
         """
         update student_profiles set extraction_status = %s, embedding = %s::vector,
             embedding_provider = %s, updated_at = now() where id = %s
@@ -106,7 +106,7 @@ def process_student_profile(student_profile_id: str) -> dict:
          embeddings.vec_literal(vec) if vec else None, provider, student_profile_id),
     )
 
-    n_matches = matching.compute_matches_for_student(student_profile_id)
+    n_matches = await matching.compute_matches_for_student(student_profile_id)
     return {
         "student_profile_id": student_profile_id,
         "extracted_count": len(extracted),
@@ -117,16 +117,16 @@ def process_student_profile(student_profile_id: str) -> dict:
     }
 
 
-def process_job_description(jd_id: str) -> dict:
+async def process_job_description(jd_id: str) -> dict:
     """Extract skills from the JD text, store them, embed, compute matches
     against every open student in the stream."""
-    jd = fetch_one("select * from job_descriptions where id = %s", (jd_id,))
+    jd = await afetch_one("select * from job_descriptions where id = %s", (jd_id,))
     if jd is None:
         raise ValueError("job description not found")
     stream = jd["stream"]
 
-    skills, provider = extraction.extract_with_weights(jd["description"], stream)
-    execute(
+    skills, provider = await extraction.extract_with_weights(jd["description"], stream)
+    await aexecute(
         "update job_descriptions set extracted_skills = %s::jsonb, extraction_status = %s "
         "where id = %s",
         (_dumps(skills), "extracted" if skills else "empty", jd_id),
@@ -135,18 +135,18 @@ def process_job_description(jd_id: str) -> dict:
     vec = None
     if provider == "fastembed":
         text_vec = embeddings.embed_one((jd["description"] or "")[:6000])
-        svecs = _skill_vectors([s["skill_id"] for s in skills])
+        svecs = await _skill_vectors([s["skill_id"] for s in skills])
         vec = _blend(text_vec, svecs)
-        execute(
+        await aexecute(
             "update job_descriptions set embedding = %s::vector, embedding_provider = %s "
             "where id = %s",
             (embeddings.vec_literal(vec) if vec else None, provider, jd_id),
         )
 
-    students = fetch_all("select id from student_profiles where stream = %s", (stream,))
+    students = await afetch_all("select id from student_profiles where stream = %s", (stream,))
     n = 0
     for st in students:
-        matching.compute_matches_for_student(str(st["id"]), jd_id=jd_id)
+        await matching.compute_matches_for_student(str(st["id"]), jd_id=jd_id)
         n += 1
     return {
         "job_description_id": jd_id,

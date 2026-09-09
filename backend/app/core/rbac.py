@@ -10,7 +10,7 @@ from fastapi import Depends, HTTPException, Request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from app.core.security import decode_token
-from app.db.pool import fetch_one
+from app.db.pool import afetch_one
 
 _bearer = HTTPBearer(auto_error=False)
 
@@ -56,7 +56,7 @@ async def get_current_user(
     except Exception:
         raise HTTPException(401, "Invalid or expired token")
     user_id = payload.get("sub")
-    row = fetch_one(
+    row = await afetch_one(
         """
         select u.id, u.email, u.full_name, u.institution_id, u.organization_id,
                u.consent_given, r.name as role_name, r.permissions

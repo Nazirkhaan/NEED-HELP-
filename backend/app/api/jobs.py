@@ -2,15 +2,15 @@
 from fastapi import APIRouter, Depends, HTTPException
 
 from app.core.rbac import AuthUser, get_current_user
-from app.db.pool import fetch_all, fetch_one
+from app.db.pool import afetch_all, afetch_one
 
 router = APIRouter(prefix="/api/jobs", tags=["jobs"])
 
 
 @router.get("")
-def list_jobs(stream: str | None = None, user: AuthUser = Depends(get_current_user)):
+async def list_jobs(stream: str | None = None, user: AuthUser = Depends(get_current_user)):
     if stream:
-        rows = fetch_all(
+        rows = await afetch_all(
             """
             select jd.id, jd.title, jd.kind, jd.stream, jd.location, jd.stipend,
                    jd.salary_min, jd.salary_max, jd.seats, jd.status,
@@ -22,7 +22,7 @@ def list_jobs(stream: str | None = None, user: AuthUser = Depends(get_current_us
             (stream,),
         )
     else:
-        rows = fetch_all(
+        rows = await afetch_all(
             """
             select jd.id, jd.title, jd.kind, jd.stream, jd.location, jd.stipend,
                    jd.salary_min, jd.salary_max, jd.seats, jd.status,
@@ -39,8 +39,8 @@ def list_jobs(stream: str | None = None, user: AuthUser = Depends(get_current_us
 
 
 @router.get("/{jd_id}")
-def job_detail(jd_id: str, user: AuthUser = Depends(get_current_user)):
-    row = fetch_one(
+async def job_detail(jd_id: str, user: AuthUser = Depends(get_current_user)):
+    row = await afetch_one(
         """
         select jd.*, o.name as organization_name
         from job_descriptions jd join organizations o on o.id = jd.organization_id

@@ -6,7 +6,7 @@ from pydantic import BaseModel, EmailStr
 
 from app.core.rbac import AuthUser, get_current_user
 from app.core.security import create_access_token, hash_password, verify_password
-from app.db.pool import fetch_one, transaction
+from app.db.pool import afetch_one, atransaction
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 
@@ -54,32 +54,32 @@ where u.email = %s and u.is_active
 
 
 @router.post("/login")
-def login(body: LoginBody):
+async def login(body: LoginBody):
     email = body.email.lower().strip()
-    stored = fetch_one(
+    stored = await afetch_one(
         "select password_hash from users where email = %s and is_active", (email,)
     )
     if stored is None or not verify_password(body.password, stored["password_hash"]):
         raise HTTPException(401, "Invalid email or password")
-    row = fetch_one(_SELECT, (email,))
+    row = await afetch_one(_SELECT, (email,))
     token = create_access_token(str(row["id"]), {"role": row["role_name"]})
     return {"access_token": token, "token_type": "bearer", "user": _user_response(row)}
 
 
 @router.get("/me")
-def me(user: AuthUser = Depends(get_current_user)):
+async def me(user: AuthUser = Depends(get_current_user)):
     return _user_response(user.raw)
 
 
 @router.post("/register")
-def register(body: RegisterBody):
+async def register(body: RegisterBody):
     email = body.email.lower().strip()
-    if fetch_one("select id from users where email = %s", (email,)):
+    if await afetch_one("select id from users where email = %s", (email,)):
         raise HTTPException(409, "An account with this email already exists")
-    role = fetch_one("select id from roles_permissions where name = 'student'")
+    role = await afetch_one("select id from roles_permissions where name = 'student'")
     if role is None:
         raise HTTPException(500, "roles not seeded")
-    row = fetch_one(
+    row = await afetch_one(
         """
         insert into users (email, full_name, password_hash, role_id, institution_id)
         values (%s, %s, %s, %s, %s)
@@ -88,14 +88,14 @@ def register(body: RegisterBody):
         (email, body.full_name, hash_password(body.password), role["id"],
          uuid.UUID(body.institution_id) if body.institution_id else None),
     )
-    with transaction() as cur:
-        cur.execute(
+    async with atransaction() as cur:
+        await cur.execute(
             """
             insert into student_profiles (user_id, stream)
             values (%s, %s)
             """,
             (row["id"], body.stream),
         )
-    full = fetch_one(_SELECT, (email,))
+    full = await afetch_one(_SELECT, (email,))
     token = create_access_token(str(row["id"]), {"role": full["role_name"]})
     return {"access_token": token, "token_type": "bearer", "user": _user_response(full)}

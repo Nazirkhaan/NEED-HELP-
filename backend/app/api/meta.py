@@ -1,7 +1,7 @@
 """Public metadata: streams, target roles, taxonomy, embedding provider."""
 from fastapi import APIRouter, HTTPException, Query
 
-from app.db.pool import fetch_all
+from app.db.pool import afetch_all
 from app.services import embeddings
 from app.services.config_loader import list_streams, stream_config
 
@@ -9,7 +9,7 @@ router = APIRouter(prefix="/api/meta", tags=["meta"])
 
 
 @router.get("/streams")
-def streams():
+async def streams():
     out = []
     for s in list_streams():
         try:
@@ -26,12 +26,12 @@ def streams():
 
 
 @router.get("/skills")
-def skills(stream: str = Query(...)):
+async def skills(stream: str = Query(...)):
     try:
         cfg = stream_config(stream)
     except FileNotFoundError:
         raise HTTPException(404, f"unknown stream '{stream}'")
-    rows = fetch_all(
+    rows = await afetch_all(
         "select id, code, label, category, demand_weight from skills "
         "where stream = %s and active order by category, label",
         (stream,),
@@ -43,7 +43,7 @@ def skills(stream: str = Query(...)):
 
 
 @router.get("/provider")
-def provider_info():
+async def provider_info():
     return {
         "provider": embeddings.provider_name(),
         "dim": 384,

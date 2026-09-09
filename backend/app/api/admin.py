@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
 from app.core.rbac import AuthUser, require_perm
-from app.db.pool import execute, fetch_all, fetch_one, transaction
+from app.db.pool import aexecute, afetch_all, afetch_one, atransaction
 from app.services.config_loader import reload_configs, stream_config
 from app.services.gap import STATE_FACTOR
 from app.services.recalibration import rebuild_curriculum_signals
@@ -14,12 +14,12 @@ router = APIRouter(prefix="/api/admin", tags=["admin"])
 
 
 @router.get("/heatmap")
-def heatmap(stream: str | None = None,
-            user: AuthUser = Depends(require_perm("dashboard.view.all"))):
+async def heatmap(stream: str | None = None,
+                  user: AuthUser = Depends(require_perm("dashboard.view.all"))):
     """Skill-gap heatmap: institutions × target roles, cell = avg readiness %,
     plus per-role missing-skill percentages across the stream."""
     streams = [stream] if stream else [
-        r["stream"] for r in fetch_all("select distinct stream from institutions")
+        r["stream"] for r in await afetch_all("select distinct stream from institutions")
     ]
     result = []
     for st in streams:
@@ -27,16 +27,16 @@ def heatmap(stream: str | None = None,
             cfg = stream_config(st)
         except FileNotFoundError:
             continue
-        insts = fetch_all(
+        insts = await afetch_all(
             "select id, name from institutions where stream = %s order by name", (st,)
         )
-        skill_rows = fetch_all(
+        skill_rows = await afetch_all(
             "select id, code, label, demand_weight from skills where stream = %s", (st,)
         )
         code_to_id = {r["code"]: str(r["id"]) for r in skill_rows}
         weight_by_id = {str(r["id"]): float(r["demand_weight"]) for r in skill_rows}
         label_by_code = {r["code"]: r["label"] for r in skill_rows}
-        students = fetch_all(
+        students = await afetch_all(
             """
             select sp.id, sp.institution_id,
                    coalesce(jsonb_agg(distinct s.id) filter (where s.id is not null), '[]') as skill_ids,
@@ -126,23 +126,23 @@ def heatmap(stream: str | None = None,
 
 
 @router.get("/curriculum-gaps")
-def all_curriculum_gaps(severity: str | None = None,
-                        user: AuthUser = Depends(require_perm("curriculum.view.all"))):
+async def all_curriculum_gaps(severity: str | None = None,
+                              user: AuthUser = Depends(require_perm("curriculum.view.all"))):
     sql = """
         select c.*, s.code, s.label, s.category, i.name as institution_name, i.stream
         from curriculum_gap_signal c
         join skills s on s.id = c.skill_id
         join institutions i on i.id = c.institution_id
     """
-    rows = fetch_all(sql + " order by case c.severity when 'high' then 0 when 'medium' then 1 else 2 end, c.demand_score desc")
+    rows = await afetch_all(sql + " order by case c.severity when 'high' then 0 when 'medium' then 1 else 2 end, c.demand_score desc")
     if severity:
         rows = [r for r in rows if r["severity"] == severity]
     return rows
 
 
 @router.get("/analytics")
-def analytics(user: AuthUser = Depends(require_perm("analytics.view.all"))):
-    totals = fetch_one(
+async def analytics(user: AuthUser = Depends(require_perm("analytics.view.all"))):
+    totals = await afetch_one(
         """
         select
             (select count(*) from student_profiles) as students,
@@ -157,7 +157,7 @@ def analytics(user: AuthUser = Depends(require_perm("analytics.view.all"))):
             (select count(*) from skill_verification_state where state = 'verified') as verified_skills
         """
     )
-    funnel = fetch_one(
+    funnel = await afetch_one(
         """
         select count(*) as applied,
                count(*) filter (where status in ('shortlisted','selected')) as shortlisted,
@@ -167,10 +167,10 @@ def analytics(user: AuthUser = Depends(require_perm("analytics.view.all"))):
         from applications
         """
     )
-    avg_rating = fetch_one(
+    avg_rating = await afetch_one(
         "select round(avg(performance_rating), 2) as avg_rating, count(*) as n from outcomes"
     )
-    top_demand = fetch_all(
+    top_demand = await afetch_all(
         """
         select s.code, s.label, s.demand_weight,
                sum((e->>'weight')::numeric) as total_jd_weight,
@@ -183,7 +183,7 @@ def analytics(user: AuthUser = Depends(require_perm("analytics.view.all"))):
         limit 12
         """
     )
-    recal = fetch_all(
+    recal = await afetch_all(
         """
         select l.*, s.code, s.label, o.result, o.performance_rating
         from skill_recalibration_log l
@@ -193,7 +193,7 @@ def analytics(user: AuthUser = Depends(require_perm("analytics.view.all"))):
         limit 15
         """
     )
-    stream_split = fetch_all(
+    stream_split = await afetch_all(
         """
         select stream,
                count(*) as students,
@@ -207,7 +207,7 @@ def analytics(user: AuthUser = Depends(require_perm("analytics.view.all"))):
         group by stream
         """
     )
-    alerts = fetch_all(
+    alerts = await afetch_all(
         """
         select c.severity, count(*) as n from curriculum_gap_signal c
         group by c.severity
@@ -227,8 +227,8 @@ def analytics(user: AuthUser = Depends(require_perm("analytics.view.all"))):
 # ---------------- RBAC ----------------
 
 @router.get("/roles")
-def list_roles(user: AuthUser = Depends(require_perm("rbac.manage"))):
-    return fetch_all(
+async def list_roles(user: AuthUser = Depends(require_perm("rbac.manage"))):
+    return await afetch_all(
         "select id, name, display_name, permissions, description, updated_at "
         "from roles_permissions order by name"
     )
@@ -239,21 +239,21 @@ class RoleUpdateBody(BaseModel):
 
 
 @router.put("/roles/{role_name}")
-def update_role(role_name: str, body: RoleUpdateBody,
-                user: AuthUser = Depends(require_perm("rbac.manage"))):
-    role = fetch_one("select * from roles_permissions where name = %s", (role_name,))
+async def update_role(role_name: str, body: RoleUpdateBody,
+                      user: AuthUser = Depends(require_perm("rbac.manage"))):
+    role = await afetch_one("select * from roles_permissions where name = %s", (role_name,))
     if role is None:
         raise HTTPException(404, "role not found")
     perms = sorted(set(p.strip() for p in body.permissions if p.strip()))
-    with transaction() as cur:
-        cur.execute(
+    async with atransaction() as cur:
+        await cur.execute(
             """
             insert into rbac_audit_log (changed_by, role_id, old_permissions, new_permissions)
             values (%s, %s, %s::jsonb, %s::jsonb)
             """,
             (user.id, role["id"], _json(role["permissions"]), _json(perms)),
         )
-        cur.execute(
+        await cur.execute(
             "update roles_permissions set permissions = %s::jsonb, updated_at = now() where id = %s",
             (_json(perms), role["id"]),
         )
@@ -262,8 +262,8 @@ def update_role(role_name: str, body: RoleUpdateBody,
 
 
 @router.get("/rbac-audit")
-def rbac_audit(user: AuthUser = Depends(require_perm("rbac.manage"))):
-    return fetch_all(
+async def rbac_audit(user: AuthUser = Depends(require_perm("rbac.manage"))):
+    return await afetch_all(
         """
         select a.*, r.name as role_name, u.email as changed_by_email
         from rbac_audit_log a
@@ -277,8 +277,8 @@ def rbac_audit(user: AuthUser = Depends(require_perm("rbac.manage"))):
 # ---------------- Taxonomy ----------------
 
 @router.get("/skills")
-def taxonomy(stream: str, user: AuthUser = Depends(require_perm("taxonomy.manage"))):
-    rows = fetch_all(
+async def taxonomy(stream: str, user: AuthUser = Depends(require_perm("taxonomy.manage"))):
+    rows = await afetch_all(
         """
         select s.id, s.code, s.label, s.category, s.demand_weight, s.embedding_provider,
                (select count(*) from skill_recalibration_log l where l.skill_id = s.id) as recalibrations,
@@ -298,11 +298,11 @@ class WeightBody(BaseModel):
 
 
 @router.put("/skills/{skill_id}/weight")
-def set_weight(skill_id: str, body: WeightBody,
-               user: AuthUser = Depends(require_perm("taxonomy.manage"))):
+async def set_weight(skill_id: str, body: WeightBody,
+                     user: AuthUser = Depends(require_perm("taxonomy.manage"))):
     if not 0.3 <= body.demand_weight <= 3.0:
         raise HTTPException(400, "demand_weight must be within [0.3, 3.0]")
-    row = execute(
+    row = await aexecute(
         "update skills set demand_weight = %s where id = %s returning id, code, demand_weight",
         (body.demand_weight, skill_id),
     )
@@ -321,7 +321,7 @@ class ReseedBody(BaseModel):
 
 
 @router.post("/reseed")
-def reseed(body: ReseedBody, user: AuthUser = Depends(require_perm("reseed.run"))):
+async def reseed(body: ReseedBody, user: AuthUser = Depends(require_perm("reseed.run"))):
     try:
         stream_config(body.stream)
     except FileNotFoundError:
@@ -329,7 +329,7 @@ def reseed(body: ReseedBody, user: AuthUser = Depends(require_perm("reseed.run")
     from seed.generate import generate_stream
 
     reload_configs()
-    summary = generate_stream(
+    summary = await generate_stream(
         body.stream,
         wipe=True,
         students_per_institution=body.students_per_institution,
@@ -340,8 +340,8 @@ def reseed(body: ReseedBody, user: AuthUser = Depends(require_perm("reseed.run")
 
 
 @router.get("/institutions")
-def institutions(user: AuthUser = Depends(require_perm("dashboard.view.all"))):
-    return fetch_all(
+async def institutions(user: AuthUser = Depends(require_perm("dashboard.view.all"))):
+    return await afetch_all(
         """
         select i.*, count(sp.id) as students
         from institutions i

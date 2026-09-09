@@ -12,7 +12,7 @@ import random
 from datetime import datetime, timedelta, timezone
 
 from app.core.security import hash_password
-from app.db.pool import execute, fetch_all, fetch_one, transaction
+from app.db.pool import aexecute, afetch_all, afetch_one, atransaction
 from app.services import embeddings
 from app.services.config_loader import stream_config
 from app.services.profile_pipeline import process_job_description, process_student_profile
@@ -118,10 +118,10 @@ def _now() -> datetime:
     return datetime.now(timezone.utc)
 
 
-def _upsert_taxonomy(stream: str, cfg: dict) -> int:
-    with transaction() as cur:
+async def _upsert_taxonomy(stream: str, cfg: dict) -> int:
+    async with atransaction() as cur:
         for s in cfg["skills"]:
-            cur.execute(
+            await cur.execute(
                 """
                 insert into skills (stream, code, label, category, aliases, demand_weight)
                 values (%s, %s, %s, %s, %s, %s)
@@ -137,18 +137,18 @@ def _upsert_taxonomy(stream: str, cfg: dict) -> int:
             )
     count = len(cfg["skills"])
     # learning resources (per skill, from config)
-    with transaction() as cur:
-        cur.execute("delete from learning_resources where stream = %s", (stream,))
+    async with atransaction() as cur:
+        await cur.execute("delete from learning_resources where stream = %s", (stream,))
         skill_rows = {
             r["code"]: r["id"]
-            for r in fetch_all("select id, code from skills where stream = %s", (stream,))
+            for r in await afetch_all("select id, code from skills where stream = %s", (stream,))
         }
         for code, resources in cfg.get("learning_resources", {}).items():
             sid = skill_rows.get(code)
             if not sid:
                 continue
             for r in resources:
-                cur.execute(
+                await cur.execute(
                     """
                     insert into learning_resources
                         (stream, skill_id, title, provider, url, duration_hours, is_free)
@@ -160,51 +160,51 @@ def _upsert_taxonomy(stream: str, cfg: dict) -> int:
     return count
 
 
-def _embed_skills(stream: str) -> bool:
+async def _embed_skills(stream: str) -> bool:
     if embeddings.provider_name() != "fastembed":
         return False
-    rows = fetch_all(
+    rows = await afetch_all(
         "select id, label, aliases from skills where stream = %s", (stream,)
     )
     texts = [f"{r['label']}. {' '.join(r['aliases'] or [])}" for r in rows]
     vecs = embeddings.embed_texts(texts)
     if vecs is None:
         return False
-    with transaction() as cur:
+    async with atransaction() as cur:
         for r, v in zip(rows, vecs):
-            cur.execute(
+            await cur.execute(
                 "update skills set embedding = %s::vector, embedding_provider = %s where id = %s",
                 (embeddings.vec_literal(v), "fastembed", r["id"]),
             )
     return True
 
 
-def _get_role_id(name: str) -> str:
-    return str(fetch_one("select id from roles_permissions where name = %s", (name,))["id"])
+async def _get_role_id(name: str) -> str:
+    return str((await afetch_one("select id from roles_permissions where name = %s", (name,)))["id"])
 
 
-def _create_user(rnd_email: str, full_name: str, role: str, password: str,
+async def _create_user(rnd_email: str, full_name: str, role: str, password: str,
                  institution_id: str | None = None, organization_id: str | None = None,
                  consent: bool = False) -> dict:
-    row = execute(
+    row = await aexecute(
         """
         insert into users (email, full_name, password_hash, role_id, institution_id,
                            organization_id, consent_given, consent_at)
         values (%s, %s, %s, %s, %s, %s, %s, case when %s then now() else null end)
         returning id, email
         """,
-        (rnd_email, full_name, hash_password(password), _get_role_id(role),
+        (rnd_email, full_name, hash_password(password), await _get_role_id(role),
          institution_id, organization_id, consent, consent),
     )
     return row
 
 
-def _add_skill_claim(profile_id: str, skill_id: str, state: str, user_ids: dict,
+async def _add_skill_claim(profile_id: str, skill_id: str, state: str, user_ids: dict,
                      seq: int, extracted: bool = True) -> None:
     claimed_at = STATE_TIMESTAMP_BASE + timedelta(hours=seq)
     cosigned_at = claimed_at + timedelta(days=1) if state != "claimed" else None
     verified_at = claimed_at + timedelta(days=3) if state == "verified" else None
-    execute(
+    await aexecute(
         """
         insert into skill_verification_state
             (student_profile_id, skill_id, state, extracted_from_resume, claimed_at,
@@ -217,12 +217,12 @@ def _add_skill_claim(profile_id: str, skill_id: str, state: str, user_ids: dict,
     )
 
 
-def _make_student(rnd: random.Random, idx: int, cfg: dict, stream: str,
+async def _make_student(rnd: random.Random, idx: int, cfg: dict, stream: str,
                   inst_id: str, tpo_user_id: str, industry_user_id: str) -> dict:
     first = rnd.choice(FIRST_NAMES)
     last = rnd.choice(LAST_NAMES)
     email = f"{first.lower()}.{last.lower()}.{idx}@student.example.edu"
-    user = _create_user(email, f"{first} {last}", "student", DEMO_PASSWORD,
+    user = await _create_user(email, f"{first} {last}", "student", DEMO_PASSWORD,
                         institution_id=inst_id, consent=True)
     role = rnd.choice(cfg["target_roles"])
     req_codes = [r["code"] for r in role["required"]]
@@ -251,7 +251,7 @@ def _make_student(rnd: random.Random, idx: int, cfg: dict, stream: str,
         + "\n".join(bullets)
     )
 
-    profile = execute(
+    profile = await aexecute(
         """
         insert into student_profiles (user_id, institution_id, stream, resume_text,
             cgpa, graduation_year, consent_given, consent_at, extraction_status)
@@ -266,12 +266,12 @@ def _make_student(rnd: random.Random, idx: int, cfg: dict, stream: str,
     for i, c in enumerate(chosen):
         r = rnd.random()
         state = "claimed" if r < 0.55 else ("institution_cosigned" if r < 0.85 else "verified")
-        skill = fetch_one("select id from skills where stream = %s and code = %s", (stream, c))
-        _add_skill_claim(profile_id, str(skill["id"]), state, state_user_ids, seq=idx * 10 + i)
+        skill = await afetch_one("select id from skills where stream = %s and code = %s", (stream, c))
+        await _add_skill_claim(profile_id, str(skill["id"]), state, state_user_ids, seq=idx * 10 + i)
     return {"profile_id": profile_id, "user_id": str(user["id"]), "name": f"{first} {last}"}
 
 
-def _make_jd(rnd: random.Random, org_id: str, template: dict, cfg: dict,
+async def _make_jd(rnd: random.Random, org_id: str, template: dict, cfg: dict,
              stream: str, posted_by: str | None) -> str:
     role_cfg = next(r for r in cfg["target_roles"] if r["name"] == template["role"])
     codes = [r["code"] for r in role_cfg["required"]]
@@ -288,7 +288,7 @@ def _make_jd(rnd: random.Random, org_id: str, template: dict, cfg: dict,
     stipend = rnd.randint(*template["stipend"]) if template.get("stipend") else None
     smin = rnd.randint(*template["salary_min"]) if template.get("salary_min") else None
     smax = rnd.randint(*template["salary_max"]) if template.get("salary_max") else None
-    row = execute(
+    row = await aexecute(
         """
         insert into job_descriptions (organization_id, posted_by_user_id, title, kind,
             stream, description, location, stipend, salary_min, salary_max, seats, is_synthetic)
@@ -302,7 +302,7 @@ def _make_jd(rnd: random.Random, org_id: str, template: dict, cfg: dict,
     return str(row["id"])
 
 
-def generate_stream(stream: str, wipe: bool = True, students_per_institution: int = 16,
+async def generate_stream(stream: str, wipe: bool = True, students_per_institution: int = 16,
                     seed: int = 42, note: str | None = None) -> dict:
     """Seed one stream end-to-end. Deterministic for a given seed."""
     cfg = stream_config(stream)
@@ -310,37 +310,37 @@ def generate_stream(stream: str, wipe: bool = True, students_per_institution: in
     provider = embeddings.provider_name()
 
     if wipe:
-        with transaction() as cur:
+        async with atransaction() as cur:
             # Stream-scoped deletes in FK-safe order
-            cur.execute(
+            await cur.execute(
                 "delete from outcomes where application_id in (select id from applications "
                 "where student_profile_id in (select id from student_profiles where stream = %s))",
                 (stream,),
             )
-            cur.execute(
+            await cur.execute(
                 "delete from applications where student_profile_id in "
                 "(select id from student_profiles where stream = %s)", (stream,)
             )
-            cur.execute(
+            await cur.execute(
                 "delete from matches where student_profile_id in "
                 "(select id from student_profiles where stream = %s)", (stream,)
             )
-            cur.execute(
+            await cur.execute(
                 "delete from skill_verification_state where student_profile_id in "
                 "(select id from student_profiles where stream = %s)", (stream,)
             )
             # Delete the stream's student users BEFORE their profiles, so the
             # skill_verification_state FK on users is satisfied.
-            cur.execute(
+            await cur.execute(
                 "delete from users where id in (select user_id from student_profiles "
                 "where stream = %s)", (stream,)
             )
-            cur.execute("delete from student_profiles where stream = %s", (stream,))
-            cur.execute("delete from curriculum_gap_signal where stream = %s", (stream,))
-            cur.execute("delete from learning_resources where stream = %s", (stream,))
-            cur.execute("delete from skills where stream = %s", (stream,))
-            cur.execute("delete from job_descriptions where stream = %s", (stream,))
-            cur.execute("delete from seed_runs where stream = %s", (stream,))
+            await cur.execute("delete from student_profiles where stream = %s", (stream,))
+            await cur.execute("delete from curriculum_gap_signal where stream = %s", (stream,))
+            await cur.execute("delete from learning_resources where stream = %s", (stream,))
+            await cur.execute("delete from skills where stream = %s", (stream,))
+            await cur.execute("delete from job_descriptions where stream = %s", (stream,))
+            await cur.execute("delete from seed_runs where stream = %s", (stream,))
             # users: delete the stream's demo accounts (students, tpo, industry).
             # NOTE: student.demo / student.demo2 are CSE-only demo accounts and must
             # NOT be deleted when reseeding another stream (their verification
@@ -356,22 +356,22 @@ def generate_stream(stream: str, wipe: bool = True, students_per_institution: in
                     "student.demo2@sih.gov.in",
                 ] + demo_emails
             for demo_email in demo_emails:
-                cur.execute("delete from users where email = %s", (demo_email,))
+                await cur.execute("delete from users where email = %s", (demo_email,))
 
-    n_skills = _upsert_taxonomy(stream, cfg)
-    embedded = _embed_skills(stream)
+    n_skills = await _upsert_taxonomy(stream, cfg)
+    embedded = await _embed_skills(stream)
 
     # institutions & organizations (synthetic) — upsert so cross-stream data survives
     inst_ids = {}
     for inst in INSTITUTIONS.get(stream, []):
-        existing = fetch_one(
+        existing = await afetch_one(
             "select id from institutions where name = %s and stream = %s",
             (inst["name"], stream),
         )
         if existing:
             inst_ids[inst["name"]] = str(existing["id"])
         else:
-            row = execute(
+            row = await aexecute(
                 "insert into institutions (name, stream, city, is_synthetic) values (%s,%s,%s,true) returning id",
                 (inst["name"], stream, inst["city"]),
             )
@@ -379,30 +379,30 @@ def generate_stream(stream: str, wipe: bool = True, students_per_institution: in
 
     org_ids = {}
     for org_name in cfg["generator"]["orgs"]:
-        existing = fetch_one("select id from organizations where name = %s", (org_name,))
+        existing = await afetch_one("select id from organizations where name = %s", (org_name,))
         if existing:
             org_ids[org_name] = str(existing["id"])
         else:
-            row = execute(
+            row = await aexecute(
                 "insert into organizations (name, industry, is_synthetic) values (%s, %s, true) returning id",
                 (org_name, cfg["name"]),
             )
             org_ids[org_name] = str(row["id"])
 
     # demo accounts
-    admin = fetch_one("select id, email from users where email = %s", (ADMIN_EMAIL,))
+    admin = await afetch_one("select id, email from users where email = %s", (ADMIN_EMAIL,))
     if admin is None:
-        admin = _create_user(ADMIN_EMAIL, "Ministry Demo Admin", "admin", DEMO_PASSWORD)
+        admin = await _create_user(ADMIN_EMAIL, "Ministry Demo Admin", "admin", DEMO_PASSWORD)
 
     first_inst = list(INSTITUTIONS.get(stream, [None]))[0]
     first_inst_id = inst_ids.get(first_inst["name"]) if first_inst else None
     primary_org = cfg["generator"]["orgs"][0]
 
-    tpo_user = _create_user(
+    tpo_user = await _create_user(
         f"tpo.{stream}.demo@sih.gov.in", f"TPO {cfg['name']}", "tpo", DEMO_PASSWORD,
         institution_id=first_inst_id,
     )
-    industry_user = _create_user(
+    industry_user = await _create_user(
         f"industry.{stream}.demo@sih.gov.in", f"Industry {primary_org}", "industry",
         DEMO_PASSWORD, organization_id=org_ids[primary_org],
     )
@@ -412,9 +412,9 @@ def generate_stream(stream: str, wipe: bool = True, students_per_institution: in
     demo_students = []
     if stream == "cse":
         for spec in (DEMO_SEMANTIC, DEMO_LITERAL):
-            user = _create_user(spec["email"], f"{spec['first']} {spec['last']}", "student",
+            user = await _create_user(spec["email"], f"{spec['first']} {spec['last']}", "student",
                                 DEMO_PASSWORD, institution_id=first_inst_id, consent=True)
-            profile = execute(
+            profile = await aexecute(
                 """
                 insert into student_profiles (user_id, institution_id, stream, resume_text,
                     cgpa, graduation_year, consent_given, consent_at, extraction_status)
@@ -426,9 +426,9 @@ def generate_stream(stream: str, wipe: bool = True, students_per_institution: in
             state_user_ids = {"student": user["id"], "tpo": tpo_user["id"],
                               "industry": industry_user["id"]}
             for i, (code, state) in enumerate(spec["skills"].items()):
-                skill = fetch_one("select id from skills where stream=%s and code=%s", (stream, code))
+                skill = await afetch_one("select id from skills where stream=%s and code=%s", (stream, code))
                 if skill:
-                    _add_skill_claim(str(profile["id"]), str(skill["id"]), state,
+                    await _add_skill_claim(str(profile["id"]), str(skill["id"]), state,
                                      state_user_ids, seq=len(demo_students) * 10 + i)
             demo_students.append({
                 "profile_id": str(profile["id"]),
@@ -436,9 +436,9 @@ def generate_stream(stream: str, wipe: bool = True, students_per_institution: in
                 "kind": "semantic-proof" if spec is DEMO_SEMANTIC else "literal-twin",
             })
     else:
-        user = _create_user(f"student.{stream}.demo@sih.gov.in", "Demo Student", "student",
+        user = await _create_user(f"student.{stream}.demo@sih.gov.in", "Demo Student", "student",
                             DEMO_PASSWORD, institution_id=first_inst_id, consent=True)
-        profile = execute(
+        profile = await aexecute(
             """
             insert into student_profiles (user_id, institution_id, stream, resume_text,
                 cgpa, graduation_year, consent_given, consent_at, extraction_status)
@@ -456,13 +456,13 @@ def generate_stream(stream: str, wipe: bool = True, students_per_institution: in
     n_random = 0
     for inst_name, inst_id in inst_ids.items():
         for i in range(students_per_institution):
-            _make_student(rnd, i, cfg, stream, inst_id, tpo_user["id"], industry_user["id"])
+            await _make_student(rnd, i, cfg, stream, inst_id, tpo_user["id"], industry_user["id"])
             n_random += 1
 
     # process all student profiles (extraction + embeddings)
-    profiles = fetch_all("select id from student_profiles where stream = %s", (stream,))
+    profiles = await afetch_all("select id from student_profiles where stream = %s", (stream,))
     for p in profiles:
-        process_student_profile(str(p["id"]))
+        await process_student_profile(str(p["id"]))
 
     # job descriptions
     jd_ids = []
@@ -470,11 +470,11 @@ def generate_stream(stream: str, wipe: bool = True, students_per_institution: in
         templates = [t for t in cfg["generator"]["jd_templates"] if True]
         n_jds = min(3, len(templates))
         for t in rnd.sample(templates, n_jds):
-            jd_ids.append(_make_jd(rnd, org_ids[org_name], t, cfg, stream,
+            jd_ids.append(await _make_jd(rnd, org_ids[org_name], t, cfg, stream,
                                    industry_user["id"] if org_name == primary_org else None))
     if stream == "cse":
         # JD A — the semantic-proof target at CloudNest, posted by the demo industry user
-        row = execute(
+        row = await aexecute(
             """
             insert into job_descriptions (organization_id, posted_by_user_id, title, kind,
                 stream, description, location, stipend, seats, is_synthetic)
@@ -487,7 +487,7 @@ def generate_stream(stream: str, wipe: bool = True, students_per_institution: in
         jd_a_id = str(row["id"])
         jd_ids.insert(0, jd_a_id)
     for jid in jd_ids:
-        process_job_description(jid)  # extracts skills, embeds, computes matches for all students
+        await process_job_description(jid)  # extracts skills, embeds, computes matches for all students
 
     # applications
     n_apps = 0
@@ -496,7 +496,7 @@ def generate_stream(stream: str, wipe: bool = True, students_per_institution: in
         pid = str(p["id"])
         if rnd.random() < 0.35:
             continue  # some students haven't applied yet
-        top = fetch_one(
+        top = await afetch_one(
             """
             select m.id as match_id, m.job_description_id, m.score from matches m
             join job_descriptions jd on jd.id = m.job_description_id
@@ -514,7 +514,7 @@ def generate_stream(stream: str, wipe: bool = True, students_per_institution: in
             status = "selected"
         elif score >= 55 and r < 0.6:
             status = "shortlisted"
-        app = execute(
+        app = await aexecute(
             """
             insert into applications (student_profile_id, job_description_id, match_id, status)
             values (%s, %s, %s, %s) returning id
@@ -527,17 +527,17 @@ def generate_stream(stream: str, wipe: bool = True, students_per_institution: in
     # demo student applies to JD A via the real loop
     if stream == "cse":
         demo_profile_id = demo_students[0]["profile_id"]
-        jd_a = fetch_one("select id from job_descriptions where id = %s", (jd_a_id,))
-        existing = fetch_one(
+        jd_a = await afetch_one("select id from job_descriptions where id = %s", (jd_a_id,))
+        existing = await afetch_one(
             "select id from applications where student_profile_id = %s and job_description_id = %s",
             (demo_profile_id, jd_a_id),
         )
         if not existing:
-            m = fetch_one(
+            m = await afetch_one(
                 "select id, score from matches where student_profile_id = %s and job_description_id = %s",
                 (demo_profile_id, jd_a_id),
             )
-            app = execute(
+            app = await aexecute(
                 """
                 insert into applications (student_profile_id, job_description_id, match_id, status, cover_note)
                 values (%s, %s, %s, 'shortlisted', %s) returning id
@@ -560,7 +560,7 @@ def generate_stream(stream: str, wipe: bool = True, students_per_institution: in
             result, rating = "hired", rnd.randint(3, 5)
         else:
             result, rating = "dropped", rnd.randint(1, 2)
-        outcome = execute(
+        outcome = await aexecute(
             """
             insert into outcomes (application_id, job_description_id, student_profile_id,
                 result, performance_rating, industry_feedback, is_synthetic)
@@ -579,9 +579,9 @@ def generate_stream(stream: str, wipe: bool = True, students_per_institution: in
              app_id),
         )
         if outcome:
-            apply_outcome_recalibration(str(outcome["id"]))
+            await apply_outcome_recalibration(str(outcome["id"]))
             n_outcomes += 1
-        execute(
+        await aexecute(
             "update applications set status = case when %s = 'hired' then 'selected' else status end where id = %s",
             (result, app_id),
         )
@@ -589,11 +589,11 @@ def generate_stream(stream: str, wipe: bool = True, students_per_institution: in
     # final pass: matches reflect recalibrated weights; signals fresh
     from app.services.matching import compute_matches_for_stream
 
-    compute_matches_for_stream(stream)
+    await compute_matches_for_stream(stream)
     for inst_id in inst_ids.values():
-        rebuild_curriculum_signals(inst_id)
+        await rebuild_curriculum_signals(inst_id)
 
-    execute(
+    await aexecute(
         "insert into seed_runs (stream, note, is_synthetic) values (%s, %s, true)",
         (stream, note or "Deterministic synthetic seed"),
     )

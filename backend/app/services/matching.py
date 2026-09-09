@@ -11,9 +11,7 @@ Every match stores matched_skills + missing_skills + literal keyword overlap,
 so the UI can render the full skill-diff and prove semantic (not keyword)
 matching.
 """
-import math
-
-from app.db.pool import fetch_all, fetch_one, transaction
+from app.db.pool import afetch_all, afetch_one, atransaction
 from app.services import embeddings
 from app.services.tfidf import literal_token_overlap
 
@@ -23,13 +21,13 @@ W_SEMANTIC = 0.55
 W_TAXONOMY = 0.45
 
 
-def _student_payload(student_profile_id: str) -> dict | None:
-    profile = fetch_one(
+async def _student_payload(student_profile_id: str) -> dict | None:
+    profile = await afetch_one(
         "select * from student_profiles where id = %s", (student_profile_id,)
     )
     if profile is None:
         return None
-    skills = fetch_all(
+    skills = await afetch_all(
         """
         select s.id, s.code, s.label, s.category, s.aliases, s.demand_weight,
                v.state
@@ -50,10 +48,10 @@ def _student_skill_text(skills: list[dict]) -> str:
     return ". ".join(parts)
 
 
-def _semantic_scores_sql(stream: str, student_profile_id: str) -> dict[str, float]:
+async def _semantic_scores_sql(stream: str, student_profile_id: str) -> dict[str, float]:
     """pgvector cosine between the student aggregate embedding and every open
     JD aggregate embedding in the stream, in a single query."""
-    rows = fetch_all(
+    rows = await afetch_all(
         """
         select jd.id, 1 - (sp.embedding <=> jd.embedding) as sim
         from student_profiles sp
@@ -88,14 +86,14 @@ def _semantic_scores_tfidf(student: dict, jds: list[dict]) -> dict[str, float]:
     return scores
 
 
-def _taxonomy_components(student: dict, jd: dict) -> tuple[float, list[dict], list[dict], list[dict]]:
+async def _taxonomy_components(student: dict, jd: dict) -> tuple[float, list[dict], list[dict], list[dict]]:
     """Returns (taxonomy_score, matched, missing, extra) for one JD."""
     student_map = {str(s["id"]): s for s in student["skills"]}
     skill_weights = {str(s["id"]): float(s["demand_weight"]) for s in student["skills"]}
     # demand_weight of skills only present in the JD must come from the taxonomy
     jd_skill_ids = [str(e["skill_id"]) for e in (jd["extracted_skills"] or [])]
     if jd_skill_ids:
-        for r in fetch_all(
+        for r in await afetch_all(
             "select id, demand_weight from skills where id = any(%s)",
             (jd_skill_ids,),
         ):
@@ -152,8 +150,8 @@ def _taxonomy_components(student: dict, jd: dict) -> tuple[float, list[dict], li
     return score, matched, missing, extra[:10]
 
 
-def compute_match_for_student_jd(student: dict, jd: dict, semantic_map: dict[str, float]) -> dict:
-    tax_score, matched, missing, extra = _taxonomy_components(student, jd)
+async def compute_match_for_student_jd(student: dict, jd: dict, semantic_map: dict[str, float]) -> dict:
+    tax_score, matched, missing, extra = await _taxonomy_components(student, jd)
     provider = embeddings.provider_name()
     sem_score = semantic_map.get(str(jd["id"]))
     if sem_score is None:
@@ -186,11 +184,11 @@ def compute_match_for_student_jd(student: dict, jd: dict, semantic_map: dict[str
     return payload
 
 
-def upsert_match(payload: dict) -> None:
+async def upsert_match(payload: dict) -> None:
     import json
 
-    with transaction() as cur:
-        cur.execute(
+    async with atransaction() as cur:
+        await cur.execute(
             """
             insert into matches (student_profile_id, job_description_id, score,
                 semantic_score, taxonomy_score, provider, matched_skills,
@@ -219,43 +217,43 @@ def upsert_match(payload: dict) -> None:
         )
 
 
-def compute_matches_for_student(student_profile_id: str, jd_id: str | None = None) -> int:
-    student = _student_payload(student_profile_id)
+async def compute_matches_for_student(student_profile_id: str, jd_id: str | None = None) -> int:
+    student = await _student_payload(student_profile_id)
     if student is None:
         return 0
     stream = student["profile"]["stream"]
     if jd_id:
-        jds = fetch_all(
+        jds = await afetch_all(
             "select * from job_descriptions where id = %s and status = 'open'", (jd_id,)
         )
     else:
-        jds = fetch_all(
+        jds = await afetch_all(
             "select * from job_descriptions where stream = %s and status = 'open' order by created_at",
             (stream,),
         )
     if not jds:
         return 0
-    semantic_map = _semantic_scores_sql(stream, student_profile_id)
+    semantic_map = await _semantic_scores_sql(stream, student_profile_id)
     count = 0
     for jd in jds:
-        payload = compute_match_for_student_jd(student, jd, semantic_map)
-        upsert_match(payload)
+        payload = await compute_match_for_student_jd(student, jd, semantic_map)
+        await upsert_match(payload)
         count += 1
     return count
 
 
-def compute_matches_for_stream(stream: str, student_ids: list[str] | None = None) -> int:
+async def compute_matches_for_stream(stream: str, student_ids: list[str] | None = None) -> int:
     if student_ids is None:
-        rows = fetch_all("select id from student_profiles where stream = %s", (stream,))
+        rows = await afetch_all("select id from student_profiles where stream = %s", (stream,))
         student_ids = [str(r["id"]) for r in rows]
     total = 0
     for sid in student_ids:
-        total += compute_matches_for_student(sid)
+        total += await compute_matches_for_student(sid)
     return total
 
 
-def top_matches_for_student(student_profile_id: str, limit: int = 20) -> list[dict]:
-    return fetch_all(
+async def top_matches_for_student(student_profile_id: str, limit: int = 20) -> list[dict]:
+    return await afetch_all(
         """
         select m.*, jd.title, jd.kind, jd.location, jd.stipend, jd.salary_min,
                jd.salary_max, o.name as organization_name, jd.stream,

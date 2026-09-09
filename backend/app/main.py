@@ -10,20 +10,20 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # ensure 'seed'
 from app.api import admin, auth, industry, jobs, meta, student, tpo  # noqa: E402
 from app.config import settings  # noqa: E402
 from app.db.migrate import run_migrations  # noqa: E402
-from app.db.pool import execute, fetch_one, get_pool  # noqa: E402
+from app.db.pool import afetch_one, aexecute, get_async_pool  # noqa: E402
 from app.services.config_loader import roles_config  # noqa: E402
 
 
-def ensure_roles() -> None:
+async def ensure_roles() -> None:
     """Upsert roles from configs/roles.json — RBAC is config-driven."""
+    import json
+
     for role in roles_config():
-        row = fetch_one(
+        row = await afetch_one(
             "select id from roles_permissions where name = %s", (role["name"],)
         )
-        import json
-
         if row is None:
-            execute(
+            await aexecute(
                 """
                 insert into roles_permissions (name, display_name, permissions, description)
                 values (%s, %s, %s::jsonb, %s)
@@ -33,11 +33,11 @@ def ensure_roles() -> None:
             )
         else:
             # keep DB permissions unless an admin edited them (audit log wins)
-            audited = fetch_one(
+            audited = await afetch_one(
                 "select id from rbac_audit_log where role_id = %s limit 1", (row["id"],)
             )
             if audited is None:
-                execute(
+                await aexecute(
                     "update roles_permissions set permissions = %s::jsonb where id = %s",
                     (json.dumps(role["permissions"]), row["id"]),
                 )
@@ -68,25 +68,28 @@ app.include_router(admin.router)
 
 
 @app.on_event("startup")
-def startup() -> None:
-    get_pool()  # fail fast if DB is unreachable
-    applied = run_migrations()
+async def startup() -> None:
+    # fail fast if the DB is unreachable; the async pool stays open for the
+    # process lifetime (retries + per-checkout health check configured)
+    await get_async_pool()
+    applied = run_migrations()  # sync script path; startup-time only
     if applied:
         print(f"[startup] applied migrations: {applied}")
-    ensure_roles()
+    await ensure_roles()
 
 
 @app.get("/api/health")
-def health():
+async def health():
+    db_ok = bool(await afetch_one("select 1 as ok"))
     return {
-        "status": "ok",
-        "db": True,
+        "status": "ok" if db_ok else "degraded",
+        "db": db_ok,
         "provider": None,  # filled below lazily
     }
 
 
 @app.get("/api/health/detail")
-def health_detail():
+async def health_detail():
     from app.services import embeddings
 
     return {

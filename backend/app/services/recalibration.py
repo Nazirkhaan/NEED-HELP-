@@ -18,11 +18,9 @@ Mechanism (one, fully implemented and demoable):
    institution: per-skill gap counts (students missing a demanded skill) with
    severity, which the Institution and Ministry dashboards render as alerts.
 
-This module is called synchronously inside the outcome-logging API and from
-the seeder, so the walkthrough shows dashboard changes the moment an outcome
-is logged.
+Called from the async outcome-logging API and from the seeder.
 """
-from app.db.pool import execute, fetch_all, fetch_one, transaction
+from app.db.pool import aexecute, afetch_all, afetch_one, atransaction
 
 MIN_W, MAX_W = 0.5, 2.5
 
@@ -50,14 +48,14 @@ def _reason_for(result: str, rating: int | None, delta: int) -> str:
     return f"neutral outcome: {result} with rating {rating}/5 -> no change"
 
 
-def apply_outcome_recalibration(outcome_id: str) -> dict:
-    outcome = fetch_one("select * from outcomes where id = %s", (outcome_id,))
+async def apply_outcome_recalibration(outcome_id: str) -> dict:
+    outcome = await afetch_one("select * from outcomes where id = %s", (outcome_id,))
     if outcome is None:
         raise ValueError("outcome not found")
-    jd = fetch_one(
+    jd = await afetch_one(
         "select * from job_descriptions where id = %s", (outcome["job_description_id"],)
     )
-    profile = fetch_one(
+    profile = await afetch_one(
         "select * from student_profiles where id = %s", (outcome["student_profile_id"],)
     )
     rating = outcome["performance_rating"]
@@ -67,17 +65,17 @@ def apply_outcome_recalibration(outcome_id: str) -> dict:
     changes = []
     for entry in (jd["extracted_skills"] or []):
         sid = str(entry["skill_id"])
-        skill = fetch_one("select * from skills where id = %s", (sid,))
+        skill = await afetch_one("select * from skills where id = %s", (sid,))
         if skill is None:
             continue
         old = float(skill["demand_weight"])
         new = round(min(MAX_W, max(MIN_W, old * (1 + delta / 100.0))), 4)
         if new != old:
-            with transaction() as cur:
-                cur.execute(
+            async with atransaction() as cur:
+                await cur.execute(
                     "update skills set demand_weight = %s where id = %s", (new, sid)
                 )
-                cur.execute(
+                await cur.execute(
                     """
                     insert into skill_recalibration_log
                         (outcome_id, skill_id, old_weight, new_weight, reason)
@@ -93,24 +91,24 @@ def apply_outcome_recalibration(outcome_id: str) -> dict:
 
     signals = []
     if profile["institution_id"]:
-        signals = rebuild_curriculum_signals(str(profile["institution_id"]))
+        signals = await rebuild_curriculum_signals(str(profile["institution_id"]))
 
     return {"outcome_id": outcome_id, "weight_changes": changes,
             "curriculum_signals_regenerated": len(signals)}
 
 
-def rebuild_curriculum_signals(institution_id: str) -> list[dict]:
+async def rebuild_curriculum_signals(institution_id: str) -> list[dict]:
     """Recompute curriculum_gap_signal rows for one institution (its stream).
 
     For every skill demanded by open JDs in the stream: how many of the
     institution's students lack it (gap_count), aggregate JD demand, severity.
     """
-    inst = fetch_one("select * from institutions where id = %s", (institution_id,))
+    inst = await afetch_one("select * from institutions where id = %s", (institution_id,))
     if inst is None:
         return []
     stream = inst["stream"]
 
-    students = fetch_all(
+    students = await afetch_all(
         """
         select sp.id, coalesce(jsonb_agg(distinct s.id) filter (where s.id is not null), '[]') as skill_ids
         from student_profiles sp
@@ -121,7 +119,7 @@ def rebuild_curriculum_signals(institution_id: str) -> list[dict]:
         """,
         (institution_id,),
     )
-    jds = fetch_all(
+    jds = await afetch_all(
         "select extracted_skills from job_descriptions where stream = %s and status = 'open'",
         (stream,),
     )
@@ -136,7 +134,7 @@ def rebuild_curriculum_signals(institution_id: str) -> list[dict]:
             jd_count[sid] = jd_count.get(sid, 0) + 1
 
     skill_ids = list(demand.keys())
-    skill_rows = fetch_all(
+    skill_rows = await afetch_all(
         "select id, demand_weight, label from skills where id = any(%s)",
         (skill_ids,),
     ) if skill_ids else []
@@ -153,8 +151,8 @@ def rebuild_curriculum_signals(institution_id: str) -> list[dict]:
                     missing_counts[sid] += 1
 
     rows = []
-    with transaction() as cur:
-        cur.execute(
+    async with atransaction() as cur:
+        await cur.execute(
             "delete from curriculum_gap_signal where institution_id = %s",
             (institution_id,),
         )
@@ -174,7 +172,7 @@ def rebuild_curriculum_signals(institution_id: str) -> list[dict]:
                 "skill_label": labels.get(sid),
                 "demand_weight": weights.get(sid, 1.0),
             }
-            cur.execute(
+            await cur.execute(
                 """
                 insert into curriculum_gap_signal
                     (institution_id, stream, skill_id, gap_count, student_count,
@@ -185,7 +183,7 @@ def rebuild_curriculum_signals(institution_id: str) -> list[dict]:
                 (institution_id, stream, sid, gap_count, student_count,
                  demand_score, severity, _json(detail)),
             )
-            rows.append(cur.fetchone())
+            rows.append(await cur.fetchone())
     return rows
 
 

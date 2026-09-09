@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
 from app.core.rbac import AuthUser, require_perm
-from app.db.pool import fetch_all, fetch_one
+from app.db.pool import afetch_all, afetch_one
 from app.services import matching
 from app.services.config_loader import stream_config
 from app.services.gap import STATE_FACTOR
@@ -26,9 +26,9 @@ def _own_institution(user: AuthUser) -> str:
 
 
 @router.get("/students")
-def students(user: AuthUser = Depends(require_perm("students.view.institution"))):
+async def students(user: AuthUser = Depends(require_perm("students.view.institution"))):
     inst = _own_institution(user)
-    return fetch_all(
+    return await afetch_all(
         """
         select sp.id, u.full_name, u.email, sp.stream, sp.cgpa, sp.graduation_year,
                sp.extraction_status,
@@ -49,10 +49,10 @@ def students(user: AuthUser = Depends(require_perm("students.view.institution"))
 
 
 @router.get("/students/{student_profile_id}")
-def student_detail(student_profile_id: str,
-                   user: AuthUser = Depends(require_perm("students.view.institution"))):
+async def student_detail(student_profile_id: str,
+                         user: AuthUser = Depends(require_perm("students.view.institution"))):
     inst = _own_institution(user)
-    profile = fetch_one(
+    profile = await afetch_one(
         """
         select sp.*, u.full_name, u.email from student_profiles sp
         join users u on u.id = sp.user_id
@@ -62,7 +62,7 @@ def student_detail(student_profile_id: str,
     )
     if profile is None:
         raise HTTPException(404, "Student not in your institution")
-    skills = fetch_all(
+    skills = await afetch_all(
         """
         select v.id, v.state, s.code, s.label, s.category
         from skill_verification_state v join skills s on s.id = v.skill_id
@@ -74,9 +74,9 @@ def student_detail(student_profile_id: str,
 
 
 @router.get("/verification-queue")
-def verification_queue(user: AuthUser = Depends(require_perm("skills.cosign.institution"))):
+async def verification_queue(user: AuthUser = Depends(require_perm("skills.cosign.institution"))):
     inst = _own_institution(user)
-    return fetch_all(
+    return await afetch_all(
         """
         select v.id, v.state, v.claimed_at, v.extracted_from_resume,
                s.code, s.label, s.category,
@@ -93,9 +93,9 @@ def verification_queue(user: AuthUser = Depends(require_perm("skills.cosign.inst
 
 
 @router.post("/cosign")
-def cosign_skill(body: CosignBody, user: AuthUser = Depends(require_perm("skills.cosign.institution"))):
-    row = cosign(body.student_skill_id, {"id": user.id, "institution_id": user.institution_id}, body.note)
-    matching.compute_matches_for_student(str(row["student_profile_id"]))
+async def cosign_skill(body: CosignBody, user: AuthUser = Depends(require_perm("skills.cosign.institution"))):
+    row = await cosign(body.student_skill_id, {"id": user.id, "institution_id": user.institution_id}, body.note)
+    await matching.compute_matches_for_student(str(row["student_profile_id"]))
     return {
         "student_skill_id": str(row["id"]),
         "state": row["state"],
@@ -104,9 +104,9 @@ def cosign_skill(body: CosignBody, user: AuthUser = Depends(require_perm("skills
 
 
 @router.get("/curriculum-gaps")
-def curriculum_gaps(user: AuthUser = Depends(require_perm("curriculum.view.institution"))):
+async def curriculum_gaps(user: AuthUser = Depends(require_perm("curriculum.view.institution"))):
     inst = _own_institution(user)
-    rows = fetch_all(
+    rows = await afetch_all(
         """
         select c.*, s.code, s.label, s.category
         from curriculum_gap_signal c join skills s on s.id = c.skill_id
@@ -120,16 +120,16 @@ def curriculum_gaps(user: AuthUser = Depends(require_perm("curriculum.view.insti
 
 
 @router.post("/curriculum-gaps/refresh")
-def refresh_curriculum_gaps(user: AuthUser = Depends(require_perm("curriculum.view.institution"))):
+async def refresh_curriculum_gaps(user: AuthUser = Depends(require_perm("curriculum.view.institution"))):
     inst = _own_institution(user)
-    rows = rebuild_curriculum_signals(inst)
+    rows = await rebuild_curriculum_signals(inst)
     return {"regenerated": len(rows)}
 
 
 @router.get("/placements")
-def placements(user: AuthUser = Depends(require_perm("placements.view.institution"))):
+async def placements(user: AuthUser = Depends(require_perm("placements.view.institution"))):
     inst = _own_institution(user)
-    rows = fetch_all(
+    rows = await afetch_all(
         """
         select a.id as application_id, a.status, a.applied_at,
                u.full_name, jd.title, jd.kind, o.name as organization_name,
@@ -146,7 +146,7 @@ def placements(user: AuthUser = Depends(require_perm("placements.view.institutio
         """,
         (inst,),
     )
-    funnel = fetch_one(
+    funnel = await afetch_one(
         """
         select count(*) as applications,
                count(*) filter (where a.status in ('shortlisted','selected')) as shortlisted,
@@ -164,13 +164,13 @@ def placements(user: AuthUser = Depends(require_perm("placements.view.institutio
 
 
 @router.get("/role-gaps")
-def role_gaps(user: AuthUser = Depends(require_perm("gaps.view.institution"))):
+async def role_gaps(user: AuthUser = Depends(require_perm("gaps.view.institution"))):
     """Per-target-role readiness of this institution's students (heatmap-lite)."""
     inst = _own_institution(user)
-    inst_row = fetch_one("select stream from institutions where id = %s", (inst,))
+    inst_row = await afetch_one("select stream from institutions where id = %s", (inst,))
     stream = inst_row["stream"]
     cfg = stream_config(stream)
-    students = fetch_all(
+    students = await afetch_all(
         """
         select sp.id, coalesce(jsonb_agg(distinct s.id) filter (where s.id is not null), '[]') as skill_ids,
                coalesce(jsonb_object_agg(v.skill_id::text, v.state) filter (where v.skill_id is not null), '{}') as state_by_skill
@@ -182,7 +182,7 @@ def role_gaps(user: AuthUser = Depends(require_perm("gaps.view.institution"))):
         """,
         (inst,),
     )
-    skill_rows = fetch_all(
+    skill_rows = await afetch_all(
         "select id, code, demand_weight from skills where stream = %s", (stream,)
     )
     code_to_id = {r["code"]: str(r["id"]) for r in skill_rows}

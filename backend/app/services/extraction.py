@@ -7,7 +7,7 @@ Deterministic two-layer pipeline — NO live LLM calls at request time:
 """
 import re
 
-from app.db.pool import fetch_all
+from app.db.pool import afetch_all
 from app.services import embeddings
 
 _SKILL_LIMIT = 12
@@ -19,11 +19,11 @@ def _alias_hit(text_lower: str, candidate: str) -> bool:
     return re.search(pattern, text_lower) is not None
 
 
-def extract_skills(text: str, stream: str, use_semantic: bool = True) -> list[dict]:
+async def extract_skills(text: str, stream: str, use_semantic: bool = True) -> list[dict]:
     """Return [{skill_id, code, label, category, confidence, source}]."""
     if not text or not text.strip():
         return []
-    skills = fetch_all(
+    skills = await afetch_all(
         "select id, code, label, category, aliases from skills "
         "where stream = %s and active order by label",
         (stream,),
@@ -48,7 +48,7 @@ def extract_skills(text: str, stream: str, use_semantic: bool = True) -> list[di
     if use_semantic and embeddings.provider_name() == "fastembed":
         qvec = embeddings.embed_one(text[:6000])
         if qvec:
-            rows = fetch_all(
+            rows = await afetch_all(
                 """
                 select id, code, label, category,
                        1 - (embedding <=> %s::vector) as sim
@@ -77,16 +77,16 @@ def extract_skills(text: str, stream: str, use_semantic: bool = True) -> list[di
     return sorted(found.values(), key=lambda x: (-x["confidence"], x["label"]))
 
 
-def extract_with_weights(text: str, stream: str) -> tuple[list[dict], str]:
+async def extract_with_weights(text: str, stream: str) -> tuple[list[dict], str]:
     """Extraction returning JD-ready skill entries with demand weights, plus
     the provider name used. Returns ([{skill_id, code, label, weight}], provider)."""
-    found = extract_skills(text, stream)
+    found = await extract_skills(text, stream)
     if not found:
         return [], embeddings.provider_name()
     ids = tuple(f["skill_id"] for f in found)
     weights = {
         str(r["id"]): float(r["demand_weight"])
-        for r in fetch_all(
+        for r in await afetch_all(
             "select id, demand_weight from skills where id = any(%s)", (list(ids),)
         )
     }

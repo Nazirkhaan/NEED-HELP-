@@ -3,7 +3,7 @@
 Role requirements come from the stream config (backend/configs/stream_*.json),
 never hardcoded. Learning resources are taxonomy-linked rows.
 """
-from app.db.pool import fetch_all, fetch_one
+from app.db.pool import afetch_all, afetch_one
 from app.services.config_loader import stream_config
 
 STATE_FACTOR = {"verified": 1.0, "institution_cosigned": 0.9, "claimed": 0.7}
@@ -14,8 +14,8 @@ def list_target_roles(stream: str) -> list[dict]:
     return [{"name": r["name"], "n_required": len(r["required"])} for r in cfg["target_roles"]]
 
 
-def compute_role_gap(student_profile_id: str, role_name: str) -> dict:
-    profile = fetch_one(
+async def compute_role_gap(student_profile_id: str, role_name: str) -> dict:
+    profile = await afetch_one(
         "select * from student_profiles where id = %s", (student_profile_id,)
     )
     if profile is None:
@@ -28,7 +28,7 @@ def compute_role_gap(student_profile_id: str, role_name: str) -> dict:
 
     student_skills = {
         str(r["id"]): r
-        for r in fetch_all(
+        for r in await afetch_all(
             """
             select s.id, s.code, s.label, s.category, v.state
             from skill_verification_state v join skills s on s.id = v.skill_id
@@ -41,8 +41,9 @@ def compute_role_gap(student_profile_id: str, role_name: str) -> dict:
     matched, missing = [], []
     num = den = 0.0
     for req in role["required"]:
-        sid = str(fetch_one("select id from skills where stream=%s and code=%s",
-                            (stream, req["code"]))["id"])
+        row = await afetch_one("select id from skills where stream=%s and code=%s",
+                               (stream, req["code"]))
+        sid = str(row["id"])
         w = float(req["weight"])
         den += w
         if sid in student_skills:
@@ -55,7 +56,7 @@ def compute_role_gap(student_profile_id: str, role_name: str) -> dict:
                 "credit": round(factor, 2),
             })
         else:
-            label_row = fetch_one("select label from skills where id=%s", (sid,))
+            label_row = await afetch_one("select label from skills where id=%s", (sid,))
             missing.append({
                 "skill_id": sid, "code": req["code"],
                 "label": label_row["label"], "weight": w,
@@ -68,7 +69,7 @@ def compute_role_gap(student_profile_id: str, role_name: str) -> dict:
     # Learning path: top missing skills first, with resources
     path = []
     for m in missing[:6]:
-        resources = fetch_all(
+        resources = await afetch_all(
             "select title, provider, url, duration_hours, is_free "
             "from learning_resources where skill_id = %s order by duration_hours",
             (m["skill_id"],),

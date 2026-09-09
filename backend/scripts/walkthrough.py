@@ -22,7 +22,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from app.db.pool import fetch_all, fetch_one, get_pool  # noqa: E402
+from app.db.pool import afetch_all, afetch_one, get_async_pool  # noqa: E402
 from app.db.migrate import run_migrations  # noqa: E402
 from app.main import ensure_roles  # noqa: E402
 from app.core.security import verify_password  # noqa: E402
@@ -54,9 +54,9 @@ class FakeCreds:
         self.credentials = token
 
 
-def login_role(email: str) -> AuthUser:
+async def login_role(email: str) -> AuthUser:
     body = type("B", (), {"email": email, "password": "demo1234"})()
-    res = login(body)
+    res = await login(body)
     token = res["access_token"]
     user = get_current_user.__wrapped__ if False else None  # noqa: F841
     # build AuthUser directly from the token payload path used in requests
@@ -65,7 +65,7 @@ def login_role(email: str) -> AuthUser:
     import uuid as _uuid
 
     payload = decode_token(token)
-    row = fetch_one(
+    row = await afetch_one(
         """
         select u.id, u.email, u.full_name, u.institution_id, u.organization_id,
                u.consent_given, r.name as role_name, r.permissions
@@ -77,17 +77,17 @@ def login_role(email: str) -> AuthUser:
     return AuthUser(row)
 
 
-def main() -> int:
+async def main() -> int:
     t0 = time.time()
-    get_pool()
+    await get_async_pool()
     run_migrations()
-    ensure_roles()
+    await ensure_roles()
 
     section("1. Auth & RBAC (database-driven)")
-    student = login_role("student.demo@sih.gov.in")
-    tpo = login_role("tpo.cse.demo@sih.gov.in")
-    industry = login_role("industry.cse.demo@sih.gov.in")
-    admin = login_role("admin.demo@sih.gov.in")
+    student = await login_role("student.demo@sih.gov.in")
+    tpo = await login_role("tpo.cse.demo@sih.gov.in")
+    industry = await login_role("industry.cse.demo@sih.gov.in")
+    admin = await login_role("admin.demo@sih.gov.in")
     check("student role resolves", student.role == "student")
     check("tpo role resolves", tpo.role == "tpo")
     check("industry role resolves", industry.role == "industry")
@@ -99,17 +99,17 @@ def main() -> int:
     section("2. Student: consent + resume upload + extraction")
     # upload on the literal-twin demo student (demo1 stays pristine for the
     # semantic-proof checks in section 4)
-    student = login_role("student.demo2@sih.gov.in")
-    set_consent({"granted": True}, student)
+    student = await login_role("student.demo2@sih.gov.in")
+    await set_consent({"granted": True}, student)
     resume_text = (
         "Passionate final-year builder. Built a quiz app with React and a small "
         "Python web scraper. Familiar with Git and Linux basics."
     )
-    asyncio.run(upload_profile(
+    await upload_profile(
         resume_text=resume_text, stream="cse", cgpa=8.4, graduation_year=2026,
         bio="walkthrough", file=None, user=student,
-    ))
-    prof = get_profile(user=student)
+    )
+    prof = await get_profile(user=student)
     skills = prof["skills"]
     check("profile stored with resume", bool(prof["profile"]["resume_text"]))
     check("extraction_status extracted", prof["profile"]["extraction_status"] == "extracted")
@@ -120,26 +120,26 @@ def main() -> int:
           all(s["state"] in ("claimed", "institution_cosigned", "verified") for s in skills))
     # manual claim: pick any taxonomy skill not yet on the profile (idempotent)
     have = {s["code"] for s in skills}
-    fresh = fetch_one(
+    fresh = await afetch_one(
         "select id, code from skills where stream = 'cse' and code <> all(%s) limit 1",
         (sorted(have),),
     )
     if fresh:
-        add_skill({"skill_id": str(fresh["id"])}, student)
+        await add_skill({"skill_id": str(fresh["id"])}, student)
         check(f"manual claim works ({fresh['code']})",
-              any(s["code"] == fresh["code"] for s in get_profile(user=student)["skills"]))
+              any(s["code"] == fresh["code"] for s in (await get_profile(user=student))["skills"]))
     else:
         check("manual claim skipped (full coverage)", True)
 
     section("3. Skill gap vs target role + learning path")
-    gap = gap_ep(role="Full-Stack Developer Intern", user=student)
+    gap = await gap_ep(role="Full-Stack Developer Intern", user=student)
     check("readiness computed", 0 <= gap["readiness_pct"] <= 100, f"{gap['readiness_pct']}%")
     check("missing skills listed", len(gap["missing_skills"]) >= 1)
     check("learning path attached to missing skills",
           len(gap["learning_path"]) >= 1 and all(p["resources"] for p in gap["learning_path"]))
 
     section("4. Explainable match (semantic, not keyword)")
-    ms = matches_ep(user=student)
+    ms = await matches_ep(user=student)
     check("matches computed for open JDs", len(ms) >= 3, f"n={len(ms)}")
     m = ms[0]
     check("score decomposed into semantic + taxonomy",
@@ -148,10 +148,10 @@ def main() -> int:
     check("matched/missing lists present", isinstance(m["matched_skills"], list) and isinstance(m["missing_skills"], list))
 
     # THE PROOF: demo student (zero literal overlap) vs JD A
-    demo = login_role("student.demo@sih.gov.in")
-    set_consent({"granted": True}, demo)
-    dms = matches_ep(user=demo)
-    jd_a = fetch_one("select * from job_descriptions where title = %s", ("Cloud Backend Intern",))
+    demo = await login_role("student.demo@sih.gov.in")
+    await set_consent({"granted": True}, demo)
+    dms = await matches_ep(user=demo)
+    jd_a = await afetch_one("select * from job_descriptions where title = %s", ("Cloud Backend Intern",))
     dm = next(x for x in dms if x["job_description_id"] == str(jd_a["id"]))
     check("semantic-proof match exists", dm is not None,
           f"score={dm['score']} literal_overlap={dm['literal_keyword_overlap']}%")
@@ -161,13 +161,13 @@ def main() -> int:
     check("matched skills non-empty for zero-overlap pair", len(dm["matched_skills"]) >= 3,
           str([s["label"] for s in dm["matched_skills"]]))
     lit = literal_token_overlap(
-        fetch_one("select resume_text from student_profiles sp join users u on u.id=sp.user_id where u.email=%s",
-                  ("student.demo@sih.gov.in",))["resume_text"],
+        (await afetch_one("select resume_text from student_profiles sp join users u on u.id=sp.user_id where u.email=%s",
+                          ("student.demo@sih.gov.in",)))["resume_text"],
         jd_a["description"])
     check("literal overlap independently recomputed = 0", lit == 0.0, f"{lit}")
 
     section("5. Verification state machine (claimed -> cosigned -> verified)")
-    queue = fetch_all(
+    queue = await afetch_all(
         """
         select v.id, v.state, sp.user_id, u.email from skill_verification_state v
         join student_profiles sp on sp.id = v.student_profile_id
@@ -178,19 +178,19 @@ def main() -> int:
     )
     check("TPO verification queue has claimed skills", len(queue) >= 1)
     target = queue[0]
-    cos = cosign_skill(type("B", (), {"student_skill_id": str(target["id"]), "note": "confirmed in lab"})(), tpo)
+    cos = await cosign_skill(type("B", (), {"student_skill_id": str(target["id"]), "note": "confirmed in lab"})(), tpo)
     check("claimed -> institution_cosigned", cos["state"] == "institution_cosigned")
-    ver = verify_skill(type("B", (), {"student_skill_id": str(target["id"]), "note": "verified in interview"})(), industry)
+    ver = await verify_skill(type("B", (), {"student_skill_id": str(target["id"]), "note": "verified in interview"})(), industry)
     check("institution_cosigned -> verified (industry)", ver["state"] == "verified")
     try:
-        cosign_skill(type("B", (), {"student_skill_id": str(target["id"]), "note": None})(), tpo)
+        await cosign_skill(type("B", (), {"student_skill_id": str(target["id"]), "note": None})(), tpo)
         check("illegal re-cosign rejected", False)
     except Exception as e:
         check("illegal re-cosign rejected", getattr(e, "status_code", None) == 409,
               f"{type(e).__name__}: {e}")
 
     section("6. Industry: post JD -> applicants -> apply -> outcome")
-    job = post_job(type("B", (), {
+    job = await post_job(type("B", (), {
         "title": "Platform Engineering Intern (walkthrough)",
         "kind": "internship", "stream": "cse",
         "description": ("We need an intern comfortable with Python, SQL databases and "
@@ -202,19 +202,19 @@ def main() -> int:
     check("JD posted with extracted skills", job["extracted_count"] >= 3,
           str([s["code"] for s in job["skills"]]))
 
-    app = apply({"job_description_id": job["job_description_id"], "cover_note": "hi"}, student)
+    app = await apply({"job_description_id": job["job_description_id"], "cover_note": "hi"}, student)
     check("application submitted", bool(app["application_id"]))
-    apps = applicants(job["job_description_id"], industry)
+    apps = await applicants(job["job_description_id"], industry)
     check("applicants visible to industry with skill-diff", len(apps) >= 1 and "matched_skills" in apps[0])
     app_row = next(a for a in apps if a["application_id"] == app["application_id"])
-    set_application_status(app["application_id"], type("B", (), {"status": "selected"})(), industry)
-    out = log_outcome(type("B", (), {
+    await set_application_status(app["application_id"], type("B", (), {"status": "selected"})(), industry)
+    out = await log_outcome(type("B", (), {
         "application_id": app["application_id"], "result": "completed",
         "performance_rating": 5, "industry_feedback": "Outstanding intern.",
     })(), industry)
     check("outcome logged triggers recalibration", len(out["weight_changes"]) >= 1,
           str([(c["code"], c["old_weight"], c["new_weight"]) for c in out["weight_changes"]]))
-    logs = fetch_all(
+    logs = await afetch_all(
         """
         select l.*, s.code from skill_recalibration_log l join skills s on s.id=l.skill_id
         where l.outcome_id = %s
@@ -227,34 +227,34 @@ def main() -> int:
           str([(l["code"], float(l["old_weight"]), float(l["new_weight"])) for l in logs]))
 
     section("7. Feedback loop reaches the institution dashboard")
-    cgs = curriculum_gaps(user=tpo)
+    cgs = await curriculum_gaps(user=tpo)
     check("curriculum gap signals exist for TPO institution", len(cgs) >= 1, f"n={len(cgs)}")
     check("severities assigned", set(c["severity"] for c in cgs) <= {"low", "medium", "high"})
-    rg = role_gaps(user=tpo)
+    rg = await role_gaps(user=tpo)
     check("TPO role-gap readiness computed", len(rg) >= 1 and rg[0]["avg_readiness"] is not None)
-    plc = placements(user=tpo)
+    plc = await placements(user=tpo)
     check("TPO placements funnel computed", plc["funnel"]["applications"] >= 1)
 
     section("8. Admin/Ministry: heatmap, analytics, RBAC, taxonomy")
-    hm = heatmap(user=admin)
+    hm = await heatmap(user=admin)
     check("heatmap covers streams", len(hm) >= 1 and len(hm[0]["grid"]) >= 1)
     check("heatmap grid cells populated",
           any(c is not None for row in hm[0]["grid"] for c in row["cells"]))
-    an = analytics(user=admin)
+    an = await analytics(user=admin)
     check("analytics totals sane",
           an["totals"]["students"] >= 1 and an["totals"]["matches"] >= 1)
     check("recalibration history in analytics", len(an["recent_recalibrations"]) >= 1)
-    roles = list_roles(user=admin)
+    roles = await list_roles(user=admin)
     check("RBAC roles listed from DB", len(roles) >= 4)
     old_perms = next(r for r in roles if r["name"] == "student")["permissions"]
     new_perms = list(old_perms) + ["matches.view.institution"]
-    upd = update_role("student", type("B", (), {"permissions": new_perms})(), admin)
+    upd = await update_role("student", type("B", (), {"permissions": new_perms})(), admin)
     check("RBAC edit takes effect live", "matches.view.institution" in upd["permissions"])
-    student2 = login_role("student.demo2@sih.gov.in")
+    student2 = await login_role("student.demo2@sih.gov.in")
     check("student sees updated permissions on fresh login",
           "matches.view.institution" in student2.permissions)
     update_role("student", type("B", (), {"permissions": old_perms})(), admin)
-    tax = taxonomy(stream="cse", user=admin)
+    tax = await taxonomy(stream="cse", user=admin)
     check("taxonomy weights visible (recalibrated)", len(tax) >= 10
           and any(float(t["demand_weight"]) != 1.0 for t in tax))
 
@@ -266,4 +266,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(asyncio.run(main()))
