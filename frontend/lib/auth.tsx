@@ -75,12 +75,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     );
     setToken(res.access_token);
     setUser(res.user);
+    setLoading(false);
     return res.user;
   }, []);
 
   const logout = useCallback(() => {
     setToken(null);
     setUser(null);
+    setLoading(false);
   }, []);
 
   const can = useCallback(

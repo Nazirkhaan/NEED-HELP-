@@ -102,13 +102,17 @@ export function AppShell({
 export function PageGuard({ role, children }: { role: string; children: React.ReactNode }) {
   const { user, loading } = useAuth();
   const router = useRouter();
+
   useEffect(() => {
     if (!loading && user && user.role !== role) {
       router.replace(ROLE_HOME[user.role] || "/login");
     }
   }, [loading, user, role, router]);
+
   if (loading) return <Splash />;
-  if (!user || user.role !== role) return <Splash />;
+  if (!user) return <Splash />;
+  if (user.role !== role) return null;
+
   return <>{children}</>;
 }
 

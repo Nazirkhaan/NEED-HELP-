@@ -9,6 +9,7 @@ venv/
 node_modules/
 .next/
 out/
+*.tsbuildinfo
 
 # Model caches
 .cache/
@@ -18,3 +19,4 @@ models/
 *.log
 .DS_Store
 *.sqlite3
+backend/inspect_db_users_output.txt

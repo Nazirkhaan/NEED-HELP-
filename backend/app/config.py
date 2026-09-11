@@ -11,7 +11,7 @@ class Settings(BaseSettings):
         env_file=str(BASE_DIR / ".env"), extra="ignore"
     )
 
-    database_url: str = "postgresql://sih:sih@localhost:5433/sih26044"
+    database_url: str = "postgresql://sih:sih@192.168.162.220:5432/sih26044"
     jwt_secret: str = "change-me-in-production"
     jwt_expires_minutes: int = 60 * 12
     cors_origins: str = "http://localhost:3000"
