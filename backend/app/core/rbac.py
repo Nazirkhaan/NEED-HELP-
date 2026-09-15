@@ -59,8 +59,11 @@ async def get_current_user(
     row = await afetch_one(
         """
         select u.id, u.email, u.full_name, u.institution_id, u.organization_id,
-               u.consent_given, r.name as role_name, r.permissions
+               u.consent_given, r.name as role_name, r.display_name, r.permissions,
+               i.name as institution_name, o.name as organization_name
         from users u join roles_permissions r on r.id = u.role_id
+        left join institutions i on i.id = u.institution_id
+        left join organizations o on o.id = u.organization_id
         where u.id = %s and u.is_active
         """,
         (uuid.UUID(user_id),),

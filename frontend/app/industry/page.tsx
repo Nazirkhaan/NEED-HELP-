@@ -55,6 +55,13 @@ type Applicant = {
   full_name: string;
   institution_name: string | null;
   cgpa: number | null;
+  stream: string;
+  degree?: string | null;
+  job_description_id: string;
+  job_title: string;
+  job_kind: string;
+  is_hired?: boolean;
+  outcome_result?: string | null;
   match_id: string | null;
   score: number | null;
   semantic_score: number | null;
@@ -64,8 +71,102 @@ type Applicant = {
   missing_skills: any[];
   extra_skills: any[];
   literal_keyword_overlap: number | null;
-  outcome_id: string | null;
+  outcome_id?: string | null;
 };
+
+type Summary = {
+  total: number;
+  hired: number;
+  waitlisted: number;
+  rejected: number;
+  in_process: number;
+  withdrawn: number;
+  by_status: Record<string, number>;
+};
+
+// Hiring buckets derived from the authoritative applications.status +
+// outcomes.result. In-flight states (applied/shortlisted) stay visible as
+// IN PROCESS -- never silently folded into a decision bucket.
+type Bucket = "hired" | "waitlisted" | "rejected" | "in_process" | "withdrawn";
+
+const BUCKET_META: Record<Bucket, { label: string; cls: string }> = {
+  hired: { label: "HIRED", cls: "bg-emerald-100 text-emerald-800 ring-emerald-300" },
+  waitlisted: { label: "WAITLISTED", cls: "bg-amber-100 text-amber-800 ring-amber-300" },
+  rejected: { label: "REJECTED", cls: "bg-red-100 text-red-700 ring-red-300" },
+  in_process: { label: "IN PROCESS", cls: "bg-blue-50 text-blue-700 ring-blue-200" },
+  withdrawn: { label: "WITHDRAWN", cls: "bg-slate-100 text-slate-600 ring-slate-300" },
+};
+
+function bucketOf(a: Applicant): Bucket {
+  if (a.is_hired || a.status === "selected") return "hired";
+  if (a.status === "waitlisted") return "waitlisted";
+  if (a.status === "rejected") return "rejected";
+  return a.status === "withdrawn" ? "withdrawn" : "in_process";
+}
+
+function StatusChip({ bucket, note }: { bucket: Bucket; note?: string | null }) {
+  const m = BUCKET_META[bucket];
+  return (
+    <span className={`inline-flex items-center gap-1 whitespace-nowrap rounded-full px-2 py-0.5 text-[11px] font-bold ring-1 ring-inset ${m.cls}`}>
+      {m.label}
+      {note ? <span className="font-medium opacity-70">· {note}</span> : null}
+    </span>
+  );
+}
+
+function StatusCard({
+  label, count, hint, tone, icon, active, onClick,
+}: {
+  label: string; count: number; hint: string; tone: "green" | "amber" | "red" | "blue";
+  icon: string; active: boolean; onClick: () => void;
+}) {
+  const toneCls = {
+    green: "border-emerald-200 bg-emerald-50 text-emerald-900",
+    amber: "border-amber-200 bg-amber-50 text-amber-900",
+    red: "border-red-200 bg-red-50 text-red-900",
+    blue: "border-blue-200 bg-blue-50 text-blue-900",
+  }[tone];
+  return (
+    <button
+      onClick={onClick}
+      title={`Filter candidates: ${label}`}
+      className={`rounded-xl border p-4 text-left transition ${toneCls} ${
+        active ? "ring-2 ring-slate-400 ring-offset-1" : "hover:shadow-sm"
+      }`}
+    >
+      <div className="text-xs font-bold uppercase tracking-wide">{icon} {label}</div>
+      <div className="mt-1 text-3xl font-extrabold">{count}</div>
+      <div className="mt-0.5 text-[11px] opacity-70">{hint}</div>
+    </button>
+  );
+}
+
+// Only statuses the backend's /industry/applications/{id}/status accepts.
+function recruitActions(a: Applicant): { label: string; status: string; variant?: string }[] {
+  const b = bucketOf(a);
+  if (b === "hired")
+    return [
+      { label: "Move to Waitlist", status: "waitlisted" },
+      { label: "Reject", status: "rejected", variant: "danger" },
+    ];
+  if (b === "waitlisted")
+    return [
+      { label: "Mark as Hired", status: "selected" },
+      { label: "Reject", status: "rejected", variant: "danger" },
+    ];
+  if (b === "rejected")
+    return [
+      { label: "Move to Waitlist", status: "waitlisted" },
+      { label: "Mark as Hired", status: "selected" },
+    ];
+  if (b === "withdrawn") return [];
+  return [
+    { label: "Shortlist", status: "shortlisted", variant: "outline" },
+    { label: "Move to Waitlist", status: "waitlisted" },
+    { label: "Mark as Hired", status: "selected" },
+    { label: "Reject", status: "rejected", variant: "danger" },
+  ];
+}
 
 const RESULT_TONES: Record<string, "green" | "red" | "slate"> = {
   hired: "green",
@@ -82,7 +183,7 @@ export default function IndustryPage() {
 }
 
 function IndustryView() {
-  const [tab, setTab] = useState("jobs");
+  const [tab, setTab] = useState("hiring");
   const [error, setError] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -92,6 +193,13 @@ function IndustryView() {
   const [openDiff, setOpenDiff] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [studentSkills, setStudentSkills] = useState<any[] | null>(null);
+
+  // hiring-status view
+  const [summary, setSummary] = useState<Summary | null>(null);
+  const [recruits, setRecruits] = useState<Applicant[] | null>(null);
+  const [recruitFilter, setRecruitFilter] = useState("all");
+  const [recruitLoading, setRecruitLoading] = useState(true);
+  const [recruitError, setRecruitError] = useState<string | null>(null);
 
   // post-job form
   const [form, setForm] = useState({
@@ -120,6 +228,27 @@ function IndustryView() {
     loadJobs();
     api("/meta/streams").then(setStreams).catch(() => {});
   }, [loadJobs]);
+
+  const loadRecruitment = useCallback(async () => {
+    setRecruitLoading(true);
+    setRecruitError(null);
+    try {
+      const [s, rows] = await Promise.all([
+        api<Summary>("/industry/recruitment/summary"),
+        api<Applicant[]>("/industry/applicants"),
+      ]);
+      setSummary(s);
+      setRecruits(rows);
+    } catch (e: any) {
+      setRecruitError(e.message);
+    } finally {
+      setRecruitLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadRecruitment();
+  }, [loadRecruitment]);
 
   async function postJob() {
     setError(null);
@@ -174,6 +303,7 @@ function IndustryView() {
         body: JSON.stringify({ status }),
       });
       if (openApplicants) showApplicants(openApplicants);
+      loadRecruitment(); // database updated first; refresh cards + table
     } catch (e: any) {
       setError(e.message);
     }
@@ -241,6 +371,7 @@ function IndustryView() {
 
       <Tabs
         tabs={[
+          { key: "hiring", label: "Hiring status" },
           { key: "jobs", label: "My jobs", count: jobs.length },
           { key: "post", label: "Post a job" },
         ]}
@@ -249,6 +380,149 @@ function IndustryView() {
       />
 
       <div className="mt-4">
+        {tab === "hiring" && (
+          <div className="space-y-4">
+            {recruitLoading && !summary ? (
+              <Card>
+                <CardContent className="flex items-center justify-center gap-3 py-10 text-sm text-slate-500">
+                  <Spinner /> Loading recruitment data...
+                </CardContent>
+              </Card>
+            ) : recruitError ? (
+              <Card>
+                <CardContent className="py-10 text-center">
+                  <p className="text-sm font-semibold text-slate-700">Unable to load recruitment data.</p>
+                  <p className="mt-1 text-xs text-slate-500">{recruitError}</p>
+                  <div className="mt-3 flex justify-center">
+                    <Button variant="outline" size="sm" onClick={loadRecruitment}>Try again</Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : summary && (
+              <>
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                  <StatusCard icon="🎯" label="Hired" count={summary.hired} hint="Successfully hired"
+                    tone="green" active={recruitFilter === "hired"}
+                    onClick={() => setRecruitFilter(recruitFilter === "hired" ? "all" : "hired")} />
+                  <StatusCard icon="⏳" label="Waitlisted" count={summary.waitlisted} hint="Waiting for decision"
+                    tone="amber" active={recruitFilter === "waitlisted"}
+                    onClick={() => setRecruitFilter(recruitFilter === "waitlisted" ? "all" : "waitlisted")} />
+                  <StatusCard icon="✕" label="Rejected" count={summary.rejected} hint="Not selected"
+                    tone="red" active={recruitFilter === "rejected"}
+                    onClick={() => setRecruitFilter(recruitFilter === "rejected" ? "all" : "rejected")} />
+                  <StatusCard icon="⟳" label="In process" count={summary.in_process} hint="Applied / shortlisted — decision pending"
+                    tone="blue" active={recruitFilter === "in_process"}
+                    onClick={() => setRecruitFilter(recruitFilter === "in_process" ? "all" : "in_process")} />
+                </div>
+                {summary.withdrawn > 0 && (
+                  <p className="text-xs text-slate-500">{summary.withdrawn} application(s) withdrawn by students are excluded from the decision buckets.</p>
+                )}
+
+                <div className="flex flex-wrap items-center gap-2">
+                  {([
+                    { key: "all", label: "All", n: summary.total },
+                    { key: "hired", label: "Hired", n: summary.hired },
+                    { key: "waitlisted", label: "Waitlisted", n: summary.waitlisted },
+                    { key: "rejected", label: "Rejected", n: summary.rejected },
+                    { key: "in_process", label: "In process", n: summary.in_process },
+                  ] as const).map((f) => (
+                    <button
+                      key={f.key}
+                      onClick={() => setRecruitFilter(f.key)}
+                      className={`rounded-full px-3 py-1 text-xs font-semibold ring-1 ring-inset transition ${
+                        recruitFilter === f.key
+                          ? "bg-slate-900 text-white ring-slate-900"
+                          : "bg-white text-slate-600 ring-slate-200 hover:bg-slate-50"
+                      }`}
+                    >
+                      {f.label} <span className="opacity-70">{f.n}</span>
+                    </button>
+                  ))}
+                </div>
+
+                <Card>
+                  <CardContent className="pt-4">
+                    {!recruits || recruits.length === 0 ? (
+                      <EmptyState
+                        icon="🧑‍💼"
+                        title="No candidates found."
+                        hint="Applicants from every job your organization has posted will appear here."
+                      />
+                    ) : (() => {
+                      const filtered = recruits.filter(
+                        (a) => recruitFilter === "all" || bucketOf(a) === recruitFilter
+                      );
+                      if (filtered.length === 0) {
+                        const hints: Record<string, string> = {
+                          hired: "No candidates have been hired yet.",
+                          waitlisted: "No waitlisted candidates.",
+                          rejected: "No rejected candidates.",
+                          in_process: "No candidates in process right now.",
+                        };
+                        return <EmptyState icon="🗂️" title={hints[recruitFilter] || "No candidates found."} hint="Switch filters to see other candidates." />;
+                      }
+                      return (
+                        <Table>
+                          <thead>
+                            <tr>
+                              <TH>Candidate</TH>
+                              <TH>Degree</TH>
+                              <TH>Stream</TH>
+                              <TH>Skills</TH>
+                              <TH>Applied Role</TH>
+                              <TH>Applied Date</TH>
+                              <TH>Status</TH>
+                              <TH>Actions</TH>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {filtered.map((a) => {
+                              const b = bucketOf(a);
+                              const matched = a.matched_skills?.length;
+                              const missing = a.missing_skills?.length ?? 0;
+                              return (
+                                <tr key={a.application_id} className="border-t border-slate-100 align-top">
+                                  <TD>
+                                    <div className="font-semibold text-slate-900">{a.full_name}</div>
+                                    <div className="text-xs text-slate-500">{a.institution_name || "—"}{a.cgpa != null ? ` · CGPA ${a.cgpa}` : ""}</div>
+                                  </TD>
+                                  <TD className="text-xs text-slate-600">{a.degree || "—"}</TD>
+                                  <TD className="text-xs text-slate-600">{a.stream?.toUpperCase()}</TD>
+                                  <TD className="text-xs text-slate-600">
+                                    {matched != null ? (
+                                      <span title={`${matched} matched / ${missing} missing`}>{matched} / {matched + missing}</span>
+                                    ) : "—"}
+                                  </TD>
+                                  <TD>
+                                    <div className="text-sm font-medium text-slate-800">{a.job_title}</div>
+                                    <div className="text-xs text-slate-500">{a.job_kind}{a.score != null ? ` · match ${a.score.toFixed(0)}` : ""}</div>
+                                  </TD>
+                                  <TD className="text-xs text-slate-600">{new Date(a.applied_at).toLocaleDateString()}</TD>
+                                  <TD><StatusChip bucket={b} note={b === "hired" && a.outcome_result === "hired" ? "outcome" : null} /></TD>
+                                  <TD>
+                                    <div className="flex flex-wrap gap-1">
+                                      {recruitActions(a).map((act) => (
+                                        <Button key={act.status} size="sm" variant={(act.variant as any) || "subtle"}
+                                          onClick={() => setStatus(a.application_id, act.status)}>
+                                          {act.label}
+                                        </Button>
+                                      ))}
+                                    </div>
+                                  </TD>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </Table>
+                      );
+                    })()}
+                  </CardContent>
+                </Card>
+              </>
+            )}
+          </div>
+        )}
+
         {tab === "jobs" && (
           <div className="space-y-3">
             {jobs.length === 0 ? (

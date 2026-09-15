@@ -1,0 +1,306 @@
+{
+  "key": "bca_blockchain",
+  "name": "BCA — Blockchain",
+  "degree": "BCA",
+  "skills": [
+    {
+      "code": "blockchain",
+      "label": "Blockchain Fundamentals",
+      "category": "Blockchain",
+      "aliases": [
+        "distributed ledger",
+        "distributed ledgers"
+      ],
+      "demand_weight": 1.3
+    },
+    {
+      "code": "cryptography",
+      "label": "Cryptography",
+      "category": "Security",
+      "aliases": [
+        "encryption",
+        "ciphers",
+        "hashing",
+        "pki"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "ethereum",
+      "label": "Ethereum",
+      "category": "Blockchain",
+      "aliases": [
+        "eth",
+        "evm"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "solidity",
+      "label": "Solidity",
+      "category": "Blockchain",
+      "aliases": [
+        "solidity smart contracts"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "smart_contracts",
+      "label": "Smart Contracts",
+      "category": "Blockchain",
+      "aliases": [
+        "dapps",
+        "erc20"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "web3",
+      "label": "Web3 & Wallets",
+      "category": "Blockchain",
+      "aliases": [
+        "web3.js",
+        "ethers.js",
+        "metamask",
+        "wallets"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "consensus",
+      "label": "Consensus Mechanisms",
+      "category": "Blockchain",
+      "aliases": [
+        "proof of work",
+        "proof of stake"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "nodejs",
+      "label": "Node.js",
+      "category": "Web",
+      "aliases": [
+        "node",
+        "node js",
+        "npm"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "javascript",
+      "label": "JavaScript",
+      "category": "Programming",
+      "aliases": [
+        "js",
+        "es6",
+        "ecmascript"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "web_security",
+      "label": "Web Security",
+      "category": "Security",
+      "aliases": [
+        "web app security",
+        "xss",
+        "csrf",
+        "sql injection"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "networks",
+      "label": "Computer Networks",
+      "category": "Fundamentals",
+      "aliases": [
+        "networking",
+        "computer network",
+        "osi model"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "python",
+      "label": "Python",
+      "category": "Programming",
+      "aliases": [
+        "py",
+        "python3"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "blockchain_security",
+      "label": "Blockchain Security",
+      "category": "Blockchain",
+      "aliases": [
+        "smart contract audits"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "react",
+      "label": "React",
+      "category": "Web",
+      "aliases": [
+        "reactjs",
+        "react.js",
+        "jsx",
+        "frontend framework"
+      ],
+      "demand_weight": 0.85
+    }
+  ],
+  "target_roles": [
+    {
+      "name": "Blockchain Intern",
+      "required": [
+        {
+          "code": "blockchain",
+          "weight": 1.3
+        },
+        {
+          "code": "cryptography",
+          "weight": 1.0
+        },
+        {
+          "code": "ethereum",
+          "weight": 0.9
+        }
+      ]
+    },
+    {
+      "name": "Blockchain Developer Intern",
+      "required": [
+        {
+          "code": "solidity",
+          "weight": 1.3
+        },
+        {
+          "code": "smart_contracts",
+          "weight": 1.2
+        },
+        {
+          "code": "ethereum",
+          "weight": 1.1
+        },
+        {
+          "code": "javascript",
+          "weight": 0.9
+        }
+      ]
+    },
+    {
+      "name": "Smart Contract Developer Intern",
+      "required": [
+        {
+          "code": "solidity",
+          "weight": 1.3
+        },
+        {
+          "code": "smart_contracts",
+          "weight": 1.3
+        },
+        {
+          "code": "blockchain_security",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Web3 Developer Intern",
+      "required": [
+        {
+          "code": "web3",
+          "weight": 1.3
+        },
+        {
+          "code": "javascript",
+          "weight": 1.1
+        },
+        {
+          "code": "react",
+          "weight": 0.9
+        },
+        {
+          "code": "ethereum",
+          "weight": 1.0
+        }
+      ]
+    }
+  ],
+  "learning_resources": {
+    "blockchain": [
+      {
+        "title": "Blockchain (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105197",
+        "duration_hours": 30
+      }
+    ],
+    "ethereum": [
+      {
+        "title": "Ethereum Developer Portal",
+        "provider": "ethereum.org",
+        "url": "https://ethereum.org/en/developers/",
+        "duration_hours": 15
+      }
+    ],
+    "solidity": [
+      {
+        "title": "Solidity Documentation",
+        "provider": "soliditylang.org",
+        "url": "https://docs.soliditylang.org/en/stable/",
+        "duration_hours": 15
+      }
+    ],
+    "nodejs": [
+      {
+        "title": "Node.js & Express (MDN)",
+        "provider": "MDN",
+        "url": "https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs",
+        "duration_hours": 12
+      }
+    ],
+    "javascript": [
+      {
+        "title": "The Modern JavaScript Tutorial",
+        "provider": "javascript.info",
+        "url": "https://javascript.info/",
+        "duration_hours": 30
+      }
+    ],
+    "networks": [
+      {
+        "title": "Computer Networks (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105183",
+        "duration_hours": 35
+      }
+    ],
+    "python": [
+      {
+        "title": "Python for Everybody (Coursera)",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/specializations/python",
+        "duration_hours": 40
+      },
+      {
+        "title": "Official Python Tutorial",
+        "provider": "python.org",
+        "url": "https://docs.python.org/3/tutorial/",
+        "duration_hours": 10
+      }
+    ],
+    "react": [
+      {
+        "title": "React Official Learn Course",
+        "provider": "react.dev",
+        "url": "https://react.dev/learn",
+        "duration_hours": 20
+      }
+    ]
+  }
+}

@@ -183,10 +183,12 @@ async def role_gaps(user: AuthUser = Depends(require_perm("gaps.view.institution
         (inst,),
     )
     skill_rows = await afetch_all(
-        "select id, code, demand_weight from skills where stream = %s", (stream,)
+        "select id, code, label, demand_weight from skills where stream = %s", (stream,)
     )
     code_to_id = {r["code"]: str(r["id"]) for r in skill_rows}
     weight_by_id = {str(r["id"]): float(r["demand_weight"]) for r in skill_rows}
+    id_to_code = {sid: code for code, sid in code_to_id.items()}
+    label_by_code = {r["code"]: r["label"] for r in skill_rows}
 
     out = []
     for role in cfg["target_roles"]:
@@ -213,7 +215,9 @@ async def role_gaps(user: AuthUser = Depends(require_perm("gaps.view.institution
             "n_students": len(students),
             "avg_readiness": round(sum(readiness_vals) / len(readiness_vals), 1),
             "missing_skill_pcts": [
-                {"code": sid, "pct_missing": round(100 * missing_counts[sid] / len(students), 1)}
+                {"code": id_to_code[sid],
+                 "label": label_by_code.get(id_to_code[sid], id_to_code[sid]),
+                 "pct_missing": round(100 * missing_counts[sid] / len(students), 1)}
                 for sid, _ in reqs
             ],
         })

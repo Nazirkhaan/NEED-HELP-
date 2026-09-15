@@ -1,0 +1,354 @@
+{
+  "key": "bsc_cloud",
+  "name": "B.Sc Cloud Computing",
+  "degree": "B.Sc",
+  "skills": [
+    {
+      "code": "cloud_fundamentals",
+      "label": "Cloud Computing",
+      "category": "Cloud",
+      "aliases": [
+        "cloud computing fundamentals",
+        "cloud basics",
+        "cloud concepts"
+      ],
+      "demand_weight": 1.3
+    },
+    {
+      "code": "aws",
+      "label": "AWS",
+      "category": "Cloud",
+      "aliases": [
+        "amazon web services",
+        "ec2",
+        "s3",
+        "lambda"
+      ],
+      "demand_weight": 1.2
+    },
+    {
+      "code": "azure",
+      "label": "Microsoft Azure",
+      "category": "Cloud",
+      "aliases": [
+        "azure portal",
+        "az-900"
+      ],
+      "demand_weight": 1.2
+    },
+    {
+      "code": "gcp",
+      "label": "Google Cloud",
+      "category": "Cloud",
+      "aliases": [
+        "gcp",
+        "google cloud platform"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "linux",
+      "label": "Linux",
+      "category": "Tools",
+      "aliases": [
+        "unix",
+        "ubuntu",
+        "command line",
+        "cli"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "virtualization",
+      "label": "Virtualization",
+      "category": "Cloud",
+      "aliases": [
+        "virtual machines",
+        "hypervisor",
+        "vmware"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "networks",
+      "label": "Computer Networks",
+      "category": "Fundamentals",
+      "aliases": [
+        "networking",
+        "computer network",
+        "osi model"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "storage",
+      "label": "Cloud Storage",
+      "category": "Cloud",
+      "aliases": [
+        "object storage",
+        "block storage",
+        "buckets"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "cloud_databases",
+      "label": "Cloud Databases",
+      "category": "Cloud",
+      "aliases": [
+        "managed databases",
+        "dbaas",
+        "rds"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "iam",
+      "label": "IAM",
+      "category": "Cloud",
+      "aliases": [
+        "identity and access management",
+        "access roles",
+        "policies"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "cloud_security",
+      "label": "Cloud Security",
+      "category": "Security",
+      "aliases": [
+        "cloud compliance",
+        "cloud hardening"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "docker",
+      "label": "Docker",
+      "category": "DevOps",
+      "aliases": [
+        "containers",
+        "containerization",
+        "dockerfiles"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "kubernetes",
+      "label": "Kubernetes Fundamentals",
+      "category": "DevOps",
+      "aliases": [
+        "k8s",
+        "pods",
+        "container orchestration"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "git",
+      "label": "Git & Version Control",
+      "category": "DevOps",
+      "aliases": [
+        "git scm",
+        "github",
+        "version control",
+        "pull requests",
+        "merge conflicts"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "cloud_deployment",
+      "label": "Cloud Deployment",
+      "category": "Cloud",
+      "aliases": [
+        "cloud hosting",
+        "paas",
+        "deploying to cloud"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "monitoring",
+      "label": "Monitoring & Logging",
+      "category": "DevOps",
+      "aliases": [
+        "observability",
+        "prometheus",
+        "grafana",
+        "logs"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "troubleshooting",
+      "label": "Troubleshooting",
+      "category": "Tools",
+      "aliases": [
+        "problem diagnosis",
+        "technical troubleshooting"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "ci_cd",
+      "label": "CI/CD",
+      "category": "DevOps",
+      "aliases": [
+        "continuous integration",
+        "continuous deployment",
+        "pipelines"
+      ],
+      "demand_weight": 0.85
+    }
+  ],
+  "target_roles": [
+    {
+      "name": "Cloud Intern",
+      "required": [
+        {
+          "code": "cloud_fundamentals",
+          "weight": 1.3
+        },
+        {
+          "code": "virtualization",
+          "weight": 1.0
+        },
+        {
+          "code": "linux",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Cloud Support Engineer",
+      "required": [
+        {
+          "code": "troubleshooting",
+          "weight": 1.2
+        },
+        {
+          "code": "cloud_fundamentals",
+          "weight": 1.2
+        },
+        {
+          "code": "linux",
+          "weight": 1.1
+        }
+      ]
+    },
+    {
+      "name": "Cloud Engineer Intern",
+      "required": [
+        {
+          "code": "aws",
+          "weight": 1.2
+        },
+        {
+          "code": "docker",
+          "weight": 1.1
+        },
+        {
+          "code": "kubernetes",
+          "weight": 1.0
+        },
+        {
+          "code": "ci_cd",
+          "weight": 0.9
+        }
+      ]
+    },
+    {
+      "name": "Cloud Operations Intern",
+      "required": [
+        {
+          "code": "monitoring",
+          "weight": 1.2
+        },
+        {
+          "code": "linux",
+          "weight": 1.1
+        },
+        {
+          "code": "storage",
+          "weight": 0.9
+        }
+      ]
+    }
+  ],
+  "learning_resources": {
+    "cloud_fundamentals": [
+      {
+        "title": "Cloud Computing (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105167",
+        "duration_hours": 30
+      }
+    ],
+    "aws": [
+      {
+        "title": "AWS Cloud Practitioner Essentials",
+        "provider": "AWS Skill Builder",
+        "url": "https://skillbuilder.aws/",
+        "duration_hours": 20
+      }
+    ],
+    "azure": [
+      {
+        "title": "Azure Fundamentals (AZ-900)",
+        "provider": "Microsoft Learn",
+        "url": "https://learn.microsoft.com/en-us/training/paths/azure-fundamentals/",
+        "duration_hours": 16
+      }
+    ],
+    "gcp": [
+      {
+        "title": "Cloud Digital Leader learning path",
+        "provider": "Google Cloud Skills Boost",
+        "url": "https://www.cloudskillsboost.google/paths/9",
+        "duration_hours": 12
+      }
+    ],
+    "linux": [
+      {
+        "title": "The Missing Semester (MIT)",
+        "provider": "MIT",
+        "url": "https://missing.csail.mit.edu/",
+        "duration_hours": 10
+      }
+    ],
+    "networks": [
+      {
+        "title": "Computer Networks (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105183",
+        "duration_hours": 35
+      }
+    ],
+    "docker": [
+      {
+        "title": "Docker Get Started",
+        "provider": "Docker",
+        "url": "https://docs.docker.com/get-started/",
+        "duration_hours": 8
+      }
+    ],
+    "kubernetes": [
+      {
+        "title": "Kubernetes Basics",
+        "provider": "kubernetes.io",
+        "url": "https://kubernetes.io/docs/tutorials/kubernetes-basics/",
+        "duration_hours": 10
+      }
+    ],
+    "git": [
+      {
+        "title": "Pro Git book",
+        "provider": "git-scm",
+        "url": "https://git-scm.com/book/en/v2",
+        "duration_hours": 8
+      }
+    ]
+  }
+}

@@ -1,0 +1,399 @@
+{
+  "key": "bsc_ct",
+  "name": "B.Sc Computer Technology",
+  "degree": "B.Sc",
+  "skills": [
+    {
+      "code": "programming_fundamentals",
+      "label": "Programming Fundamentals",
+      "category": "Fundamentals",
+      "aliases": [
+        "programming basics",
+        "coding fundamentals",
+        "programming"
+      ],
+      "demand_weight": 1.2
+    },
+    {
+      "code": "computer_architecture",
+      "label": "Computer Architecture",
+      "category": "Fundamentals",
+      "aliases": [
+        "microprocessors",
+        "memory hierarchy",
+        "instruction set"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "os",
+      "label": "Operating Systems",
+      "category": "Fundamentals",
+      "aliases": [
+        "os concepts",
+        "processes and threads",
+        "memory management"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "networks",
+      "label": "Computer Networks",
+      "category": "Fundamentals",
+      "aliases": [
+        "networking",
+        "computer network",
+        "osi model"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "dbms",
+      "label": "DBMS",
+      "category": "Data",
+      "aliases": [
+        "database management",
+        "database management system",
+        "rdbms"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "sql",
+      "label": "SQL",
+      "category": "Data",
+      "aliases": [
+        "structured query language",
+        "queries",
+        "joins"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "dsa",
+      "label": "Data Structures & Algorithms",
+      "category": "Fundamentals",
+      "aliases": [
+        "dsa",
+        "data structures",
+        "algorithms",
+        "problem solving",
+        "complexity analysis",
+        "competitive programming"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "html",
+      "label": "HTML",
+      "category": "Web",
+      "aliases": [
+        "html5",
+        "web markup"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "javascript",
+      "label": "JavaScript",
+      "category": "Programming",
+      "aliases": [
+        "js",
+        "es6",
+        "ecmascript"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "software_engineering",
+      "label": "Software Engineering",
+      "category": "Software Engineering",
+      "aliases": [
+        "swe principles"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "linux",
+      "label": "Linux",
+      "category": "Tools",
+      "aliases": [
+        "unix",
+        "ubuntu",
+        "command line",
+        "cli"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "git",
+      "label": "Git & Version Control",
+      "category": "DevOps",
+      "aliases": [
+        "git scm",
+        "github",
+        "version control",
+        "pull requests",
+        "merge conflicts"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "cybersecurity",
+      "label": "Cybersecurity Fundamentals",
+      "category": "Security",
+      "aliases": [
+        "cybersecurity basics",
+        "infosec",
+        "information security"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "it_support",
+      "label": "IT Support",
+      "category": "Tools",
+      "aliases": [
+        "helpdesk",
+        "desktop support"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "troubleshooting",
+      "label": "Troubleshooting",
+      "category": "Tools",
+      "aliases": [
+        "problem diagnosis",
+        "technical troubleshooting"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "tcp_ip",
+      "label": "TCP/IP",
+      "category": "Fundamentals",
+      "aliases": [
+        "tcp ip stack",
+        "ip addressing",
+        "dns",
+        "dhcp"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "css",
+      "label": "CSS",
+      "category": "Web",
+      "aliases": [
+        "css3",
+        "stylesheets",
+        "flexbox",
+        "grid"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "sysadmin",
+      "label": "System Administration",
+      "category": "Tools",
+      "aliases": [
+        "server administration",
+        "patching",
+        "user management"
+      ],
+      "demand_weight": 0.85
+    }
+  ],
+  "target_roles": [
+    {
+      "name": "Software Developer",
+      "required": [
+        {
+          "code": "dsa",
+          "weight": 1.2
+        },
+        {
+          "code": "sql",
+          "weight": 1.0
+        },
+        {
+          "code": "programming_fundamentals",
+          "weight": 1.2
+        }
+      ]
+    },
+    {
+      "name": "IT Support Engineer",
+      "required": [
+        {
+          "code": "it_support",
+          "weight": 1.3
+        },
+        {
+          "code": "troubleshooting",
+          "weight": 1.2
+        },
+        {
+          "code": "os",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Network Support Engineer",
+      "required": [
+        {
+          "code": "networks",
+          "weight": 1.3
+        },
+        {
+          "code": "tcp_ip",
+          "weight": 1.1
+        },
+        {
+          "code": "linux",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Web Developer",
+      "required": [
+        {
+          "code": "html",
+          "weight": 1.2
+        },
+        {
+          "code": "javascript",
+          "weight": 1.1
+        },
+        {
+          "code": "css",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "System Administrator Intern",
+      "required": [
+        {
+          "code": "sysadmin",
+          "weight": 1.3
+        },
+        {
+          "code": "linux",
+          "weight": 1.2
+        },
+        {
+          "code": "os",
+          "weight": 1.0
+        }
+      ]
+    }
+  ],
+  "learning_resources": {
+    "computer_architecture": [
+      {
+        "title": "Computer Architecture (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106103148",
+        "duration_hours": 35
+      }
+    ],
+    "os": [
+      {
+        "title": "Operating Systems (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106106144",
+        "duration_hours": 35
+      }
+    ],
+    "networks": [
+      {
+        "title": "Computer Networks (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105183",
+        "duration_hours": 35
+      }
+    ],
+    "dbms": [
+      {
+        "title": "Database Management System (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105175",
+        "duration_hours": 30
+      }
+    ],
+    "sql": [
+      {
+        "title": "SQL Tutorial (SQLBolt)",
+        "provider": "SQLBolt",
+        "url": "https://sqlbolt.com/",
+        "duration_hours": 6
+      },
+      {
+        "title": "DBMS (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105175",
+        "duration_hours": 30
+      }
+    ],
+    "dsa": [
+      {
+        "title": "Programming, Data Structures and Algorithms (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106106145",
+        "duration_hours": 40
+      }
+    ],
+    "html": [
+      {
+        "title": "Responsive Web Design Certification",
+        "provider": "freeCodeCamp",
+        "url": "https://www.freecodecamp.org/learn/2022/responsive-web-design/",
+        "duration_hours": 30
+      }
+    ],
+    "javascript": [
+      {
+        "title": "The Modern JavaScript Tutorial",
+        "provider": "javascript.info",
+        "url": "https://javascript.info/",
+        "duration_hours": 30
+      }
+    ],
+    "linux": [
+      {
+        "title": "The Missing Semester (MIT)",
+        "provider": "MIT",
+        "url": "https://missing.csail.mit.edu/",
+        "duration_hours": 10
+      }
+    ],
+    "git": [
+      {
+        "title": "Pro Git book",
+        "provider": "git-scm",
+        "url": "https://git-scm.com/book/en/v2",
+        "duration_hours": 8
+      }
+    ],
+    "cybersecurity": [
+      {
+        "title": "Foundations of Cybersecurity (Google)",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/learn/foundations-of-cybersecurity",
+        "duration_hours": 15
+      }
+    ],
+    "css": [
+      {
+        "title": "Learn CSS (web.dev)",
+        "provider": "Google",
+        "url": "https://web.dev/learn/css/",
+        "duration_hours": 12
+      }
+    ]
+  }
+}

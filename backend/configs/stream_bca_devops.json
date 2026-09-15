@@ -1,0 +1,383 @@
+{
+  "key": "bca_devops",
+  "name": "BCA — DevOps",
+  "degree": "BCA",
+  "skills": [
+    {
+      "code": "linux",
+      "label": "Linux",
+      "category": "Tools",
+      "aliases": [
+        "unix",
+        "ubuntu",
+        "command line",
+        "cli"
+      ],
+      "demand_weight": 1.2
+    },
+    {
+      "code": "git",
+      "label": "Git & Version Control",
+      "category": "DevOps",
+      "aliases": [
+        "git scm",
+        "github",
+        "version control",
+        "pull requests",
+        "merge conflicts"
+      ],
+      "demand_weight": 1.2
+    },
+    {
+      "code": "docker",
+      "label": "Docker",
+      "category": "DevOps",
+      "aliases": [
+        "containers",
+        "containerization",
+        "dockerfiles"
+      ],
+      "demand_weight": 1.3
+    },
+    {
+      "code": "ci_cd",
+      "label": "CI/CD",
+      "category": "DevOps",
+      "aliases": [
+        "continuous integration",
+        "continuous deployment",
+        "pipelines"
+      ],
+      "demand_weight": 1.2
+    },
+    {
+      "code": "jenkins",
+      "label": "Jenkins",
+      "category": "DevOps",
+      "aliases": [
+        "jenkins pipeline"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "github_actions",
+      "label": "GitHub Actions",
+      "category": "DevOps",
+      "aliases": [
+        "gh actions",
+        "workflow files"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "kubernetes",
+      "label": "Kubernetes Fundamentals",
+      "category": "DevOps",
+      "aliases": [
+        "k8s",
+        "pods",
+        "container orchestration"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "shell_scripting",
+      "label": "Shell Scripting",
+      "category": "Tools",
+      "aliases": [
+        "bash scripting",
+        "bash"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "python",
+      "label": "Python",
+      "category": "Programming",
+      "aliases": [
+        "py",
+        "python3"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "cloud_fundamentals",
+      "label": "Cloud Computing",
+      "category": "Cloud",
+      "aliases": [
+        "cloud computing fundamentals",
+        "cloud basics",
+        "cloud concepts"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "aws",
+      "label": "AWS",
+      "category": "Cloud",
+      "aliases": [
+        "amazon web services",
+        "ec2",
+        "s3",
+        "lambda"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "azure",
+      "label": "Microsoft Azure",
+      "category": "Cloud",
+      "aliases": [
+        "azure portal",
+        "az-900"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "gcp",
+      "label": "Google Cloud",
+      "category": "Cloud",
+      "aliases": [
+        "gcp",
+        "google cloud platform"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "infra_fundamentals",
+      "label": "Infrastructure Fundamentals",
+      "category": "Cloud",
+      "aliases": [
+        "servers",
+        "datacenters",
+        "infrastructure basics"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "monitoring",
+      "label": "Monitoring & Logging",
+      "category": "DevOps",
+      "aliases": [
+        "observability",
+        "prometheus",
+        "grafana",
+        "logs"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "communication",
+      "label": "Professional Communication",
+      "category": "Soft Skills",
+      "aliases": [
+        "presentation",
+        "business communication"
+      ],
+      "demand_weight": 0.85
+    }
+  ],
+  "target_roles": [
+    {
+      "name": "DevOps Intern",
+      "required": [
+        {
+          "code": "docker",
+          "weight": 1.3
+        },
+        {
+          "code": "ci_cd",
+          "weight": 1.2
+        },
+        {
+          "code": "linux",
+          "weight": 1.2
+        },
+        {
+          "code": "git",
+          "weight": 1.1
+        }
+      ]
+    },
+    {
+      "name": "DevOps Engineer Intern",
+      "required": [
+        {
+          "code": "ci_cd",
+          "weight": 1.3
+        },
+        {
+          "code": "jenkins",
+          "weight": 1.0
+        },
+        {
+          "code": "kubernetes",
+          "weight": 1.0
+        },
+        {
+          "code": "docker",
+          "weight": 1.2
+        }
+      ]
+    },
+    {
+      "name": "Cloud/DevOps Intern",
+      "required": [
+        {
+          "code": "cloud_fundamentals",
+          "weight": 1.2
+        },
+        {
+          "code": "docker",
+          "weight": 1.2
+        },
+        {
+          "code": "ci_cd",
+          "weight": 1.1
+        },
+        {
+          "code": "aws",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Junior DevOps Engineer",
+      "required": [
+        {
+          "code": "kubernetes",
+          "weight": 1.2
+        },
+        {
+          "code": "docker",
+          "weight": 1.2
+        },
+        {
+          "code": "monitoring",
+          "weight": 1.0
+        },
+        {
+          "code": "shell_scripting",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Site Reliability Intern",
+      "required": [
+        {
+          "code": "monitoring",
+          "weight": 1.3
+        },
+        {
+          "code": "linux",
+          "weight": 1.1
+        },
+        {
+          "code": "python",
+          "weight": 1.0
+        },
+        {
+          "code": "docker",
+          "weight": 1.0
+        }
+      ]
+    }
+  ],
+  "learning_resources": {
+    "linux": [
+      {
+        "title": "The Missing Semester (MIT)",
+        "provider": "MIT",
+        "url": "https://missing.csail.mit.edu/",
+        "duration_hours": 10
+      }
+    ],
+    "git": [
+      {
+        "title": "Pro Git book",
+        "provider": "git-scm",
+        "url": "https://git-scm.com/book/en/v2",
+        "duration_hours": 8
+      }
+    ],
+    "docker": [
+      {
+        "title": "Docker Get Started",
+        "provider": "Docker",
+        "url": "https://docs.docker.com/get-started/",
+        "duration_hours": 8
+      }
+    ],
+    "jenkins": [
+      {
+        "title": "Jenkins Pipeline Tutorial",
+        "provider": "Jenkins",
+        "url": "https://www.jenkins.io/doc/pipeline/tour/",
+        "duration_hours": 6
+      }
+    ],
+    "kubernetes": [
+      {
+        "title": "Kubernetes Basics",
+        "provider": "kubernetes.io",
+        "url": "https://kubernetes.io/docs/tutorials/kubernetes-basics/",
+        "duration_hours": 10
+      }
+    ],
+    "python": [
+      {
+        "title": "Python for Everybody (Coursera)",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/specializations/python",
+        "duration_hours": 40
+      },
+      {
+        "title": "Official Python Tutorial",
+        "provider": "python.org",
+        "url": "https://docs.python.org/3/tutorial/",
+        "duration_hours": 10
+      }
+    ],
+    "cloud_fundamentals": [
+      {
+        "title": "Cloud Computing (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105167",
+        "duration_hours": 30
+      }
+    ],
+    "aws": [
+      {
+        "title": "AWS Cloud Practitioner Essentials",
+        "provider": "AWS Skill Builder",
+        "url": "https://skillbuilder.aws/",
+        "duration_hours": 20
+      }
+    ],
+    "azure": [
+      {
+        "title": "Azure Fundamentals (AZ-900)",
+        "provider": "Microsoft Learn",
+        "url": "https://learn.microsoft.com/en-us/training/paths/azure-fundamentals/",
+        "duration_hours": 16
+      }
+    ],
+    "gcp": [
+      {
+        "title": "Cloud Digital Leader learning path",
+        "provider": "Google Cloud Skills Boost",
+        "url": "https://www.cloudskillsboost.google/paths/9",
+        "duration_hours": 12
+      }
+    ],
+    "communication": [
+      {
+        "title": "Business English Communication (Coursera)",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/specializations/business-english-communication",
+        "duration_hours": 20
+      }
+    ]
+  }
+}

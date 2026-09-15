@@ -1,7 +1,7 @@
 import psycopg
 
 conn = psycopg.connect(
-    "dbname=sih26044 user=sih password=sih host=192.168.162.220 port=5432",
+    "dbname=sih26044 user=sih password=sih host=localhost port=5433",
     autocommit=True,
 )
 cur = conn.cursor()

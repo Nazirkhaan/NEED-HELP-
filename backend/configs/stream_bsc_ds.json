@@ -1,0 +1,559 @@
+{
+  "key": "bsc_ds",
+  "name": "B.Sc Data Science",
+  "degree": "B.Sc",
+  "skills": [
+    {
+      "code": "python",
+      "label": "Python",
+      "category": "Programming",
+      "aliases": [
+        "py",
+        "python3"
+      ],
+      "demand_weight": 1.3
+    },
+    {
+      "code": "sql",
+      "label": "SQL",
+      "category": "Data",
+      "aliases": [
+        "structured query language",
+        "queries",
+        "joins"
+      ],
+      "demand_weight": 1.3
+    },
+    {
+      "code": "statistics",
+      "label": "Statistics",
+      "category": "Data",
+      "aliases": [
+        "statistical methods",
+        "descriptive statistics",
+        "inferential statistics"
+      ],
+      "demand_weight": 1.2
+    },
+    {
+      "code": "probability",
+      "label": "Probability",
+      "category": "Data",
+      "aliases": [
+        "probability theory",
+        "distributions"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "numpy",
+      "label": "NumPy",
+      "category": "Data",
+      "aliases": [
+        "numerical python",
+        "ndarray"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "pandas",
+      "label": "Pandas",
+      "category": "Data",
+      "aliases": [
+        "dataframes",
+        "data wrangling"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "data_cleaning",
+      "label": "Data Cleaning",
+      "category": "Data",
+      "aliases": [
+        "data munging",
+        "missing values",
+        "outlier treatment"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "eda",
+      "label": "Exploratory Data Analysis",
+      "category": "Data",
+      "aliases": [
+        "eda",
+        "data analysis",
+        "data exploration"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "data_viz",
+      "label": "Data Visualization",
+      "category": "Data",
+      "aliases": [
+        "charts",
+        "visual analytics",
+        "graphs"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "matplotlib",
+      "label": "Matplotlib",
+      "category": "Data",
+      "aliases": [
+        "pyplot",
+        "seaborn",
+        "plotting"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "powerbi",
+      "label": "Power BI",
+      "category": "Data",
+      "aliases": [
+        "power bi desktop",
+        "dax"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "tableau",
+      "label": "Tableau",
+      "category": "Data",
+      "aliases": [
+        "tableau desktop",
+        "tableau public"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "ml_basics",
+      "label": "Machine Learning",
+      "category": "AI/ML",
+      "aliases": [
+        "ml",
+        "machine learning fundamentals",
+        "supervised learning",
+        "model training",
+        "regression classifiers"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "sklearn",
+      "label": "Scikit-learn",
+      "category": "AI/ML",
+      "aliases": [
+        "scikit learn"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "jupyter",
+      "label": "Jupyter",
+      "category": "Tools",
+      "aliases": [
+        "jupyter notebook",
+        "jupyterlab",
+        "colab"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "excel",
+      "label": "Excel",
+      "category": "Data",
+      "aliases": [
+        "microsoft excel",
+        "spreadsheets",
+        "pivot tables",
+        "vlookup"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "r",
+      "label": "R",
+      "category": "Programming",
+      "aliases": [
+        "r language",
+        "r programming",
+        "rstudio"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "data_mining",
+      "label": "Data Mining",
+      "category": "Data",
+      "aliases": [
+        "pattern mining",
+        "association rules"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "big_data",
+      "label": "Big Data Fundamentals",
+      "category": "Data",
+      "aliases": [
+        "hadoop",
+        "hdfs",
+        "hive"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "spark",
+      "label": "Apache Spark",
+      "category": "Data",
+      "aliases": [
+        "pyspark",
+        "spark sql"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "deep_learning",
+      "label": "Deep Learning",
+      "category": "AI/ML",
+      "aliases": [
+        "neural networks",
+        "cnn",
+        "rnn",
+        "transformers"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "nlp",
+      "label": "NLP",
+      "category": "AI/ML",
+      "aliases": [
+        "natural language processing",
+        "text mining",
+        "language models"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "time_series",
+      "label": "Time Series Analysis",
+      "category": "Data",
+      "aliases": [
+        "forecasting",
+        "arima"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "cloud_data",
+      "label": "Cloud Data Platforms",
+      "category": "Cloud",
+      "aliases": [
+        "data warehouse",
+        "bigquery",
+        "redshift",
+        "snowflake"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "data_engineering",
+      "label": "Data Engineering",
+      "category": "Data",
+      "aliases": [
+        "etl",
+        "data pipelines",
+        "airflow"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "dashboarding",
+      "label": "Dashboarding & Reporting",
+      "category": "Data",
+      "aliases": [
+        "mis reporting",
+        "dashboards"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "communication",
+      "label": "Professional Communication",
+      "category": "Soft Skills",
+      "aliases": [
+        "presentation",
+        "business communication"
+      ],
+      "demand_weight": 0.85
+    }
+  ],
+  "target_roles": [
+    {
+      "name": "Data Analyst",
+      "required": [
+        {
+          "code": "sql",
+          "weight": 1.3
+        },
+        {
+          "code": "python",
+          "weight": 1.1
+        },
+        {
+          "code": "eda",
+          "weight": 1.0
+        },
+        {
+          "code": "powerbi",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Data Scientist Intern",
+      "required": [
+        {
+          "code": "python",
+          "weight": 1.2
+        },
+        {
+          "code": "ml_basics",
+          "weight": 1.3
+        },
+        {
+          "code": "statistics",
+          "weight": 1.1
+        },
+        {
+          "code": "pandas",
+          "weight": 1.1
+        }
+      ]
+    },
+    {
+      "name": "Data Science Intern",
+      "required": [
+        {
+          "code": "python",
+          "weight": 1.2
+        },
+        {
+          "code": "pandas",
+          "weight": 1.1
+        },
+        {
+          "code": "ml_basics",
+          "weight": 1.1
+        },
+        {
+          "code": "sql",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Data Engineer Intern",
+      "required": [
+        {
+          "code": "data_engineering",
+          "weight": 1.3
+        },
+        {
+          "code": "sql",
+          "weight": 1.2
+        },
+        {
+          "code": "python",
+          "weight": 1.1
+        },
+        {
+          "code": "spark",
+          "weight": 0.9
+        }
+      ]
+    },
+    {
+      "name": "BI Analyst",
+      "required": [
+        {
+          "code": "powerbi",
+          "weight": 1.3
+        },
+        {
+          "code": "sql",
+          "weight": 1.2
+        },
+        {
+          "code": "tableau",
+          "weight": 1.0
+        },
+        {
+          "code": "dashboarding",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "ML Intern",
+      "required": [
+        {
+          "code": "ml_basics",
+          "weight": 1.3
+        },
+        {
+          "code": "sklearn",
+          "weight": 1.1
+        },
+        {
+          "code": "python",
+          "weight": 1.2
+        }
+      ]
+    },
+    {
+      "name": "Business Intelligence Intern",
+      "required": [
+        {
+          "code": "sql",
+          "weight": 1.1
+        },
+        {
+          "code": "powerbi",
+          "weight": 1.1
+        },
+        {
+          "code": "excel",
+          "weight": 1.0
+        },
+        {
+          "code": "communication",
+          "weight": 0.9
+        }
+      ]
+    }
+  ],
+  "learning_resources": {
+    "python": [
+      {
+        "title": "Python for Everybody (Coursera)",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/specializations/python",
+        "duration_hours": 40
+      },
+      {
+        "title": "Official Python Tutorial",
+        "provider": "python.org",
+        "url": "https://docs.python.org/3/tutorial/",
+        "duration_hours": 10
+      }
+    ],
+    "sql": [
+      {
+        "title": "SQL Tutorial (SQLBolt)",
+        "provider": "SQLBolt",
+        "url": "https://sqlbolt.com/",
+        "duration_hours": 6
+      },
+      {
+        "title": "DBMS (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105175",
+        "duration_hours": 30
+      }
+    ],
+    "statistics": [
+      {
+        "title": "Statistics (Khan Academy)",
+        "provider": "Khan Academy",
+        "url": "https://www.khanacademy.org/math/statistics-probability",
+        "duration_hours": 25
+      }
+    ],
+    "numpy": [
+      {
+        "title": "NumPy Quickstart",
+        "provider": "numpy.org",
+        "url": "https://numpy.org/doc/stable/user/quickstart.html",
+        "duration_hours": 5
+      }
+    ],
+    "pandas": [
+      {
+        "title": "Kaggle Pandas Micro-course",
+        "provider": "Kaggle",
+        "url": "https://www.kaggle.com/learn/pandas",
+        "duration_hours": 4
+      }
+    ],
+    "powerbi": [
+      {
+        "title": "Get started with Power BI",
+        "provider": "Microsoft Learn",
+        "url": "https://learn.microsoft.com/en-us/training/powerplatform/power-bi",
+        "duration_hours": 10
+      }
+    ],
+    "tableau": [
+      {
+        "title": "Tableau eLearning fundamentals",
+        "provider": "Tableau",
+        "url": "https://www.tableau.com/learn/training",
+        "duration_hours": 12
+      }
+    ],
+    "ml_basics": [
+      {
+        "title": "Machine Learning Specialization",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/specializations/machine-learning-introduction",
+        "duration_hours": 60
+      }
+    ],
+    "excel": [
+      {
+        "title": "Excel Skills for Business (Coursera)",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/specializations/excel",
+        "duration_hours": 40
+      }
+    ],
+    "r": [
+      {
+        "title": "R for Data Science (free book)",
+        "provider": "r4ds.had.co.nz",
+        "url": "https://r4ds.had.co.nz/",
+        "duration_hours": 30
+      }
+    ],
+    "deep_learning": [
+      {
+        "title": "Practical Deep Learning for Coders",
+        "provider": "fast.ai",
+        "url": "https://course.fast.ai/",
+        "duration_hours": 40
+      }
+    ],
+    "nlp": [
+      {
+        "title": "Hugging Face NLP Course",
+        "provider": "Hugging Face",
+        "url": "https://huggingface.co/learn/nlp-course",
+        "duration_hours": 25
+      }
+    ],
+    "communication": [
+      {
+        "title": "Business English Communication (Coursera)",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/specializations/business-english-communication",
+        "duration_hours": 20
+      }
+    ]
+  }
+}

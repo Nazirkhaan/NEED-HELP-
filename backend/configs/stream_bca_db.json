@@ -1,0 +1,396 @@
+{
+  "key": "bca_db",
+  "name": "BCA — Database / Database Applications",
+  "degree": "BCA",
+  "skills": [
+    {
+      "code": "dbms",
+      "label": "DBMS",
+      "category": "Data",
+      "aliases": [
+        "database management",
+        "database management system",
+        "rdbms"
+      ],
+      "demand_weight": 1.3
+    },
+    {
+      "code": "sql",
+      "label": "SQL",
+      "category": "Data",
+      "aliases": [
+        "structured query language",
+        "queries",
+        "joins"
+      ],
+      "demand_weight": 1.3
+    },
+    {
+      "code": "mysql",
+      "label": "MySQL",
+      "category": "Data",
+      "aliases": [
+        "my sql",
+        "mariadb"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "postgresql",
+      "label": "PostgreSQL",
+      "category": "Data",
+      "aliases": [
+        "postgres",
+        "psql"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "sqlserver",
+      "label": "SQL Server",
+      "category": "Data",
+      "aliases": [
+        "microsoft sql server",
+        "mssql",
+        "t-sql"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "database_design",
+      "label": "Database Design",
+      "category": "Data",
+      "aliases": [
+        "schema design",
+        "relational schema"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "er_modeling",
+      "label": "ER Modeling",
+      "category": "Data",
+      "aliases": [
+        "entity relationship diagram",
+        "er diagram",
+        "erd"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "normalization",
+      "label": "Database Normalization",
+      "category": "Data",
+      "aliases": [
+        "normal forms",
+        "1nf 2nf 3nf",
+        "denormalization"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "query_optimization",
+      "label": "Indexing & Query Optimization",
+      "category": "Data",
+      "aliases": [
+        "indexing",
+        "query tuning",
+        "execution plans"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "transactions",
+      "label": "Transactions & ACID",
+      "category": "Data",
+      "aliases": [
+        "acid properties",
+        "concurrency control"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "stored_procedures",
+      "label": "Stored Procedures",
+      "category": "Data",
+      "aliases": [
+        "triggers",
+        "pl/sql",
+        "procedures"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "backup_recovery",
+      "label": "Backup & Recovery",
+      "category": "Data",
+      "aliases": [
+        "database backup",
+        "restore",
+        "dumps"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "db_security",
+      "label": "Database Security",
+      "category": "Security",
+      "aliases": [
+        "database hardening",
+        "database access control"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "python",
+      "label": "Python",
+      "category": "Programming",
+      "aliases": [
+        "py",
+        "python3"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "excel",
+      "label": "Excel",
+      "category": "Data",
+      "aliases": [
+        "microsoft excel",
+        "spreadsheets",
+        "pivot tables",
+        "vlookup"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "troubleshooting",
+      "label": "Troubleshooting",
+      "category": "Tools",
+      "aliases": [
+        "problem diagnosis",
+        "technical troubleshooting"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "eda",
+      "label": "Exploratory Data Analysis",
+      "category": "Data",
+      "aliases": [
+        "eda",
+        "data analysis",
+        "data exploration"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "powerbi",
+      "label": "Power BI",
+      "category": "Data",
+      "aliases": [
+        "power bi desktop",
+        "dax"
+      ],
+      "demand_weight": 0.85
+    }
+  ],
+  "target_roles": [
+    {
+      "name": "SQL Developer",
+      "required": [
+        {
+          "code": "sql",
+          "weight": 1.3
+        },
+        {
+          "code": "mysql",
+          "weight": 1.0
+        },
+        {
+          "code": "stored_procedures",
+          "weight": 1.0
+        },
+        {
+          "code": "query_optimization",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Database Developer",
+      "required": [
+        {
+          "code": "sql",
+          "weight": 1.3
+        },
+        {
+          "code": "database_design",
+          "weight": 1.2
+        },
+        {
+          "code": "postgresql",
+          "weight": 1.0
+        },
+        {
+          "code": "python",
+          "weight": 0.9
+        }
+      ]
+    },
+    {
+      "name": "Database Intern",
+      "required": [
+        {
+          "code": "dbms",
+          "weight": 1.3
+        },
+        {
+          "code": "sql",
+          "weight": 1.3
+        },
+        {
+          "code": "er_modeling",
+          "weight": 0.9
+        },
+        {
+          "code": "normalization",
+          "weight": 0.9
+        }
+      ]
+    },
+    {
+      "name": "Junior DBA",
+      "required": [
+        {
+          "code": "backup_recovery",
+          "weight": 1.2
+        },
+        {
+          "code": "query_optimization",
+          "weight": 1.1
+        },
+        {
+          "code": "sqlserver",
+          "weight": 1.0
+        },
+        {
+          "code": "db_security",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Database Support Engineer",
+      "required": [
+        {
+          "code": "troubleshooting",
+          "weight": 1.1
+        },
+        {
+          "code": "sql",
+          "weight": 1.2
+        },
+        {
+          "code": "backup_recovery",
+          "weight": 1.0
+        },
+        {
+          "code": "mysql",
+          "weight": 0.9
+        }
+      ]
+    },
+    {
+      "name": "Data Analyst",
+      "required": [
+        {
+          "code": "sql",
+          "weight": 1.3
+        },
+        {
+          "code": "excel",
+          "weight": 1.0
+        },
+        {
+          "code": "eda",
+          "weight": 0.9
+        },
+        {
+          "code": "powerbi",
+          "weight": 0.8
+        }
+      ]
+    }
+  ],
+  "learning_resources": {
+    "dbms": [
+      {
+        "title": "Database Management System (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105175",
+        "duration_hours": 30
+      }
+    ],
+    "sql": [
+      {
+        "title": "SQL Tutorial (SQLBolt)",
+        "provider": "SQLBolt",
+        "url": "https://sqlbolt.com/",
+        "duration_hours": 6
+      },
+      {
+        "title": "DBMS (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105175",
+        "duration_hours": 30
+      }
+    ],
+    "mysql": [
+      {
+        "title": "MySQL Tutorial",
+        "provider": "mysqltutorial.org",
+        "url": "https://www.mysqltutorial.org/",
+        "duration_hours": 12
+      }
+    ],
+    "postgresql": [
+      {
+        "title": "PostgreSQL Tutorial",
+        "provider": "postgresqltutorial.com",
+        "url": "https://www.postgresqltutorial.com/",
+        "duration_hours": 12
+      }
+    ],
+    "python": [
+      {
+        "title": "Python for Everybody (Coursera)",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/specializations/python",
+        "duration_hours": 40
+      },
+      {
+        "title": "Official Python Tutorial",
+        "provider": "python.org",
+        "url": "https://docs.python.org/3/tutorial/",
+        "duration_hours": 10
+      }
+    ],
+    "excel": [
+      {
+        "title": "Excel Skills for Business (Coursera)",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/specializations/excel",
+        "duration_hours": 40
+      }
+    ],
+    "powerbi": [
+      {
+        "title": "Get started with Power BI",
+        "provider": "Microsoft Learn",
+        "url": "https://learn.microsoft.com/en-us/training/powerplatform/power-bi",
+        "duration_hours": 10
+      }
+    ]
+  }
+}

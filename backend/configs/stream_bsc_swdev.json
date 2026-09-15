@@ -1,0 +1,458 @@
+{
+  "key": "bsc_swdev",
+  "name": "B.Sc Software Development / Software Technology",
+  "degree": "B.Sc",
+  "skills": [
+    {
+      "code": "cpp",
+      "label": "C++",
+      "category": "Programming",
+      "aliases": [
+        "c plus plus",
+        "cpp",
+        "stl"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "java",
+      "label": "Java",
+      "category": "Programming",
+      "aliases": [
+        "core java",
+        "jvm",
+        "spring boot"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "python",
+      "label": "Python",
+      "category": "Programming",
+      "aliases": [
+        "py",
+        "python3"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "oop",
+      "label": "Object-Oriented Programming",
+      "category": "Fundamentals",
+      "aliases": [
+        "oop",
+        "object oriented programming",
+        "oops concepts"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "dsa",
+      "label": "Data Structures & Algorithms",
+      "category": "Fundamentals",
+      "aliases": [
+        "dsa",
+        "data structures",
+        "algorithms",
+        "problem solving",
+        "complexity analysis",
+        "competitive programming"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "software_engineering",
+      "label": "Software Engineering",
+      "category": "Software Engineering",
+      "aliases": [
+        "swe principles"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "sdlc",
+      "label": "SDLC",
+      "category": "Software Engineering",
+      "aliases": [
+        "software development life cycle",
+        "waterfall model"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "git",
+      "label": "Git & Version Control",
+      "category": "DevOps",
+      "aliases": [
+        "git scm",
+        "github",
+        "version control",
+        "pull requests",
+        "merge conflicts"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "testing",
+      "label": "Software Testing",
+      "category": "Quality",
+      "aliases": [
+        "unit testing",
+        "integration testing",
+        "qa",
+        "test cases"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "debugging",
+      "label": "Debugging",
+      "category": "Quality",
+      "aliases": [
+        "debugging skills",
+        "root cause analysis"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "dbms",
+      "label": "DBMS",
+      "category": "Data",
+      "aliases": [
+        "database management",
+        "database management system",
+        "rdbms"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "sql",
+      "label": "SQL",
+      "category": "Data",
+      "aliases": [
+        "structured query language",
+        "queries",
+        "joins"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "rest_api",
+      "label": "REST APIs",
+      "category": "Web",
+      "aliases": [
+        "restful",
+        "rest api",
+        "api endpoints",
+        "http services"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "html",
+      "label": "HTML",
+      "category": "Web",
+      "aliases": [
+        "html5",
+        "web markup"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "css",
+      "label": "CSS",
+      "category": "Web",
+      "aliases": [
+        "css3",
+        "stylesheets",
+        "flexbox",
+        "grid"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "javascript",
+      "label": "JavaScript",
+      "category": "Programming",
+      "aliases": [
+        "js",
+        "es6",
+        "ecmascript"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "agile",
+      "label": "Agile",
+      "category": "Software Engineering",
+      "aliases": [
+        "agile methodology"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "scrum",
+      "label": "Scrum",
+      "category": "Software Engineering",
+      "aliases": [
+        "sprints",
+        "kanban",
+        "scrum ceremonies"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "programming_fundamentals",
+      "label": "Programming Fundamentals",
+      "category": "Fundamentals",
+      "aliases": [
+        "programming basics",
+        "coding fundamentals",
+        "programming"
+      ],
+      "demand_weight": 0.85
+    }
+  ],
+  "target_roles": [
+    {
+      "name": "Software Developer",
+      "required": [
+        {
+          "code": "dsa",
+          "weight": 1.2
+        },
+        {
+          "code": "oop",
+          "weight": 1.2
+        },
+        {
+          "code": "java",
+          "weight": 1.0
+        },
+        {
+          "code": "sql",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Software Engineer Intern",
+      "required": [
+        {
+          "code": "programming_fundamentals",
+          "weight": 1.2
+        },
+        {
+          "code": "dsa",
+          "weight": 1.2
+        },
+        {
+          "code": "git",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Application Developer",
+      "required": [
+        {
+          "code": "oop",
+          "weight": 1.2
+        },
+        {
+          "code": "python",
+          "weight": 1.0
+        },
+        {
+          "code": "rest_api",
+          "weight": 1.0
+        },
+        {
+          "code": "sql",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Backend Developer",
+      "required": [
+        {
+          "code": "python",
+          "weight": 1.1
+        },
+        {
+          "code": "sql",
+          "weight": 1.2
+        },
+        {
+          "code": "rest_api",
+          "weight": 1.2
+        },
+        {
+          "code": "dsa",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "QA Engineer",
+      "required": [
+        {
+          "code": "testing",
+          "weight": 1.3
+        },
+        {
+          "code": "debugging",
+          "weight": 1.0
+        },
+        {
+          "code": "sdlc",
+          "weight": 0.9
+        }
+      ]
+    },
+    {
+      "name": "Full Stack Developer",
+      "required": [
+        {
+          "code": "javascript",
+          "weight": 1.2
+        },
+        {
+          "code": "html",
+          "weight": 1.0
+        },
+        {
+          "code": "css",
+          "weight": 1.0
+        },
+        {
+          "code": "rest_api",
+          "weight": 1.1
+        },
+        {
+          "code": "sql",
+          "weight": 1.0
+        }
+      ]
+    }
+  ],
+  "learning_resources": {
+    "cpp": [
+      {
+        "title": "C++ Course (learncpp.com)",
+        "provider": "LearnCpp",
+        "url": "https://www.learncpp.com/",
+        "duration_hours": 30
+      }
+    ],
+    "java": [
+      {
+        "title": "Java Programming (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105191",
+        "duration_hours": 40
+      }
+    ],
+    "python": [
+      {
+        "title": "Python for Everybody (Coursera)",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/specializations/python",
+        "duration_hours": 40
+      },
+      {
+        "title": "Official Python Tutorial",
+        "provider": "python.org",
+        "url": "https://docs.python.org/3/tutorial/",
+        "duration_hours": 10
+      }
+    ],
+    "oop": [
+      {
+        "title": "Object Oriented Analysis and Design (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105155",
+        "duration_hours": 30
+      }
+    ],
+    "dsa": [
+      {
+        "title": "Programming, Data Structures and Algorithms (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106106145",
+        "duration_hours": 40
+      }
+    ],
+    "git": [
+      {
+        "title": "Pro Git book",
+        "provider": "git-scm",
+        "url": "https://git-scm.com/book/en/v2",
+        "duration_hours": 8
+      }
+    ],
+    "testing": [
+      {
+        "title": "pytest documentation & course",
+        "provider": "pytest",
+        "url": "https://docs.pytest.org/en/stable/",
+        "duration_hours": 6
+      }
+    ],
+    "dbms": [
+      {
+        "title": "Database Management System (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105175",
+        "duration_hours": 30
+      }
+    ],
+    "sql": [
+      {
+        "title": "SQL Tutorial (SQLBolt)",
+        "provider": "SQLBolt",
+        "url": "https://sqlbolt.com/",
+        "duration_hours": 6
+      },
+      {
+        "title": "DBMS (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105175",
+        "duration_hours": 30
+      }
+    ],
+    "rest_api": [
+      {
+        "title": "REST API design guide (MDN)",
+        "provider": "MDN",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP",
+        "duration_hours": 8
+      }
+    ],
+    "html": [
+      {
+        "title": "Responsive Web Design Certification",
+        "provider": "freeCodeCamp",
+        "url": "https://www.freecodecamp.org/learn/2022/responsive-web-design/",
+        "duration_hours": 30
+      }
+    ],
+    "css": [
+      {
+        "title": "Learn CSS (web.dev)",
+        "provider": "Google",
+        "url": "https://web.dev/learn/css/",
+        "duration_hours": 12
+      }
+    ],
+    "javascript": [
+      {
+        "title": "The Modern JavaScript Tutorial",
+        "provider": "javascript.info",
+        "url": "https://javascript.info/",
+        "duration_hours": 30
+      }
+    ]
+  }
+}

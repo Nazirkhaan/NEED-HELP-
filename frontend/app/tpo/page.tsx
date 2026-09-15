@@ -66,7 +66,7 @@ type RoleGap = {
   role: string;
   n_students: number;
   avg_readiness: number | null;
-  missing_skill_pcts?: { code: string; pct_missing: number }[];
+  missing_skill_pcts?: { code: string; label?: string; pct_missing: number }[];
 };
 
 export default function TpoPage() {
@@ -385,7 +385,7 @@ function TpoView() {
                     <div className="mt-2 flex flex-wrap gap-1">
                       {r.missing_skill_pcts.slice(0, 4).map((m) => (
                         <span key={m.code} className="rounded bg-rose-50 px-1.5 py-0.5 text-[10px] text-rose-600">
-                          {m.code}: {pct(m.pct_missing)} missing
+                          {m.label || m.code}: {pct(m.pct_missing)} missing
                         </span>
                       ))}
                     </div>

@@ -1,6 +1,290 @@
 {
   "streams": [
-    { "key": "cse", "name": "Computer Science & Engineering" },
-    { "key": "ece", "name": "Electronics & Communication Engineering" }
+    {
+      "key": "cse",
+      "name": "Computer Science & Engineering",
+      "degree": "B.Tech / B.E.",
+      "aliases": [
+        "Computer Science & Engineering",
+        "CSE"
+      ]
+    },
+    {
+      "key": "ece",
+      "name": "Electronics & Communication Engineering",
+      "degree": "B.Tech / B.E.",
+      "aliases": [
+        "Electronics & Communication Engineering",
+        "ECE"
+      ]
+    },
+    {
+      "key": "bca_gen",
+      "name": "BCA — General / Computer Applications",
+      "degree": "BCA",
+      "aliases": [
+        "Bachelor of Computer Applications",
+        "BCA General"
+      ]
+    },
+    {
+      "key": "bca_web",
+      "name": "BCA — Web Development",
+      "degree": "BCA",
+      "aliases": [
+        "BCA Web Development"
+      ]
+    },
+    {
+      "key": "bca_swdev",
+      "name": "BCA — Software Development",
+      "degree": "BCA",
+      "aliases": [
+        "BCA Software Development"
+      ]
+    },
+    {
+      "key": "bca_ds",
+      "name": "BCA — Data Science / Data Analytics",
+      "degree": "BCA",
+      "aliases": [
+        "BCA Data Science",
+        "BCA Data Analytics"
+      ]
+    },
+    {
+      "key": "bca_aiml",
+      "name": "BCA — Artificial Intelligence / Machine Learning",
+      "degree": "BCA",
+      "aliases": [
+        "BCA AI",
+        "BCA Machine Learning",
+        "BCA AI/ML"
+      ]
+    },
+    {
+      "key": "bca_cyber",
+      "name": "BCA — Cybersecurity",
+      "degree": "BCA",
+      "aliases": [
+        "BCA Cyber Security",
+        "BCA Security"
+      ]
+    },
+    {
+      "key": "bca_cloud",
+      "name": "BCA — Cloud Computing",
+      "degree": "BCA",
+      "aliases": [
+        "BCA Cloud"
+      ]
+    },
+    {
+      "key": "bca_devops",
+      "name": "BCA — DevOps",
+      "degree": "BCA",
+      "aliases": [
+        "BCA DevOps"
+      ]
+    },
+    {
+      "key": "bca_db",
+      "name": "BCA — Database / Database Applications",
+      "degree": "BCA",
+      "aliases": [
+        "BCA Database"
+      ]
+    },
+    {
+      "key": "bca_mobile",
+      "name": "BCA — Mobile Application Development",
+      "degree": "BCA",
+      "aliases": [
+        "BCA Mobile App Development"
+      ]
+    },
+    {
+      "key": "bca_it",
+      "name": "BCA — Information Technology",
+      "degree": "BCA",
+      "aliases": [
+        "BCA IT"
+      ]
+    },
+    {
+      "key": "bca_isys",
+      "name": "BCA — Information Systems / Business Systems",
+      "degree": "BCA",
+      "aliases": [
+        "BCA Information Systems"
+      ]
+    },
+    {
+      "key": "bca_iot",
+      "name": "BCA — Internet of Things (IoT)",
+      "degree": "BCA",
+      "aliases": [
+        "BCA IoT"
+      ]
+    },
+    {
+      "key": "bca_blockchain",
+      "name": "BCA — Blockchain",
+      "degree": "BCA",
+      "aliases": [
+        "BCA Blockchain Technology"
+      ]
+    },
+    {
+      "key": "bsc_cs",
+      "name": "B.Sc Computer Science",
+      "degree": "B.Sc",
+      "aliases": [
+        "B.Sc (Hons.) Computer Science",
+        "BSc CS",
+        "Bachelor of Science Computer Science"
+      ]
+    },
+    {
+      "key": "bsc_it",
+      "name": "B.Sc Information Technology",
+      "degree": "B.Sc",
+      "aliases": [
+        "B.Sc IT",
+        "BSc Information Technology"
+      ]
+    },
+    {
+      "key": "bsc_ds",
+      "name": "B.Sc Data Science",
+      "degree": "B.Sc",
+      "aliases": [
+        "BSc Data Science"
+      ]
+    },
+    {
+      "key": "bsc_ai",
+      "name": "B.Sc Artificial Intelligence",
+      "degree": "B.Sc",
+      "aliases": [
+        "BSc AI",
+        "B.Sc in Artificial Intelligence"
+      ]
+    },
+    {
+      "key": "bsc_aiml",
+      "name": "B.Sc Artificial Intelligence & Machine Learning",
+      "degree": "B.Sc",
+      "aliases": [
+        "B.Sc AI & ML",
+        "BSc AIML"
+      ]
+    },
+    {
+      "key": "bsc_cyber",
+      "name": "B.Sc Cybersecurity / Information Security",
+      "degree": "B.Sc",
+      "aliases": [
+        "B.Sc Cyber Security",
+        "B.Sc Information Security"
+      ]
+    },
+    {
+      "key": "bsc_cloud",
+      "name": "B.Sc Cloud Computing",
+      "degree": "B.Sc",
+      "aliases": [
+        "BSc Cloud Computing"
+      ]
+    },
+    {
+      "key": "bsc_swdev",
+      "name": "B.Sc Software Development / Software Technology",
+      "degree": "B.Sc",
+      "aliases": [
+        "B.Sc Software Technology"
+      ]
+    },
+    {
+      "key": "bsc_web",
+      "name": "B.Sc Web Development / Web Technologies",
+      "degree": "B.Sc",
+      "aliases": [
+        "B.Sc Web Technologies"
+      ]
+    },
+    {
+      "key": "bsc_mobile",
+      "name": "B.Sc Mobile Application Development",
+      "degree": "B.Sc",
+      "aliases": [
+        "B.Sc Mobile App Development"
+      ]
+    },
+    {
+      "key": "bsc_da",
+      "name": "B.Sc Data Analytics",
+      "degree": "B.Sc",
+      "aliases": [
+        "BSc Data Analytics"
+      ]
+    },
+    {
+      "key": "bsc_stats",
+      "name": "B.Sc Statistics / Statistics with Computing",
+      "degree": "B.Sc",
+      "aliases": [
+        "B.Sc Statistics with Computing"
+      ]
+    },
+    {
+      "key": "bsc_isys",
+      "name": "B.Sc Information Systems",
+      "degree": "B.Sc",
+      "aliases": [
+        "B.Sc Information Systems"
+      ]
+    },
+    {
+      "key": "bsc_iot",
+      "name": "B.Sc IoT / Internet of Things",
+      "degree": "B.Sc",
+      "aliases": [
+        "B.Sc Internet of Things"
+      ]
+    },
+    {
+      "key": "bsc_blockchain",
+      "name": "B.Sc Blockchain Technology",
+      "degree": "B.Sc",
+      "aliases": [
+        "B.Sc Blockchain"
+      ]
+    },
+    {
+      "key": "bsc_ca",
+      "name": "B.Sc Computer Applications",
+      "degree": "B.Sc",
+      "aliases": [
+        "BSc Computer Applications"
+      ]
+    },
+    {
+      "key": "bsc_ct",
+      "name": "B.Sc Computer Technology",
+      "degree": "B.Sc",
+      "aliases": [
+        "BSc Computer Technology"
+      ]
+    },
+    {
+      "key": "bsc_phy_cs",
+      "name": "B.Sc Physical Science with Computer Science",
+      "degree": "B.Sc",
+      "aliases": [
+        "B.Sc Physical Science with Computer Applications",
+        "B.Sc PCM/PCS Computer Science"
+      ]
+    }
   ]
 }

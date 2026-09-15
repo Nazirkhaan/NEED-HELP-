@@ -1,0 +1,395 @@
+{
+  "key": "bca_cyber",
+  "name": "BCA — Cybersecurity",
+  "degree": "BCA",
+  "skills": [
+    {
+      "code": "networks",
+      "label": "Computer Networks",
+      "category": "Fundamentals",
+      "aliases": [
+        "networking",
+        "computer network",
+        "osi model"
+      ],
+      "demand_weight": 1.2
+    },
+    {
+      "code": "tcp_ip",
+      "label": "TCP/IP",
+      "category": "Fundamentals",
+      "aliases": [
+        "tcp ip stack",
+        "ip addressing",
+        "dns",
+        "dhcp"
+      ],
+      "demand_weight": 1.2
+    },
+    {
+      "code": "linux",
+      "label": "Linux",
+      "category": "Tools",
+      "aliases": [
+        "unix",
+        "ubuntu",
+        "command line",
+        "cli"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "cybersecurity",
+      "label": "Cybersecurity Fundamentals",
+      "category": "Security",
+      "aliases": [
+        "cybersecurity basics",
+        "infosec",
+        "information security"
+      ],
+      "demand_weight": 1.3
+    },
+    {
+      "code": "network_security",
+      "label": "Network Security",
+      "category": "Security",
+      "aliases": [
+        "firewalls",
+        "ids ips",
+        "vpn"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "web_security",
+      "label": "Web Security",
+      "category": "Security",
+      "aliases": [
+        "web app security",
+        "xss",
+        "csrf",
+        "sql injection"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "cryptography",
+      "label": "Cryptography",
+      "category": "Security",
+      "aliases": [
+        "encryption",
+        "ciphers",
+        "hashing",
+        "pki"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "auth",
+      "label": "Authentication & Authorization",
+      "category": "Security",
+      "aliases": [
+        "authentication",
+        "authorization",
+        "oauth",
+        "jwt",
+        "sso"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "owasp",
+      "label": "OWASP",
+      "category": "Security",
+      "aliases": [
+        "owasp top 10",
+        "owasp zap"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "vuln_assessment",
+      "label": "Vulnerability Assessment",
+      "category": "Security",
+      "aliases": [
+        "vulnerability scanning",
+        "nessus",
+        "cvss"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "pentest",
+      "label": "Penetration Testing",
+      "category": "Security",
+      "aliases": [
+        "pen testing",
+        "pentesting",
+        "kali linux"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "ethical_hacking",
+      "label": "Ethical Hacking",
+      "category": "Security",
+      "aliases": [
+        "white hat hacking",
+        "ceh"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "siem",
+      "label": "SIEM",
+      "category": "Security",
+      "aliases": [
+        "splunk",
+        "qradar",
+        "security log analysis"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "soc",
+      "label": "SOC Fundamentals & Monitoring",
+      "category": "Security",
+      "aliases": [
+        "security operations center",
+        "security monitoring",
+        "soc analyst"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "digital_forensics",
+      "label": "Digital Forensics",
+      "category": "Security",
+      "aliases": [
+        "forensic analysis",
+        "chain of custody"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "python",
+      "label": "Python",
+      "category": "Programming",
+      "aliases": [
+        "py",
+        "python3"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "communication",
+      "label": "Professional Communication",
+      "category": "Soft Skills",
+      "aliases": [
+        "presentation",
+        "business communication"
+      ],
+      "demand_weight": 0.85
+    }
+  ],
+  "target_roles": [
+    {
+      "name": "Cybersecurity Intern",
+      "required": [
+        {
+          "code": "cybersecurity",
+          "weight": 1.3
+        },
+        {
+          "code": "networks",
+          "weight": 1.1
+        },
+        {
+          "code": "linux",
+          "weight": 1.0
+        },
+        {
+          "code": "web_security",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "SOC Analyst Intern",
+      "required": [
+        {
+          "code": "soc",
+          "weight": 1.3
+        },
+        {
+          "code": "siem",
+          "weight": 1.2
+        },
+        {
+          "code": "network_security",
+          "weight": 1.0
+        },
+        {
+          "code": "tcp_ip",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Security Analyst",
+      "required": [
+        {
+          "code": "network_security",
+          "weight": 1.2
+        },
+        {
+          "code": "vuln_assessment",
+          "weight": 1.1
+        },
+        {
+          "code": "siem",
+          "weight": 1.0
+        },
+        {
+          "code": "linux",
+          "weight": 0.9
+        }
+      ]
+    },
+    {
+      "name": "Security Testing Intern",
+      "required": [
+        {
+          "code": "web_security",
+          "weight": 1.3
+        },
+        {
+          "code": "owasp",
+          "weight": 1.2
+        },
+        {
+          "code": "vuln_assessment",
+          "weight": 1.0
+        },
+        {
+          "code": "pentest",
+          "weight": 0.9
+        }
+      ]
+    },
+    {
+      "name": "Junior Cybersecurity Analyst",
+      "required": [
+        {
+          "code": "cybersecurity",
+          "weight": 1.3
+        },
+        {
+          "code": "network_security",
+          "weight": 1.0
+        },
+        {
+          "code": "cryptography",
+          "weight": 0.9
+        },
+        {
+          "code": "tcp_ip",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Information Security Intern",
+      "required": [
+        {
+          "code": "cybersecurity",
+          "weight": 1.2
+        },
+        {
+          "code": "auth",
+          "weight": 1.0
+        },
+        {
+          "code": "cryptography",
+          "weight": 0.9
+        },
+        {
+          "code": "owasp",
+          "weight": 0.9
+        }
+      ]
+    }
+  ],
+  "learning_resources": {
+    "networks": [
+      {
+        "title": "Computer Networks (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105183",
+        "duration_hours": 35
+      }
+    ],
+    "linux": [
+      {
+        "title": "The Missing Semester (MIT)",
+        "provider": "MIT",
+        "url": "https://missing.csail.mit.edu/",
+        "duration_hours": 10
+      }
+    ],
+    "cybersecurity": [
+      {
+        "title": "Foundations of Cybersecurity (Google)",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/learn/foundations-of-cybersecurity",
+        "duration_hours": 15
+      }
+    ],
+    "network_security": [
+      {
+        "title": "Network Security (Cisco Networking Academy)",
+        "provider": "Cisco NetAcad",
+        "url": "https://www.netacad.com/courses/network-security",
+        "duration_hours": 30
+      }
+    ],
+    "pentest": [
+      {
+        "title": "Penetration Testing Basics",
+        "provider": "TryHackMe",
+        "url": "https://tryhackme.com/",
+        "duration_hours": 20
+      }
+    ],
+    "siem": [
+      {
+        "title": "SOC Analyst learning path",
+        "provider": "LetsDefend",
+        "url": "https://letsdefend.io/",
+        "duration_hours": 20
+      }
+    ],
+    "python": [
+      {
+        "title": "Python for Everybody (Coursera)",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/specializations/python",
+        "duration_hours": 40
+      },
+      {
+        "title": "Official Python Tutorial",
+        "provider": "python.org",
+        "url": "https://docs.python.org/3/tutorial/",
+        "duration_hours": 10
+      }
+    ],
+    "communication": [
+      {
+        "title": "Business English Communication (Coursera)",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/specializations/business-english-communication",
+        "duration_hours": 20
+      }
+    ]
+  }
+}

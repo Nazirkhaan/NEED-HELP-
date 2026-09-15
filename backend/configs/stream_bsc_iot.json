@@ -1,0 +1,303 @@
+{
+  "key": "bsc_iot",
+  "name": "B.Sc IoT / Internet of Things",
+  "degree": "B.Sc",
+  "skills": [
+    {
+      "code": "iot",
+      "label": "Internet of Things",
+      "category": "Embedded",
+      "aliases": [
+        "iot systems",
+        "connected devices"
+      ],
+      "demand_weight": 1.3
+    },
+    {
+      "code": "embedded",
+      "label": "Embedded Programming",
+      "category": "Embedded",
+      "aliases": [
+        "embedded systems",
+        "firmware",
+        "embedded c"
+      ],
+      "demand_weight": 1.2
+    },
+    {
+      "code": "c",
+      "label": "C",
+      "category": "Programming",
+      "aliases": [
+        "c language"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "cpp",
+      "label": "C++",
+      "category": "Programming",
+      "aliases": [
+        "c plus plus",
+        "cpp",
+        "stl"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "python",
+      "label": "Python",
+      "category": "Programming",
+      "aliases": [
+        "py",
+        "python3"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "esp32",
+      "label": "ESP32",
+      "category": "Embedded",
+      "aliases": [
+        "esp8266",
+        "esp-idf"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "arduino",
+      "label": "Arduino",
+      "category": "Embedded",
+      "aliases": [
+        "arduino uno",
+        "arduino ide"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "sensors",
+      "label": "Sensors",
+      "category": "Embedded",
+      "aliases": [
+        "sensor interfacing"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "actuators",
+      "label": "Actuators",
+      "category": "Embedded",
+      "aliases": [
+        "motors",
+        "relays",
+        "servo"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "mqtt",
+      "label": "MQTT",
+      "category": "Embedded",
+      "aliases": [
+        "mqtt protocol",
+        "iot messaging"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "rest_api",
+      "label": "REST APIs",
+      "category": "Web",
+      "aliases": [
+        "restful",
+        "rest api",
+        "api endpoints",
+        "http services"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "networks",
+      "label": "Computer Networks",
+      "category": "Fundamentals",
+      "aliases": [
+        "networking",
+        "computer network",
+        "osi model"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "cloud_iot",
+      "label": "Cloud IoT",
+      "category": "Embedded",
+      "aliases": [
+        "iot platforms",
+        "aws iot",
+        "azure iot hub"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "edge_computing",
+      "label": "Edge Computing",
+      "category": "Embedded",
+      "aliases": [
+        "edge devices",
+        "fog computing"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "data_collection",
+      "label": "Data Collection & Telemetry",
+      "category": "Embedded",
+      "aliases": [
+        "telemetry",
+        "sensor data logging"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "microcontrollers",
+      "label": "Microcontrollers",
+      "category": "Embedded",
+      "aliases": [
+        "mcu",
+        "8051",
+        "arm cortex"
+      ],
+      "demand_weight": 1.0
+    }
+  ],
+  "target_roles": [
+    {
+      "name": "IoT Developer Intern",
+      "required": [
+        {
+          "code": "iot",
+          "weight": 1.3
+        },
+        {
+          "code": "embedded",
+          "weight": 1.1
+        },
+        {
+          "code": "mqtt",
+          "weight": 1.0
+        },
+        {
+          "code": "python",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Embedded Systems Intern",
+      "required": [
+        {
+          "code": "embedded",
+          "weight": 1.3
+        },
+        {
+          "code": "microcontrollers",
+          "weight": 1.1
+        },
+        {
+          "code": "c",
+          "weight": 1.1
+        }
+      ]
+    },
+    {
+      "name": "IoT Solutions Intern",
+      "required": [
+        {
+          "code": "iot",
+          "weight": 1.2
+        },
+        {
+          "code": "cloud_iot",
+          "weight": 1.0
+        },
+        {
+          "code": "networks",
+          "weight": 0.9
+        }
+      ]
+    },
+    {
+      "name": "Edge Computing Intern",
+      "required": [
+        {
+          "code": "edge_computing",
+          "weight": 1.3
+        },
+        {
+          "code": "esp32",
+          "weight": 1.0
+        },
+        {
+          "code": "python",
+          "weight": 1.0
+        }
+      ]
+    }
+  ],
+  "learning_resources": {
+    "iot": [
+      {
+        "title": "Introduction to Internet of Things (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105166",
+        "duration_hours": 30
+      }
+    ],
+    "c": [
+      {
+        "title": "C Programming (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106104128",
+        "duration_hours": 30
+      }
+    ],
+    "cpp": [
+      {
+        "title": "C++ Course (learncpp.com)",
+        "provider": "LearnCpp",
+        "url": "https://www.learncpp.com/",
+        "duration_hours": 30
+      }
+    ],
+    "python": [
+      {
+        "title": "Python for Everybody (Coursera)",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/specializations/python",
+        "duration_hours": 40
+      },
+      {
+        "title": "Official Python Tutorial",
+        "provider": "python.org",
+        "url": "https://docs.python.org/3/tutorial/",
+        "duration_hours": 10
+      }
+    ],
+    "rest_api": [
+      {
+        "title": "REST API design guide (MDN)",
+        "provider": "MDN",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP",
+        "duration_hours": 8
+      }
+    ],
+    "networks": [
+      {
+        "title": "Computer Networks (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105183",
+        "duration_hours": 35
+      }
+    ]
+  }
+}

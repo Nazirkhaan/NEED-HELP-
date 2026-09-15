@@ -1,0 +1,407 @@
+{
+  "key": "bsc_ai",
+  "name": "B.Sc Artificial Intelligence",
+  "degree": "B.Sc",
+  "skills": [
+    {
+      "code": "python",
+      "label": "Python",
+      "category": "Programming",
+      "aliases": [
+        "py",
+        "python3"
+      ],
+      "demand_weight": 1.3
+    },
+    {
+      "code": "mathematics",
+      "label": "Mathematics for Computing",
+      "category": "Fundamentals",
+      "aliases": [
+        "engineering mathematics",
+        "maths",
+        "math"
+      ],
+      "demand_weight": 1.2
+    },
+    {
+      "code": "statistics",
+      "label": "Statistics",
+      "category": "Data",
+      "aliases": [
+        "statistical methods",
+        "descriptive statistics",
+        "inferential statistics"
+      ],
+      "demand_weight": 1.2
+    },
+    {
+      "code": "probability",
+      "label": "Probability",
+      "category": "Data",
+      "aliases": [
+        "probability theory",
+        "distributions"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "linear_algebra",
+      "label": "Linear Algebra",
+      "category": "Fundamentals",
+      "aliases": [
+        "matrices",
+        "vectors",
+        "eigenvalues"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "calculus",
+      "label": "Calculus Fundamentals",
+      "category": "Fundamentals",
+      "aliases": [
+        "differentiation",
+        "integration"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "ml_basics",
+      "label": "Machine Learning",
+      "category": "AI/ML",
+      "aliases": [
+        "ml",
+        "machine learning fundamentals",
+        "supervised learning",
+        "model training",
+        "regression classifiers"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "deep_learning",
+      "label": "Deep Learning",
+      "category": "AI/ML",
+      "aliases": [
+        "neural networks",
+        "cnn",
+        "rnn",
+        "transformers"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "tensorflow",
+      "label": "TensorFlow",
+      "category": "AI/ML",
+      "aliases": [
+        "tf",
+        "keras"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "pytorch",
+      "label": "PyTorch",
+      "category": "AI/ML",
+      "aliases": [
+        "torch"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "sklearn",
+      "label": "Scikit-learn",
+      "category": "AI/ML",
+      "aliases": [
+        "scikit learn"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "computer_vision",
+      "label": "Computer Vision",
+      "category": "AI/ML",
+      "aliases": [
+        "cv",
+        "opencv",
+        "image processing"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "nlp",
+      "label": "NLP",
+      "category": "AI/ML",
+      "aliases": [
+        "natural language processing",
+        "text mining",
+        "language models"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "model_evaluation",
+      "label": "Model Evaluation",
+      "category": "AI/ML",
+      "aliases": [
+        "cross validation",
+        "precision recall",
+        "roc auc"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "data_preprocessing",
+      "label": "Data Preprocessing",
+      "category": "Data",
+      "aliases": [
+        "feature scaling",
+        "encoding",
+        "standardization"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "feature_engineering",
+      "label": "Feature Engineering",
+      "category": "AI/ML",
+      "aliases": [
+        "feature selection",
+        "feature extraction"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "jupyter",
+      "label": "Jupyter",
+      "category": "Tools",
+      "aliases": [
+        "jupyter notebook",
+        "jupyterlab",
+        "colab"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "git",
+      "label": "Git & Version Control",
+      "category": "DevOps",
+      "aliases": [
+        "git scm",
+        "github",
+        "version control",
+        "pull requests",
+        "merge conflicts"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "pandas",
+      "label": "Pandas",
+      "category": "Data",
+      "aliases": [
+        "dataframes",
+        "data wrangling"
+      ],
+      "demand_weight": 0.85
+    }
+  ],
+  "target_roles": [
+    {
+      "name": "AI Engineer Intern",
+      "required": [
+        {
+          "code": "python",
+          "weight": 1.3
+        },
+        {
+          "code": "deep_learning",
+          "weight": 1.2
+        },
+        {
+          "code": "tensorflow",
+          "weight": 1.0
+        },
+        {
+          "code": "pytorch",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "ML Engineer Intern",
+      "required": [
+        {
+          "code": "ml_basics",
+          "weight": 1.3
+        },
+        {
+          "code": "model_evaluation",
+          "weight": 1.1
+        },
+        {
+          "code": "feature_engineering",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "AI/ML Intern",
+      "required": [
+        {
+          "code": "ml_basics",
+          "weight": 1.3
+        },
+        {
+          "code": "python",
+          "weight": 1.2
+        },
+        {
+          "code": "statistics",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Computer Vision Intern",
+      "required": [
+        {
+          "code": "computer_vision",
+          "weight": 1.3
+        },
+        {
+          "code": "deep_learning",
+          "weight": 1.1
+        },
+        {
+          "code": "python",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "NLP Intern",
+      "required": [
+        {
+          "code": "nlp",
+          "weight": 1.3
+        },
+        {
+          "code": "python",
+          "weight": 1.1
+        },
+        {
+          "code": "deep_learning",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Data Science Intern",
+      "required": [
+        {
+          "code": "python",
+          "weight": 1.2
+        },
+        {
+          "code": "pandas",
+          "weight": 1.0
+        },
+        {
+          "code": "ml_basics",
+          "weight": 1.1
+        }
+      ]
+    }
+  ],
+  "learning_resources": {
+    "python": [
+      {
+        "title": "Python for Everybody (Coursera)",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/specializations/python",
+        "duration_hours": 40
+      },
+      {
+        "title": "Official Python Tutorial",
+        "provider": "python.org",
+        "url": "https://docs.python.org/3/tutorial/",
+        "duration_hours": 10
+      }
+    ],
+    "statistics": [
+      {
+        "title": "Statistics (Khan Academy)",
+        "provider": "Khan Academy",
+        "url": "https://www.khanacademy.org/math/statistics-probability",
+        "duration_hours": 25
+      }
+    ],
+    "ml_basics": [
+      {
+        "title": "Machine Learning Specialization",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/specializations/machine-learning-introduction",
+        "duration_hours": 60
+      }
+    ],
+    "deep_learning": [
+      {
+        "title": "Practical Deep Learning for Coders",
+        "provider": "fast.ai",
+        "url": "https://course.fast.ai/",
+        "duration_hours": 40
+      }
+    ],
+    "tensorflow": [
+      {
+        "title": "TensorFlow Developer Certificate program",
+        "provider": "TensorFlow",
+        "url": "https://www.tensorflow.org/certificate",
+        "duration_hours": 40
+      }
+    ],
+    "pytorch": [
+      {
+        "title": "PyTorch Tutorials",
+        "provider": "PyTorch",
+        "url": "https://pytorch.org/tutorials/",
+        "duration_hours": 25
+      }
+    ],
+    "computer_vision": [
+      {
+        "title": "OpenCV Python Course",
+        "provider": "OpenCV",
+        "url": "https://docs.opencv.org/master/d6/d00/tutorial_py_root.html",
+        "duration_hours": 20
+      }
+    ],
+    "nlp": [
+      {
+        "title": "Hugging Face NLP Course",
+        "provider": "Hugging Face",
+        "url": "https://huggingface.co/learn/nlp-course",
+        "duration_hours": 25
+      }
+    ],
+    "git": [
+      {
+        "title": "Pro Git book",
+        "provider": "git-scm",
+        "url": "https://git-scm.com/book/en/v2",
+        "duration_hours": 8
+      }
+    ],
+    "pandas": [
+      {
+        "title": "Kaggle Pandas Micro-course",
+        "provider": "Kaggle",
+        "url": "https://www.kaggle.com/learn/pandas",
+        "duration_hours": 4
+      }
+    ]
+  }
+}

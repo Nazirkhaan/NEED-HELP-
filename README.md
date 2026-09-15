@@ -55,11 +55,17 @@ SkillBridge implements a closed-loop platform connecting Students, Institutions 
 - [Podman](https://podman.io/getting-started/installation) >= 4.x + `pip install podman-compose`
 
 ### 1. Database Setup
-Launch PostgreSQL with `pgvector` via Podman:
+Launch PostgreSQL with `pgvector` via Podman (published on `localhost:5433`):
 ```bash
 podman-compose up -d
 ```
-Alternatively, set your PostgreSQL connection string directly in `backend/.env`.
+Wait until `podman ps` shows the `sih26044-db` container as `(healthy)`.
+
+> **Windows/WSL2 note:** the compose file uses `network_mode: pasta` because
+> netavark's nftables ruleset cannot load in the microsoft-standard WSL2 kernel.
+> Pasta requires a **rootless** podman machine:
+> `podman machine set --rootful=false podman-machine-default`.
+> Port 5433 avoids colliding with any native Windows PostgreSQL service on 5432.
 
 ### 2. Backend Setup
 ```bash
@@ -78,18 +84,25 @@ python -m app.db.migrate
 # Seed synthetic data (CSE & ECE streams)
 python -m seed
 
-# Start FastAPI server
-uvicorn app.main:app --port 8000 --reload
+# Start FastAPI server (Windows: use run.py — uvicorn >= 0.36 hard-codes
+# ProactorEventLoop, which breaks psycopg's async mode; run.py forces a
+# SelectorEventLoop)
+python run.py            # Windows
+uvicorn app.main:app --port 8000 --reload   # Linux/macOS
 ```
 The backend API will run at `http://localhost:8000`. API docs are available at `http://localhost:8000/docs`.
+
+Sanity check: `curl http://localhost:8000/api/health` → `{"status":"ok","db":true}`.
 
 ### 3. Frontend Setup
 ```bash
 cd frontend
 npm install
-npm run dev
+npm run dev -- -p 3000
 ```
 The frontend application will run at `http://localhost:3000`.
+(Pin `-p 3000`: if port 3000 is busy at startup, Next.js silently picks a
+random port, which the backend CORS list does not allow.)
 
 ---
 
@@ -101,6 +114,18 @@ To execute the 44-step end-to-end automated test suite verifying auth, resume ex
 cd backend
 python -m scripts.walkthrough
 ```
+
+---
+
+## 🛠️ Troubleshooting
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| Backend exits with `psycopg_pool.PoolTimeout after 10.0 sec` | DB container not running | `podman-compose up -d`, wait for `(healthy)` |
+| `nft did not return successfully while applying ruleset` | netavark + WSL2 kernel | keep `network_mode: pasta`; machine must be rootless |
+| "Cannot reach the backend API — is it running on :8000?" | backend not started (or DB down at startup) | start DB, then `python run.py` |
+| CORS error from the frontend | frontend port not in `CORS_ORIGINS` | run with `-p 3000` |
+| `password authentication failed for user "sih"` | hit the native Windows PostgreSQL on 5432 | use host `localhost`, port `5433` |
 
 ---
 

@@ -1,0 +1,654 @@
+{
+  "key": "bca_gen",
+  "name": "BCA — General / Computer Applications",
+  "degree": "BCA",
+  "skills": [
+    {
+      "code": "c",
+      "label": "C",
+      "category": "Programming",
+      "aliases": [
+        "c language"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "cpp",
+      "label": "C++",
+      "category": "Programming",
+      "aliases": [
+        "c plus plus",
+        "cpp",
+        "stl"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "java",
+      "label": "Java",
+      "category": "Programming",
+      "aliases": [
+        "core java",
+        "jvm",
+        "spring boot"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "python",
+      "label": "Python",
+      "category": "Programming",
+      "aliases": [
+        "py",
+        "python3"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "programming_fundamentals",
+      "label": "Programming Fundamentals",
+      "category": "Fundamentals",
+      "aliases": [
+        "programming basics",
+        "coding fundamentals",
+        "programming"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "oop",
+      "label": "Object-Oriented Programming",
+      "category": "Fundamentals",
+      "aliases": [
+        "oop",
+        "object oriented programming",
+        "oops concepts"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "dsa",
+      "label": "Data Structures & Algorithms",
+      "category": "Fundamentals",
+      "aliases": [
+        "dsa",
+        "data structures",
+        "algorithms",
+        "problem solving",
+        "complexity analysis",
+        "competitive programming"
+      ],
+      "demand_weight": 1.2
+    },
+    {
+      "code": "dbms",
+      "label": "DBMS",
+      "category": "Data",
+      "aliases": [
+        "database management",
+        "database management system",
+        "rdbms"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "sql",
+      "label": "SQL",
+      "category": "Data",
+      "aliases": [
+        "structured query language",
+        "queries",
+        "joins"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "os",
+      "label": "Operating Systems",
+      "category": "Fundamentals",
+      "aliases": [
+        "os concepts",
+        "processes and threads",
+        "memory management"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "networks",
+      "label": "Computer Networks",
+      "category": "Fundamentals",
+      "aliases": [
+        "networking",
+        "computer network",
+        "osi model"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "software_engineering",
+      "label": "Software Engineering",
+      "category": "Software Engineering",
+      "aliases": [
+        "swe principles"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "html",
+      "label": "HTML",
+      "category": "Web",
+      "aliases": [
+        "html5",
+        "web markup"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "css",
+      "label": "CSS",
+      "category": "Web",
+      "aliases": [
+        "css3",
+        "stylesheets",
+        "flexbox",
+        "grid"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "javascript",
+      "label": "JavaScript",
+      "category": "Programming",
+      "aliases": [
+        "js",
+        "es6",
+        "ecmascript"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "git",
+      "label": "Git & Version Control",
+      "category": "DevOps",
+      "aliases": [
+        "git scm",
+        "github",
+        "version control",
+        "pull requests",
+        "merge conflicts"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "computer_fundamentals",
+      "label": "Computer Fundamentals",
+      "category": "Fundamentals",
+      "aliases": [
+        "computer basics",
+        "computing fundamentals"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "debugging",
+      "label": "Debugging",
+      "category": "Quality",
+      "aliases": [
+        "debugging skills",
+        "root cause analysis"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "rest_api",
+      "label": "REST APIs",
+      "category": "Web",
+      "aliases": [
+        "restful",
+        "rest api",
+        "api endpoints",
+        "http services"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "critical_thinking",
+      "label": "Critical & Analytical Thinking",
+      "category": "Soft Skills",
+      "aliases": [
+        "critical thinking",
+        "analytical thinking",
+        "problem solving"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "communication",
+      "label": "Professional Communication",
+      "category": "Soft Skills",
+      "aliases": [
+        "presentation",
+        "business communication"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "testing",
+      "label": "Software Testing",
+      "category": "Quality",
+      "aliases": [
+        "unit testing",
+        "integration testing",
+        "qa",
+        "test cases"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "troubleshooting",
+      "label": "Troubleshooting",
+      "category": "Tools",
+      "aliases": [
+        "problem diagnosis",
+        "technical troubleshooting"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "database_design",
+      "label": "Database Design",
+      "category": "Data",
+      "aliases": [
+        "schema design",
+        "relational schema"
+      ],
+      "demand_weight": 0.85
+    }
+  ],
+  "target_roles": [
+    {
+      "name": "Software Developer",
+      "required": [
+        {
+          "code": "dsa",
+          "weight": 1.2
+        },
+        {
+          "code": "oop",
+          "weight": 1.2
+        },
+        {
+          "code": "java",
+          "weight": 1.0
+        },
+        {
+          "code": "python",
+          "weight": 1.0
+        },
+        {
+          "code": "sql",
+          "weight": 1.0
+        },
+        {
+          "code": "git",
+          "weight": 0.8
+        }
+      ]
+    },
+    {
+      "name": "Software Engineer Intern",
+      "required": [
+        {
+          "code": "programming_fundamentals",
+          "weight": 1.3
+        },
+        {
+          "code": "dsa",
+          "weight": 1.2
+        },
+        {
+          "code": "sql",
+          "weight": 1.0
+        },
+        {
+          "code": "git",
+          "weight": 0.8
+        },
+        {
+          "code": "debugging",
+          "weight": 0.8
+        }
+      ]
+    },
+    {
+      "name": "Application Developer",
+      "required": [
+        {
+          "code": "oop",
+          "weight": 1.2
+        },
+        {
+          "code": "java",
+          "weight": 1.1
+        },
+        {
+          "code": "dbms",
+          "weight": 1.0
+        },
+        {
+          "code": "javascript",
+          "weight": 1.0
+        },
+        {
+          "code": "rest_api",
+          "weight": 0.8
+        }
+      ]
+    },
+    {
+      "name": "Web Developer",
+      "required": [
+        {
+          "code": "html",
+          "weight": 1.2
+        },
+        {
+          "code": "css",
+          "weight": 1.2
+        },
+        {
+          "code": "javascript",
+          "weight": 1.2
+        },
+        {
+          "code": "sql",
+          "weight": 0.9
+        },
+        {
+          "code": "git",
+          "weight": 0.8
+        }
+      ]
+    },
+    {
+      "name": "Backend Developer",
+      "required": [
+        {
+          "code": "python",
+          "weight": 1.2
+        },
+        {
+          "code": "sql",
+          "weight": 1.2
+        },
+        {
+          "code": "dsa",
+          "weight": 1.0
+        },
+        {
+          "code": "rest_api",
+          "weight": 1.0
+        },
+        {
+          "code": "git",
+          "weight": 0.8
+        }
+      ]
+    },
+    {
+      "name": "QA Engineer",
+      "required": [
+        {
+          "code": "testing",
+          "weight": 1.3
+        },
+        {
+          "code": "debugging",
+          "weight": 1.0
+        },
+        {
+          "code": "sql",
+          "weight": 0.9
+        },
+        {
+          "code": "programming_fundamentals",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Software Testing Intern",
+      "required": [
+        {
+          "code": "testing",
+          "weight": 1.3
+        },
+        {
+          "code": "debugging",
+          "weight": 0.9
+        },
+        {
+          "code": "sql",
+          "weight": 0.8
+        },
+        {
+          "code": "communication",
+          "weight": 0.7
+        }
+      ]
+    },
+    {
+      "name": "IT Support Engineer",
+      "required": [
+        {
+          "code": "computer_fundamentals",
+          "weight": 1.2
+        },
+        {
+          "code": "networks",
+          "weight": 1.0
+        },
+        {
+          "code": "os",
+          "weight": 1.0
+        },
+        {
+          "code": "troubleshooting",
+          "weight": 1.2
+        }
+      ]
+    },
+    {
+      "name": "Technical Support Engineer",
+      "required": [
+        {
+          "code": "troubleshooting",
+          "weight": 1.3
+        },
+        {
+          "code": "networks",
+          "weight": 0.9
+        },
+        {
+          "code": "os",
+          "weight": 0.9
+        },
+        {
+          "code": "communication",
+          "weight": 0.9
+        }
+      ]
+    },
+    {
+      "name": "Junior Database Developer",
+      "required": [
+        {
+          "code": "sql",
+          "weight": 1.3
+        },
+        {
+          "code": "dbms",
+          "weight": 1.2
+        },
+        {
+          "code": "database_design",
+          "weight": 1.0
+        },
+        {
+          "code": "python",
+          "weight": 0.8
+        }
+      ]
+    }
+  ],
+  "learning_resources": {
+    "c": [
+      {
+        "title": "C Programming (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106104128",
+        "duration_hours": 30
+      }
+    ],
+    "cpp": [
+      {
+        "title": "C++ Course (learncpp.com)",
+        "provider": "LearnCpp",
+        "url": "https://www.learncpp.com/",
+        "duration_hours": 30
+      }
+    ],
+    "java": [
+      {
+        "title": "Java Programming (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105191",
+        "duration_hours": 40
+      }
+    ],
+    "python": [
+      {
+        "title": "Python for Everybody (Coursera)",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/specializations/python",
+        "duration_hours": 40
+      },
+      {
+        "title": "Official Python Tutorial",
+        "provider": "python.org",
+        "url": "https://docs.python.org/3/tutorial/",
+        "duration_hours": 10
+      }
+    ],
+    "oop": [
+      {
+        "title": "Object Oriented Analysis and Design (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105155",
+        "duration_hours": 30
+      }
+    ],
+    "dsa": [
+      {
+        "title": "Programming, Data Structures and Algorithms (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106106145",
+        "duration_hours": 40
+      }
+    ],
+    "dbms": [
+      {
+        "title": "Database Management System (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105175",
+        "duration_hours": 30
+      }
+    ],
+    "sql": [
+      {
+        "title": "SQL Tutorial (SQLBolt)",
+        "provider": "SQLBolt",
+        "url": "https://sqlbolt.com/",
+        "duration_hours": 6
+      },
+      {
+        "title": "DBMS (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105175",
+        "duration_hours": 30
+      }
+    ],
+    "os": [
+      {
+        "title": "Operating Systems (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106106144",
+        "duration_hours": 35
+      }
+    ],
+    "networks": [
+      {
+        "title": "Computer Networks (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105183",
+        "duration_hours": 35
+      }
+    ],
+    "html": [
+      {
+        "title": "Responsive Web Design Certification",
+        "provider": "freeCodeCamp",
+        "url": "https://www.freecodecamp.org/learn/2022/responsive-web-design/",
+        "duration_hours": 30
+      }
+    ],
+    "css": [
+      {
+        "title": "Learn CSS (web.dev)",
+        "provider": "Google",
+        "url": "https://web.dev/learn/css/",
+        "duration_hours": 12
+      }
+    ],
+    "javascript": [
+      {
+        "title": "The Modern JavaScript Tutorial",
+        "provider": "javascript.info",
+        "url": "https://javascript.info/",
+        "duration_hours": 30
+      }
+    ],
+    "git": [
+      {
+        "title": "Pro Git book",
+        "provider": "git-scm",
+        "url": "https://git-scm.com/book/en/v2",
+        "duration_hours": 8
+      }
+    ],
+    "rest_api": [
+      {
+        "title": "REST API design guide (MDN)",
+        "provider": "MDN",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP",
+        "duration_hours": 8
+      }
+    ],
+    "communication": [
+      {
+        "title": "Business English Communication (Coursera)",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/specializations/business-english-communication",
+        "duration_hours": 20
+      }
+    ],
+    "testing": [
+      {
+        "title": "pytest documentation & course",
+        "provider": "pytest",
+        "url": "https://docs.pytest.org/en/stable/",
+        "duration_hours": 6
+      }
+    ]
+  }
+}

@@ -1,21 +1,28 @@
 ﻿# podman-compose.yml -- run with: podman-compose up -d
 # Requires: podman >= 4.x  +  pip install podman-compose
 #
-# WSL2 NOTE: netavark (Podman default) requires nftables kernel support which
-# is unavailable in the microsoft-standard-WSL2 kernel. We use network_mode:
-# host as a workaround -- Postgres binds directly to the WSL2 VM IP
-# (192.168.162.220:5432) which is already set in backend/.env.
+# Postgres is published on 127.0.0.1:5433 (container port 5432), matching
+# backend/.env DATABASE_URL=postgresql://sih:sih@localhost:5433/sih26044.
+# Port 5433 avoids colliding with a native Windows PostgreSQL service on 5432.
+#
+# WSL2 NOTE: netavark cannot apply its nftables ruleset in the
+# microsoft-standard-WSL2 kernel ("nft did not return successfully while
+# applying ruleset"), so the default bridge network fails to start. We use
+# network_mode: pasta (userspace networking, no nftables) which supports
+# published ports. Pasta requires a ROOTLESS podman machine:
+#   podman machine set --rootful=false podman-machine-default
 #
 # To start: podman-compose up -d
 # To stop:  podman-compose down
-
 name: sih26044
 
 services:
   db:
     image: docker.io/pgvector/pgvector:pg16
     container_name: sih26044-db
-    network_mode: host
+    network_mode: pasta
+    ports:
+      - "127.0.0.1:5433:5432"
     labels:
       io.podman.compose.project: "sih26044"
       io.podman.compose.service: "db"
@@ -23,7 +30,7 @@ services:
       POSTGRES_USER: sih
       POSTGRES_PASSWORD: sih
       POSTGRES_DB: sih26044
-    # No ports: section needed -- host networking exposes 5432 directly
+    # Publish host 127.0.0.1:5433 -> container 5432 (works under pasta).
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:

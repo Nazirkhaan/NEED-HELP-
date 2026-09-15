@@ -19,6 +19,8 @@ async def streams():
         out.append({
             "key": s["key"],
             "name": s["name"],
+            "degree": s.get("degree"),
+            "aliases": s.get("aliases", []),
             "n_skills": len(cfg["skills"]),
             "target_roles": [r["name"] for r in cfg["target_roles"]],
         })

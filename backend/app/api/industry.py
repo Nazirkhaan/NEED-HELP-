@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from app.core.rbac import AuthUser, require_perm
 from app.db.pool import aexecute, afetch_all, afetch_one
 from app.services import matching
+from app.services.config_loader import list_streams
 from app.services.profile_pipeline import process_job_description
 from app.services.recalibration import apply_outcome_recalibration
 from app.services.verification import verify as verify_transition
@@ -120,6 +121,98 @@ async def applicants(jd_id: str, user: AuthUser = Depends(require_perm("applican
     return rows
 
 
+@router.get("/applicants")
+async def all_applicants(user: AuthUser = Depends(require_perm("applicants.view.own"))):
+    """Org-wide candidate pipeline with hiring status, for the Industry Console.
+
+    Hired = status 'selected' or an outcome logged as 'hired' (the outcome is
+    the stronger post-internship signal; either authorizes the HIRED bucket).
+    """
+    org = _own_org(user)
+    rows = await afetch_all(
+        """
+        select a.id as application_id, a.status, a.applied_at, a.cover_note,
+               (a.status = 'selected' or o.result = 'hired') as is_hired,
+               o.result as outcome_result,
+               sp.id as student_profile_id, sp.cgpa, sp.graduation_year, sp.stream,
+               u.full_name, i.name as institution_name,
+               jd.id as job_description_id, jd.title as job_title, jd.kind as job_kind,
+               m.id as match_id, m.score, m.semantic_score, m.taxonomy_score,
+               m.provider, m.matched_skills, m.missing_skills, m.extra_skills,
+               m.literal_keyword_overlap
+        from applications a
+        join job_descriptions jd on jd.id = a.job_description_id
+        join student_profiles sp on sp.id = a.student_profile_id
+        join users u on u.id = sp.user_id
+        left join institutions i on i.id = sp.institution_id
+        left join matches m on m.id = a.match_id
+        left join outcomes o on o.application_id = a.id
+        where jd.organization_id = %s
+        order by a.applied_at desc
+        """,
+        (org["organization_id"],),
+    )
+    for r in rows:
+        r["application_id"] = str(r["application_id"])
+        r["student_profile_id"] = str(r["student_profile_id"])
+        r["job_description_id"] = str(r["job_description_id"])
+        r["is_hired"] = bool(r["is_hired"])
+        r["score"] = float(r["score"]) if r["score"] is not None else None
+
+    degree_by_stream = {s["key"]: s.get("degree") for s in list_streams()}
+    for r in rows:
+        r["degree"] = degree_by_stream.get(r["stream"], "—")
+    return rows
+
+
+@router.get("/recruitment/summary")
+async def recruitment_summary(user: AuthUser = Depends(require_perm("applicants.view.own"))):
+    """Authoritative hiring-status counts for the console cards.
+
+    Single grouped COUNT query (no row loading); counts come straight from the
+    database so they stay correct regardless of frontend pagination.
+    """
+    org = _own_org(user)
+    row = await afetch_one(
+        """
+        select
+            count(*) as total,
+            count(*) filter (where a.status = 'selected' or o.result = 'hired') as hired,
+            count(*) filter (where a.status = 'waitlisted') as waitlisted,
+            count(*) filter (where a.status = 'rejected') as rejected,
+            count(*) filter (where a.status in ('applied', 'shortlisted')) as in_process,
+            count(*) filter (where a.status = 'withdrawn') as withdrawn
+        from applications a
+        join job_descriptions jd on jd.id = a.job_description_id
+        left join outcomes o on o.application_id = a.id
+        where jd.organization_id = %s
+        """,
+        (org["organization_id"],),
+    )
+    by_status = {
+        r["status"]: r["n"]
+        for r in await afetch_all(
+            """
+            select a.status, count(*) as n
+            from applications a
+            join job_descriptions jd on jd.id = a.job_description_id
+            where jd.organization_id = %s
+            group by a.status
+            """,
+            (org["organization_id"],),
+        )
+    }
+    return {
+        "total": int(row["total"]),
+        "hired": int(row["hired"]),
+        "waitlisted": int(row["waitlisted"]),
+        "rejected": int(row["rejected"]),
+        "in_process": int(row["in_process"]),
+        "withdrawn": int(row["withdrawn"]),
+        "by_status": by_status,
+    }
+
+
 @router.post("/applications/{application_id}/status")
 async def set_application_status(application_id: str, body: StatusBody,
                                  user: AuthUser = Depends(require_perm("applications.review.own"))):
@@ -130,7 +223,7 @@ async def set_application_status(application_id: str, body: StatusBody,
                           (app_row["job_description_id"],))
     if str(jd["organization_id"]) != user.organization_id:
         raise HTTPException(403, "Not your organization's job")
-    if body.status not in ("applied", "shortlisted", "selected", "rejected"):
+    if body.status not in ("applied", "shortlisted", "waitlisted", "selected", "rejected"):
         raise HTTPException(400, "invalid status")
     await aexecute(
         "update applications set status = %s, updated_at = now() where id = %s",

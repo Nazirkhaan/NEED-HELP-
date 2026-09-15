@@ -1,0 +1,303 @@
+{
+  "key": "bsc_mobile",
+  "name": "B.Sc Mobile Application Development",
+  "degree": "B.Sc",
+  "skills": [
+    {
+      "code": "android",
+      "label": "Android Development",
+      "category": "Mobile",
+      "aliases": [
+        "android sdk",
+        "android apps"
+      ],
+      "demand_weight": 1.3
+    },
+    {
+      "code": "java",
+      "label": "Java",
+      "category": "Programming",
+      "aliases": [
+        "core java",
+        "jvm",
+        "spring boot"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "kotlin",
+      "label": "Kotlin",
+      "category": "Programming",
+      "aliases": [
+        "kotlin jvm"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "android_studio",
+      "label": "Android Studio",
+      "category": "Mobile",
+      "aliases": [
+        "avd",
+        "gradle"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "flutter",
+      "label": "Flutter",
+      "category": "Mobile",
+      "aliases": [
+        "flutter sdk",
+        "widgets"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "dart",
+      "label": "Dart",
+      "category": "Programming",
+      "aliases": [
+        "dart language"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "react_native",
+      "label": "React Native",
+      "category": "Mobile",
+      "aliases": [
+        "rn",
+        "expo"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "firebase",
+      "label": "Firebase",
+      "category": "Mobile",
+      "aliases": [
+        "firestore",
+        "fcm",
+        "firebase auth"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "rest_api",
+      "label": "REST APIs",
+      "category": "Web",
+      "aliases": [
+        "restful",
+        "rest api",
+        "api endpoints",
+        "http services"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "sqlite",
+      "label": "SQLite",
+      "category": "Data",
+      "aliases": [
+        "sqlite3",
+        "embedded database"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "ui_design",
+      "label": "UI Design",
+      "category": "Mobile",
+      "aliases": [
+        "user interface design",
+        "wireframing",
+        "material design"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "auth",
+      "label": "Authentication & Authorization",
+      "category": "Security",
+      "aliases": [
+        "authentication",
+        "authorization",
+        "oauth",
+        "jwt",
+        "sso"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "git",
+      "label": "Git & Version Control",
+      "category": "DevOps",
+      "aliases": [
+        "git scm",
+        "github",
+        "version control",
+        "pull requests",
+        "merge conflicts"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "javascript",
+      "label": "JavaScript",
+      "category": "Programming",
+      "aliases": [
+        "js",
+        "es6",
+        "ecmascript"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "mobile_dev",
+      "label": "Mobile Development",
+      "category": "Mobile",
+      "aliases": [
+        "mobile apps",
+        "app development"
+      ],
+      "demand_weight": 0.85
+    }
+  ],
+  "target_roles": [
+    {
+      "name": "Android Developer Intern",
+      "required": [
+        {
+          "code": "android",
+          "weight": 1.3
+        },
+        {
+          "code": "kotlin",
+          "weight": 1.2
+        },
+        {
+          "code": "android_studio",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Mobile App Developer",
+      "required": [
+        {
+          "code": "flutter",
+          "weight": 1.1
+        },
+        {
+          "code": "android",
+          "weight": 1.1
+        },
+        {
+          "code": "rest_api",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Flutter Developer",
+      "required": [
+        {
+          "code": "flutter",
+          "weight": 1.3
+        },
+        {
+          "code": "dart",
+          "weight": 1.2
+        },
+        {
+          "code": "firebase",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Mobile Application Intern",
+      "required": [
+        {
+          "code": "mobile_dev",
+          "weight": 1.2
+        },
+        {
+          "code": "react_native",
+          "weight": 0.9
+        },
+        {
+          "code": "git",
+          "weight": 0.8
+        }
+      ]
+    }
+  ],
+  "learning_resources": {
+    "android": [
+      {
+        "title": "Android Basics with Compose",
+        "provider": "Google",
+        "url": "https://developer.android.com/courses/android-basics-compose/course",
+        "duration_hours": 60
+      }
+    ],
+    "java": [
+      {
+        "title": "Java Programming (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105191",
+        "duration_hours": 40
+      }
+    ],
+    "kotlin": [
+      {
+        "title": "Kotlin Official Docs",
+        "provider": "JetBrains",
+        "url": "https://kotlinlang.org/docs/home.html",
+        "duration_hours": 15
+      }
+    ],
+    "flutter": [
+      {
+        "title": "Flutter codelabs (Google)",
+        "provider": "Google",
+        "url": "https://codelabs.developers.google.com/?product=flutter",
+        "duration_hours": 20
+      }
+    ],
+    "rest_api": [
+      {
+        "title": "REST API design guide (MDN)",
+        "provider": "MDN",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP",
+        "duration_hours": 8
+      }
+    ],
+    "git": [
+      {
+        "title": "Pro Git book",
+        "provider": "git-scm",
+        "url": "https://git-scm.com/book/en/v2",
+        "duration_hours": 8
+      }
+    ],
+    "javascript": [
+      {
+        "title": "The Modern JavaScript Tutorial",
+        "provider": "javascript.info",
+        "url": "https://javascript.info/",
+        "duration_hours": 30
+      }
+    ],
+    "mobile_dev": [
+      {
+        "title": "Flutter codelabs (Google)",
+        "provider": "Google",
+        "url": "https://codelabs.developers.google.com/?product=flutter",
+        "duration_hours": 20
+      }
+    ]
+  }
+}

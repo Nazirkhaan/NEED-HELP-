@@ -1,0 +1,770 @@
+{
+  "key": "bsc_cs",
+  "name": "B.Sc Computer Science",
+  "degree": "B.Sc",
+  "skills": [
+    {
+      "code": "python",
+      "label": "Python",
+      "category": "Programming",
+      "aliases": [
+        "py",
+        "python3"
+      ],
+      "demand_weight": 1.2
+    },
+    {
+      "code": "cpp",
+      "label": "C++",
+      "category": "Programming",
+      "aliases": [
+        "c plus plus",
+        "cpp",
+        "stl"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "java",
+      "label": "Java",
+      "category": "Programming",
+      "aliases": [
+        "core java",
+        "jvm",
+        "spring boot"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "programming_fundamentals",
+      "label": "Programming Fundamentals",
+      "category": "Fundamentals",
+      "aliases": [
+        "programming basics",
+        "coding fundamentals",
+        "programming"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "oop",
+      "label": "Object-Oriented Programming",
+      "category": "Fundamentals",
+      "aliases": [
+        "oop",
+        "object oriented programming",
+        "oops concepts"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "dsa",
+      "label": "Data Structures & Algorithms",
+      "category": "Fundamentals",
+      "aliases": [
+        "dsa",
+        "data structures",
+        "algorithms",
+        "problem solving",
+        "complexity analysis",
+        "competitive programming"
+      ],
+      "demand_weight": 1.3
+    },
+    {
+      "code": "mathematics",
+      "label": "Mathematics for Computing",
+      "category": "Fundamentals",
+      "aliases": [
+        "engineering mathematics",
+        "maths",
+        "math"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "discrete_math",
+      "label": "Discrete Mathematics",
+      "category": "Fundamentals",
+      "aliases": [
+        "discrete structures",
+        "graph theory",
+        "combinatorics"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "probability",
+      "label": "Probability",
+      "category": "Data",
+      "aliases": [
+        "probability theory",
+        "distributions"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "dbms",
+      "label": "DBMS",
+      "category": "Data",
+      "aliases": [
+        "database management",
+        "database management system",
+        "rdbms"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "sql",
+      "label": "SQL",
+      "category": "Data",
+      "aliases": [
+        "structured query language",
+        "queries",
+        "joins"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "os",
+      "label": "Operating Systems",
+      "category": "Fundamentals",
+      "aliases": [
+        "os concepts",
+        "processes and threads",
+        "memory management"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "networks",
+      "label": "Computer Networks",
+      "category": "Fundamentals",
+      "aliases": [
+        "networking",
+        "computer network",
+        "osi model"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "software_engineering",
+      "label": "Software Engineering",
+      "category": "Software Engineering",
+      "aliases": [
+        "swe principles"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "computer_architecture",
+      "label": "Computer Architecture",
+      "category": "Fundamentals",
+      "aliases": [
+        "microprocessors",
+        "memory hierarchy",
+        "instruction set"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "theory_of_computation",
+      "label": "Theory of Computation",
+      "category": "Fundamentals",
+      "aliases": [
+        "automata theory",
+        "toc",
+        "formal languages"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "computer_graphics",
+      "label": "Computer Graphics",
+      "category": "Fundamentals",
+      "aliases": [
+        "graphics programming",
+        "opengl",
+        "rendering"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "git",
+      "label": "Git & Version Control",
+      "category": "DevOps",
+      "aliases": [
+        "git scm",
+        "github",
+        "version control",
+        "pull requests",
+        "merge conflicts"
+      ],
+      "demand_weight": 1.0
+    },
+    {
+      "code": "ml_basics",
+      "label": "Machine Learning",
+      "category": "AI/ML",
+      "aliases": [
+        "ml",
+        "machine learning fundamentals",
+        "supervised learning",
+        "model training",
+        "regression classifiers"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "deep_learning",
+      "label": "Deep Learning",
+      "category": "AI/ML",
+      "aliases": [
+        "neural networks",
+        "cnn",
+        "rnn",
+        "transformers"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "data_mining",
+      "label": "Data Mining",
+      "category": "Data",
+      "aliases": [
+        "pattern mining",
+        "association rules"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "cybersecurity",
+      "label": "Cybersecurity Fundamentals",
+      "category": "Security",
+      "aliases": [
+        "cybersecurity basics",
+        "infosec",
+        "information security"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "html",
+      "label": "HTML",
+      "category": "Web",
+      "aliases": [
+        "html5",
+        "web markup"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "cloud_fundamentals",
+      "label": "Cloud Computing",
+      "category": "Cloud",
+      "aliases": [
+        "cloud computing fundamentals",
+        "cloud basics",
+        "cloud concepts"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "rest_api",
+      "label": "REST APIs",
+      "category": "Web",
+      "aliases": [
+        "restful",
+        "rest api",
+        "api endpoints",
+        "http services"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "excel",
+      "label": "Excel",
+      "category": "Data",
+      "aliases": [
+        "microsoft excel",
+        "spreadsheets",
+        "pivot tables",
+        "vlookup"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "statistics",
+      "label": "Statistics",
+      "category": "Data",
+      "aliases": [
+        "statistical methods",
+        "descriptive statistics",
+        "inferential statistics"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "css",
+      "label": "CSS",
+      "category": "Web",
+      "aliases": [
+        "css3",
+        "stylesheets",
+        "flexbox",
+        "grid"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "javascript",
+      "label": "JavaScript",
+      "category": "Programming",
+      "aliases": [
+        "js",
+        "es6",
+        "ecmascript"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "testing",
+      "label": "Software Testing",
+      "category": "Quality",
+      "aliases": [
+        "unit testing",
+        "integration testing",
+        "qa",
+        "test cases"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "debugging",
+      "label": "Debugging",
+      "category": "Quality",
+      "aliases": [
+        "debugging skills",
+        "root cause analysis"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "sdlc",
+      "label": "SDLC",
+      "category": "Software Engineering",
+      "aliases": [
+        "software development life cycle",
+        "waterfall model"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "linux",
+      "label": "Linux",
+      "category": "Tools",
+      "aliases": [
+        "unix",
+        "ubuntu",
+        "command line",
+        "cli"
+      ],
+      "demand_weight": 0.85
+    },
+    {
+      "code": "database_design",
+      "label": "Database Design",
+      "category": "Data",
+      "aliases": [
+        "schema design",
+        "relational schema"
+      ],
+      "demand_weight": 0.85
+    }
+  ],
+  "target_roles": [
+    {
+      "name": "Software Developer",
+      "required": [
+        {
+          "code": "dsa",
+          "weight": 1.2
+        },
+        {
+          "code": "oop",
+          "weight": 1.2
+        },
+        {
+          "code": "python",
+          "weight": 1.0
+        },
+        {
+          "code": "cpp",
+          "weight": 0.9
+        },
+        {
+          "code": "sql",
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Software Engineer Intern",
+      "required": [
+        {
+          "code": "programming_fundamentals",
+          "weight": 1.2
+        },
+        {
+          "code": "dsa",
+          "weight": 1.3
+        },
+        {
+          "code": "git",
+          "weight": 0.9
+        },
+        {
+          "code": "sql",
+          "weight": 0.9
+        }
+      ]
+    },
+    {
+      "name": "Backend Developer",
+      "required": [
+        {
+          "code": "python",
+          "weight": 1.2
+        },
+        {
+          "code": "sql",
+          "weight": 1.2
+        },
+        {
+          "code": "dsa",
+          "weight": 1.1
+        },
+        {
+          "code": "rest_api",
+          "weight": 1.0
+        },
+        {
+          "code": "os",
+          "weight": 0.8
+        }
+      ]
+    },
+    {
+      "name": "Data Analyst",
+      "required": [
+        {
+          "code": "sql",
+          "weight": 1.2
+        },
+        {
+          "code": "python",
+          "weight": 1.1
+        },
+        {
+          "code": "probability",
+          "weight": 0.9
+        },
+        {
+          "code": "excel",
+          "weight": 0.9
+        }
+      ]
+    },
+    {
+      "name": "AI/ML Intern",
+      "required": [
+        {
+          "code": "ml_basics",
+          "weight": 1.3
+        },
+        {
+          "code": "python",
+          "weight": 1.2
+        },
+        {
+          "code": "statistics",
+          "weight": 1.0
+        },
+        {
+          "code": "deep_learning",
+          "weight": 0.9
+        }
+      ]
+    },
+    {
+      "name": "Web Developer",
+      "required": [
+        {
+          "code": "html",
+          "weight": 1.1
+        },
+        {
+          "code": "css",
+          "weight": 1.1
+        },
+        {
+          "code": "javascript",
+          "weight": 1.2
+        },
+        {
+          "code": "sql",
+          "weight": 0.8
+        }
+      ]
+    },
+    {
+      "name": "QA Engineer",
+      "required": [
+        {
+          "code": "testing",
+          "weight": 1.3
+        },
+        {
+          "code": "debugging",
+          "weight": 1.0
+        },
+        {
+          "code": "sdlc",
+          "weight": 0.8
+        }
+      ]
+    },
+    {
+      "name": "Cybersecurity Intern",
+      "required": [
+        {
+          "code": "cybersecurity",
+          "weight": 1.3
+        },
+        {
+          "code": "networks",
+          "weight": 1.0
+        },
+        {
+          "code": "linux",
+          "weight": 0.9
+        }
+      ]
+    },
+    {
+      "name": "Database Developer",
+      "required": [
+        {
+          "code": "sql",
+          "weight": 1.3
+        },
+        {
+          "code": "dbms",
+          "weight": 1.2
+        },
+        {
+          "code": "database_design",
+          "weight": 1.0
+        }
+      ]
+    }
+  ],
+  "learning_resources": {
+    "python": [
+      {
+        "title": "Python for Everybody (Coursera)",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/specializations/python",
+        "duration_hours": 40
+      },
+      {
+        "title": "Official Python Tutorial",
+        "provider": "python.org",
+        "url": "https://docs.python.org/3/tutorial/",
+        "duration_hours": 10
+      }
+    ],
+    "cpp": [
+      {
+        "title": "C++ Course (learncpp.com)",
+        "provider": "LearnCpp",
+        "url": "https://www.learncpp.com/",
+        "duration_hours": 30
+      }
+    ],
+    "java": [
+      {
+        "title": "Java Programming (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105191",
+        "duration_hours": 40
+      }
+    ],
+    "oop": [
+      {
+        "title": "Object Oriented Analysis and Design (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105155",
+        "duration_hours": 30
+      }
+    ],
+    "dsa": [
+      {
+        "title": "Programming, Data Structures and Algorithms (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106106145",
+        "duration_hours": 40
+      }
+    ],
+    "dbms": [
+      {
+        "title": "Database Management System (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105175",
+        "duration_hours": 30
+      }
+    ],
+    "sql": [
+      {
+        "title": "SQL Tutorial (SQLBolt)",
+        "provider": "SQLBolt",
+        "url": "https://sqlbolt.com/",
+        "duration_hours": 6
+      },
+      {
+        "title": "DBMS (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105175",
+        "duration_hours": 30
+      }
+    ],
+    "os": [
+      {
+        "title": "Operating Systems (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106106144",
+        "duration_hours": 35
+      }
+    ],
+    "networks": [
+      {
+        "title": "Computer Networks (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105183",
+        "duration_hours": 35
+      }
+    ],
+    "computer_architecture": [
+      {
+        "title": "Computer Architecture (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106103148",
+        "duration_hours": 35
+      }
+    ],
+    "git": [
+      {
+        "title": "Pro Git book",
+        "provider": "git-scm",
+        "url": "https://git-scm.com/book/en/v2",
+        "duration_hours": 8
+      }
+    ],
+    "ml_basics": [
+      {
+        "title": "Machine Learning Specialization",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/specializations/machine-learning-introduction",
+        "duration_hours": 60
+      }
+    ],
+    "deep_learning": [
+      {
+        "title": "Practical Deep Learning for Coders",
+        "provider": "fast.ai",
+        "url": "https://course.fast.ai/",
+        "duration_hours": 40
+      }
+    ],
+    "cybersecurity": [
+      {
+        "title": "Foundations of Cybersecurity (Google)",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/learn/foundations-of-cybersecurity",
+        "duration_hours": 15
+      }
+    ],
+    "html": [
+      {
+        "title": "Responsive Web Design Certification",
+        "provider": "freeCodeCamp",
+        "url": "https://www.freecodecamp.org/learn/2022/responsive-web-design/",
+        "duration_hours": 30
+      }
+    ],
+    "cloud_fundamentals": [
+      {
+        "title": "Cloud Computing (NPTEL)",
+        "provider": "NPTEL",
+        "url": "https://nptel.ac.in/courses/106105167",
+        "duration_hours": 30
+      }
+    ],
+    "rest_api": [
+      {
+        "title": "REST API design guide (MDN)",
+        "provider": "MDN",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP",
+        "duration_hours": 8
+      }
+    ],
+    "excel": [
+      {
+        "title": "Excel Skills for Business (Coursera)",
+        "provider": "Coursera",
+        "url": "https://www.coursera.org/specializations/excel",
+        "duration_hours": 40
+      }
+    ],
+    "statistics": [
+      {
+        "title": "Statistics (Khan Academy)",
+        "provider": "Khan Academy",
+        "url": "https://www.khanacademy.org/math/statistics-probability",
+        "duration_hours": 25
+      }
+    ],
+    "css": [
+      {
+        "title": "Learn CSS (web.dev)",
+        "provider": "Google",
+        "url": "https://web.dev/learn/css/",
+        "duration_hours": 12
+      }
+    ],
+    "javascript": [
+      {
+        "title": "The Modern JavaScript Tutorial",
+        "provider": "javascript.info",
+        "url": "https://javascript.info/",
+        "duration_hours": 30
+      }
+    ],
+    "testing": [
+      {
+        "title": "pytest documentation & course",
+        "provider": "pytest",
+        "url": "https://docs.pytest.org/en/stable/",
+        "duration_hours": 6
+      }
+    ],
+    "linux": [
+      {
+        "title": "The Missing Semester (MIT)",
+        "provider": "MIT",
+        "url": "https://missing.csail.mit.edu/",
+        "duration_hours": 10
+      }
+    ]
+  }
+}
